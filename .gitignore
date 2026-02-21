@@ -1,0 +1,44 @@
+# Node.js
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+*.log
+
+# Testing
+coverage/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+.env
+.env.*
+
+# npm
+package-lock.json
+yarn.lock
+
+# Others
+*.swp
+*.swo
+
+# Ignore local config
+local.settings.json
+
+# Ignore Jest cache
+.jest/
+
+# Ignore tsup cache
+.tsup/
