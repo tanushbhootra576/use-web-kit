@@ -2,7 +2,7 @@
 
 **A zero-dependency, lightweight (~3KB) collection of React hooks optimized for performance and modern Browser APIs.**
 
-`License: MIT` | `TypeScript: Included` | `Size: ~3KB`
+`TypeScript: Included` | `Size: ~3KB`
 
 ---
 
@@ -165,11 +165,6 @@ When the tab is hidden, the polling interval increases from 3 seconds to 12 seco
 
 ---
 
-## License
-
-MIT
-
----
 
 ## Author
 
