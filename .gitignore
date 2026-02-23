@@ -25,7 +25,7 @@ Thumbs.db
 # Misc
 .env
 .env.*
-
+.evn.example
 # npm
 package-lock.json
 yarn.lock
