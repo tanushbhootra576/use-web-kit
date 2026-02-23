@@ -274,3 +274,5 @@ Contributing
 - Keep runtime dependencies to zero; dev-dependencies for testing/building are acceptable.
 - Follow the existing TypeScript configuration and coding style.
 - Create a pull request against main with a clear description and test coverage for changes.
+
+  ### Developed by Tanush Bhootra
