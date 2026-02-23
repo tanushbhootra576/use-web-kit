@@ -23,6 +23,7 @@
   "scripts": {
     "build": "tsup",
     "name": "use-web-kit",
+    "test": "jest --env=jsdom",
     "test:watch": "jest --watch",
     "lint": "tsc --noEmit",
     "prepublishOnly": "npm run build"
