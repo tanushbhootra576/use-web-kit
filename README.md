@@ -161,35 +161,36 @@ Description:
 Synchronize a piece of state across same-origin tabs/windows using the BroadcastChannel API. Useful for multi-tab coordination (e.g., feature flags, lightweight UI state).
 
 Signature:
+
 ```ts
 export function useBroadcastState<T>(
   channelName: string,
-  initialValue: T,
+  initialValue: T
 ): [T, (value: T | ((prevState: T) => T)) => void];
 ```
 
 Parameters:
 
-| Name | Type | Default | Description |
-|---|---|---:|---|
-| `channelName` | `string` | — | Channel identifier shared by all participants. |
-| `initialValue` | `T` | — | Initial value used before any broadcasts are received. |
+| Name           | Type     | Default | Description                                            |
+| -------------- | -------- | ------: | ------------------------------------------------------ |
+| `channelName`  | `string` |       — | Channel identifier shared by all participants.         |
+| `initialValue` | `T`      |       — | Initial value used before any broadcasts are received. |
 
 Returns:
 
-| Name | Type | Description |
-|---|---|---|
-| State | `T` | Local state synchronized with broadcasts. |
-| setState | `(value | updater) => void` | Updates local state and broadcasts JSON-serialized value to the channel. |
+| Name     | Type    | Description                               |
+| -------- | ------- | ----------------------------------------- | ------------------------------------------------------------------------ |
+| State    | `T`     | Local state synchronized with broadcasts. |
+| setState | `(value | updater) => void`                         | Updates local state and broadcasts JSON-serialized value to the channel. |
 
 Basic Example:
 
 ```tsx
-import React from 'react';
-import { useBroadcastState } from 'use-web-kit';
+import React from "react";
+import { useBroadcastState } from "use-web-kit";
 
 export default function SharedCounter() {
-  const [count, setCount] = useBroadcastState<number>('shared-counter', 0);
+  const [count, setCount] = useBroadcastState<number>("shared-counter", 0);
 
   return (
     <div>
@@ -203,17 +204,21 @@ export default function SharedCounter() {
 Advanced Example:
 
 ```tsx
-type Settings = { theme: 'light'|'dark' };
-const [settings, setSettings] = useBroadcastState<Settings>('app-settings', { theme: 'light' });
+type Settings = { theme: "light" | "dark" };
+const [settings, setSettings] = useBroadcastState<Settings>("app-settings", {
+  theme: "light",
+});
 // update and broadcast
-setSettings({ theme: 'dark' });
+setSettings({ theme: "dark" });
 ```
 
 Edge Cases:
+
 - If `BroadcastChannel` is unavailable (older browsers), the hook is a no-op for cross-tab sync; local state still works.
 - Messages are JSON-serialized; non-serializable values should be avoided.
 
 Best Practices:
+
 - Keep broadcast payloads small and serializable.
 - Use stable channel names to avoid accidental collisions.
 
@@ -225,42 +230,52 @@ Description:
 Queue tasks to run during browser idle time using `requestIdleCallback` with a timeout and a `setTimeout` fallback. Useful for non-urgent background work (indexing, cache warming, analytics batching).
 
 Signature:
+
 ```ts
 export type IdleQueueTask = () => void | Promise<void>;
-export interface UseIdleQueueOptions { timeout?: number; fallbackInterval?: number; }
-export interface UseIdleQueueReturn { enqueue: (task: IdleQueueTask) => void; clearQueue: () => void; queueLength: number; }
+export interface UseIdleQueueOptions {
+  timeout?: number;
+  fallbackInterval?: number;
+}
+export interface UseIdleQueueReturn {
+  enqueue: (task: IdleQueueTask) => void;
+  clearQueue: () => void;
+  queueLength: number;
+}
 export function useIdleQueue(options?: UseIdleQueueOptions): UseIdleQueueReturn;
 ```
 
 Parameters:
 
-| Name | Type | Default | Description |
-|---|---|---:|---|
-| `options.timeout` | `number` | `undefined` | Timeout passed to `requestIdleCallback`. |
-| `options.fallbackInterval` | `number` | `50` | Fallback polling interval in ms when `requestIdleCallback` is unavailable. |
+| Name                       | Type     |     Default | Description                                                                |
+| -------------------------- | -------- | ----------: | -------------------------------------------------------------------------- |
+| `options.timeout`          | `number` | `undefined` | Timeout passed to `requestIdleCallback`.                                   |
+| `options.fallbackInterval` | `number` |        `50` | Fallback polling interval in ms when `requestIdleCallback` is unavailable. |
 
 Returns:
 
-| Name | Type | Description |
-|---|---|---|
-| `enqueue` | `(task: IdleQueueTask) => void` | Add a task to the queue. |
-| `clearQueue` | `() => void` | Remove queued tasks and cancel scheduled callbacks. |
-| `queueLength` | `number` | Current number of queued tasks. |
+| Name          | Type                            | Description                                         |
+| ------------- | ------------------------------- | --------------------------------------------------- |
+| `enqueue`     | `(task: IdleQueueTask) => void` | Add a task to the queue.                            |
+| `clearQueue`  | `() => void`                    | Remove queued tasks and cancel scheduled callbacks. |
+| `queueLength` | `number`                        | Current number of queued tasks.                     |
 
 Basic Example:
 
 ```tsx
-import React from 'react';
-import { useIdleQueue } from 'use-web-kit';
+import React from "react";
+import { useIdleQueue } from "use-web-kit";
 
 export default function BackgroundIndexer() {
   const { enqueue, queueLength } = useIdleQueue({ timeout: 2000 });
 
   function index(items: string[]) {
-    items.forEach((item) => enqueue(() => {
-      // inexpensive background work
-      localStorage.setItem(`idx:${item}`, JSON.stringify({ item }));
-    }));
+    items.forEach((item) =>
+      enqueue(() => {
+        // inexpensive background work
+        localStorage.setItem(`idx:${item}`, JSON.stringify({ item }));
+      })
+    );
   }
 
   return <div>Pending tasks: {queueLength}</div>;
@@ -268,9 +283,11 @@ export default function BackgroundIndexer() {
 ```
 
 Edge Cases:
+
 - `requestIdleCallback` is not available in all browsers; the hook falls back to `setTimeout`.
 
 Best Practices:
+
 - Keep queued tasks short and resilient to errors.
 - Use `clearQueue` on unmount if tasks depend on component lifecycle.
 
@@ -282,8 +299,13 @@ Description:
 Provides a shared IntersectionObserver pool and returns a `ref` attach function plus latest entry and intersection state. Use for lazy-loading, telemetry, or visibility-driven work.
 
 Signature:
+
 ```ts
-type Options = { root?: Element | null; rootMargin?: string; threshold?: number | number[] };
+type Options = {
+  root?: Element | null;
+  rootMargin?: string;
+  threshold?: number | number[];
+};
 export function useIntersection(options?: Options): {
   ref: (node: Element | null) => void;
   isIntersecting: boolean;
@@ -293,28 +315,28 @@ export function useIntersection(options?: Options): {
 
 Parameters:
 
-| Name | Type | Default | Description |
-|---|---|---:|---|
-| `options.root` | `Element|null` | `null` | Root element for the observer. |
-| `options.rootMargin` | `string` | `""` | Root margin string. |
-| `options.threshold` | `number|number[]` | `undefined` | Intersection threshold(s). |
+| Name                 | Type     |   Default | Description         |
+| -------------------- | -------- | --------: | ------------------- | ------------------------------ |
+| `options.root`       | `Element |     null` | `null`              | Root element for the observer. |
+| `options.rootMargin` | `string` |      `""` | Root margin string. |
+| `options.threshold`  | `number  | number[]` | `undefined`         | Intersection threshold(s).     |
 
 Returns:
 
-| Name | Type | Description |
-|---|---|---|
-| `ref` | `(node: Element|null) => void` | Attach this to an element to observe it. |
-| `isIntersecting` | `boolean` | Whether the element is currently intersecting. |
-| `entry` | `IntersectionObserverEntry | undefined` | Latest observer entry. |
+| Name             | Type                       | Description                                    |
+| ---------------- | -------------------------- | ---------------------------------------------- | ---------------------------------------- |
+| `ref`            | `(node: Element            | null) => void`                                 | Attach this to an element to observe it. |
+| `isIntersecting` | `boolean`                  | Whether the element is currently intersecting. |
+| `entry`          | `IntersectionObserverEntry | undefined`                                     | Latest observer entry.                   |
 
 Basic Example:
 
 ```tsx
-import React from 'react';
-import { useIntersection } from 'use-web-kit';
+import React from "react";
+import { useIntersection } from "use-web-kit";
 
 export default function LazyImage({ src, alt }: { src: string; alt: string }) {
-  const { ref, isIntersecting } = useIntersection({ rootMargin: '200px' });
+  const { ref, isIntersecting } = useIntersection({ rootMargin: "200px" });
 
   return (
     <div ref={(el) => ref(el)} style={{ minHeight: 200 }}>
@@ -331,9 +353,11 @@ const { ref, isIntersecting } = useIntersection({ threshold: [0, 0.5, 1] });
 ```
 
 Edge Cases:
+
 - If `IntersectionObserver` is unavailable, the hook is a no-op (element is not observed).
 
 Best Practices:
+
 - Use the `rootMargin` to trigger work earlier (e.g., prefetching images).
 - Reuse observers via the hook's internal pool (no additional action required).
 
@@ -345,6 +369,7 @@ Description:
 Expose online/offline state and the Network Information API values (when available): `effectiveType`, `downlink`, and `rtt`. Useful for adapting behavior based on connectivity.
 
 Signature:
+
 ```ts
 export type NetworkStatus = {
   online: boolean;
@@ -361,19 +386,21 @@ This hook accepts no parameters.
 
 Returns:
 
-| Name | Type | Description |
-|---|---|---|
-| `online` | `boolean` | `true` when `navigator.onLine` is `true`. |
-| `effectiveType` | `string | undefined` | Network effective type from `navigator.connection`. |
-| `downlink` | `number | undefined` | Estimated downlink in Mbps. |
-| `rtt` | `number | undefined` | Estimated round-trip time in ms. |
+| Name            | Type      | Description                               |
+| --------------- | --------- | ----------------------------------------- | --------------------------------------------------- |
+| `online`        | `boolean` | `true` when `navigator.onLine` is `true`. |
+| `effectiveType` | `string   | undefined`                                | Network effective type from `navigator.connection`. |
+| `downlink`      | `number   | undefined`                                | Estimated downlink in Mbps.                         |
+| `rtt`           | `number   | undefined`                                | Estimated round-trip time in ms.                    |
 
 Basic Example: See Quick Start above.
 
 Edge Cases:
+
 - The Network Information API is not available in all browsers; the hook still provides `online` via `navigator.onLine` when available.
 
 Best Practices:
+
 - Use `online` as a boolean guard, and treat `effectiveType`, `downlink`, and `rtt` as advisory metrics.
 
 ---
@@ -384,8 +411,13 @@ Description:
 Track page visibility, focus, and frozen state. Useful to pause expensive work and to coordinate behavior across focus/visibility boundaries.
 
 Signature:
+
 ```ts
-export type PageLifecycle = { visible: boolean; focused: boolean; frozen: boolean };
+export type PageLifecycle = {
+  visible: boolean;
+  focused: boolean;
+  frozen: boolean;
+};
 export function usePageLifecycle(): PageLifecycle;
 ```
 
@@ -395,17 +427,17 @@ This hook accepts no parameters.
 
 Returns:
 
-| Name | Type | Description |
-|---|---|---|
+| Name      | Type      | Description                                           |
+| --------- | --------- | ----------------------------------------------------- |
 | `visible` | `boolean` | `true` when `document.visibilityState === 'visible'`. |
-| `focused` | `boolean` | `true` if `window`/`document` reports focus. |
-| `frozen` | `boolean` | `true` if the document is frozen (where supported). |
+| `focused` | `boolean` | `true` if `window`/`document` reports focus.          |
+| `frozen`  | `boolean` | `true` if the document is frozen (where supported).   |
 
 Basic Example:
 
 ```tsx
-import React from 'react';
-import { usePageLifecycle } from 'use-web-kit';
+import React from "react";
+import { usePageLifecycle } from "use-web-kit";
 
 export default function LifecycleDebugger() {
   const { visible, focused, frozen } = usePageLifecycle();
@@ -421,32 +453,39 @@ export default function LifecycleDebugger() {
 ```
 
 Edge Cases:
+
 - Not all browsers implement the `freeze` event; the hook handles missing support gracefully.
 
 Best Practices:
+
 - Combine with `useAdaptivePolling` to pause polling on background/freeze.
 
---------------------------------------------------
+---
+
 ## Advanced Usage
---------------------------------------------------
+
+---
 
 Combining hooks is straightforward because each hook manages its own concern.
 
 Adaptive polling + network status example:
 
 ```tsx
-import React, { useCallback } from 'react';
-import { useAdaptivePolling, useNetworkStatus } from 'use-web-kit';
+import React, { useCallback } from "react";
+import { useAdaptivePolling, useNetworkStatus } from "use-web-kit";
 
 export function MetricsPoller() {
   const { online } = useNetworkStatus();
 
   const fetchMetrics = useCallback(() => {
     if (!online) return;
-    void fetch('/api/metrics').catch(() => {});
+    void fetch("/api/metrics").catch(() => {});
   }, [online]);
 
-  useAdaptivePolling(fetchMetrics, { interval: 15_000, pauseOnBackground: true });
+  useAdaptivePolling(fetchMetrics, {
+    interval: 15_000,
+    pauseOnBackground: true,
+  });
 
   return <div>Polling metrics when online and visible.</div>;
 }
@@ -455,11 +494,13 @@ export function MetricsPoller() {
 Broadcast state + page lifecycle example:
 
 ```tsx
-import React from 'react';
-import { useBroadcastState, usePageLifecycle } from 'use-web-kit';
+import React from "react";
+import { useBroadcastState, usePageLifecycle } from "use-web-kit";
 
 export function SharedUiState() {
-  const [state, setState] = useBroadcastState('ui-state', { sidebarOpen: false });
+  const [state, setState] = useBroadcastState("ui-state", {
+    sidebarOpen: false,
+  });
   const { visible } = usePageLifecycle();
 
   React.useEffect(() => {
@@ -470,26 +511,33 @@ export function SharedUiState() {
   }, [visible, setState]);
 
   return (
-    <button onClick={() => setState((s) => ({ ...s, sidebarOpen: !s.sidebarOpen }))}>
+    <button
+      onClick={() => setState((s) => ({ ...s, sidebarOpen: !s.sidebarOpen }))}
+    >
       Toggle
     </button>
   );
 }
 ```
 
---------------------------------------------------
+---
+
 ## API Design Principles
---------------------------------------------------
+
+---
 
 - Minimal APIs: each hook exposes only what is necessary for its responsibility to reduce cognitive load.
 - No heavy abstractions: the library avoids global side effects and opinionated state machines so you can compose hooks freely.
 - Composability: hooks return primitives (refs, booleans, functions) that can be combined to form higher-level behaviors in application code.
 
---------------------------------------------------
+---
+
 ## Contributing
---------------------------------------------------
+
+---
 
 To open issues:
+
 - Create an issue at: https://github.com/tanushbhootra576/use-web-kit/issues
 
 To contribute code:
@@ -500,19 +548,24 @@ To contribute code:
 4. Submit a pull request with a clear description and linked issue if applicable.
 
 Code style expectations:
+
 - TypeScript with strict typing where appropriate.
 - Keep APIs minimal and side-effect free.
 - Add unit tests for behavior-critical logic when practical.
 
---------------------------------------------------
+---
+
 ## License
---------------------------------------------------
+
+---
 
 MIT License
 
---------------------------------------------------
+---
+
 ## Links
---------------------------------------------------
+
+---
 
 GitHub:
 https://github.com/tanushbhootra576/use-web-kit
@@ -522,6 +575,7 @@ https://www.npmjs.com/package/use-web-kit
 
 Issue Tracker:
 https://github.com/tanushbhootra576/use-web-kit/issues
+
 ## use-web-kit -
 
 <img src="https://img.shields.io/npm/v/use-web-kit.svg" alt="npm version">
@@ -799,4 +853,4 @@ Contributing
 - Follow the existing TypeScript configuration and coding style.
 - Create a pull request against main with a clear description and test coverage for changes.
 
-### Developed by Tanush Bhootra
+### Developed by Tanush Bhootra ✨
