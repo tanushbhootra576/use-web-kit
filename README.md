@@ -1,7 +1,7 @@
 ## use-web-kit -
 
 <img src="https://img.shields.io/npm/v/use-web-kit.svg" alt="npm version">
-<img src="https://github.com/tanushbhootra576/use-web-kit/actions/workflows/ci.yml/badge.svg" alt="Build Status">
+<img src="https://github.com/tanushbhootra576576/use-web-kit/actions/workflows/ci.yml/badge.svg" alt="Build Status">
 <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT">
 <img src="https://img.shields.io/badge/types-TypeScript-blue.svg" alt="Typescript">
 
@@ -12,7 +12,7 @@ This document provides installation, concise examples, API reference, SSR notes,
 Package
 Name: use-web-kit
 Version: 0.1.0
-Repository: https://github.com/tanushbhootra576/use-web-kit
+Repository: https://github.com/tanushbhootra576576/use-web-kit
 Features
 Zero runtime dependencies
 Tree-shakeable named exports
@@ -101,7 +101,7 @@ rtt?: number — navigator.connection.rtt in ms when supported.
 Notes
 use-web-kit
 <img src="https://img.shields.io/npm/v/use-web-kit.svg" alt="npm version">
-<img src="https://github.com/tanushbhootra576/use-web-kit/actions/workflows/ci.yml/badge.svg" alt="Build Status">
+<img src="https://github.com/tanushbhootra576576/use-web-kit/actions/workflows/ci.yml/badge.svg" alt="Build Status">
 <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT">
 <img src="https://img.shields.io/badge/types-TypeScript-blue.svg" alt="Typescript">
 
@@ -113,7 +113,7 @@ This document provides installation, concise examples, API reference, SSR notes,
 
 - Name: use-web-kit
 - Version: 0.1.0
-- Repository: https://github.com/tanushbhootra576/use-web-kit
+- Repository: https://github.com/tanushbhootra576576/use-web-kit
 
 ## Features
 

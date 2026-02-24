@@ -41,16 +41,16 @@
     "polling",
     "typescript"
   ],
-  "author": "Tanush Bhootra <https://github.com/tanushbhootra576>",
+  "author": "Tanush Bhootra <https://github.com/tanushbhootra576576>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tanushbhootra576/use-web-kit.git"
+    "url": "git+https://github.com/tanushbhootra576576/use-web-kit.git"
   },
   "bugs": {
-    "url": "https://github.com/tanushbhootra576/use-web-kit/issues"
+    "url": "https://github.com/tanushbhootra576576/use-web-kit/issues"
   },
-  "homepage": "https://github.com/tanushbhootra576/use-web-kit#readme",
+  "homepage": "https://github.com/tanushbhootra576576/use-web-kit#readme",
   "peerDependencies": {
     "react": ">=16.8.0"
   },

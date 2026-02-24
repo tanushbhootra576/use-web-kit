@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>use-web-kit — Modern React hooks for web utilities</title>
+    <meta name="description" content="use-web-kit — Modern React hooks for web utilities" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="theme-color" content="#0b0f12">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+</head>
+
+<body>
+    <header class="site-header">
+        <nav class="nav container" id="site-nav">
+            <a class="brand" href="#">use-web-kit</a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#about">About</a></li>
+                <li><a href="#hooks">Hooks</a></li>
+                <li><a href="#install">Install</a></li>
+                <li><a href="#usage">Usage</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero container">
+            <div class="hero-content">
+                <div class="hero-left">
+                    <div>
+                        <div class="console-boot" aria-hidden="true">
+                            <pre id="boot-lines" class="terminal" style="margin-bottom:12px;">$ <span class="boot-line" data-text="Initializing Hook Engine..."></span>
+              </pre>
+                        </div>
+                        <div class="logo-wordmark" id="wordmark">use-web-kit</div>
+                        <div class="hero-meta">
+                            <p class="tagline">The Hook Engine — Industrial React utilities</p>
+                            <p class="lead">Focused, composable hooks that operate like the invisible systems powering
+                                modern web apps. Lightweight, testable, and engineered for precision.</p>
+                        </div>
+
+                        <div class="install-box">
+                            <div class="terminal"><span class="dollar">$</span> <span class="cmd">npm install
+                                    use-web-kit</span></div>
+                            <button class="toggle-btn" id="repo-btn">GitHub Repository</button>
+                            <button class="toggle-btn" id="npm-btn">NPM Package</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="hero-visual" aria-hidden="true">
+                <div class="network" id="network">
+                    <div class="node" style="left:10%; top:20%" data-id="n1"></div>
+                    <div class="node" style="left:60%; top:12%" data-id="n2"></div>
+                    <div class="node" style="left:78%; top:56%" data-id="n3"></div>
+                    <div class="node" style="left:42%; top:64%" data-id="n4"></div>
+                    <svg class="net-lines" width="280" height="160" viewBox="0 0 280 160"
+                        style="position:absolute; left:0; top:0; pointer-events:none">
+                        <line x1="28" y1="20" x2="168" y2="12" stroke="rgba(156,255,0,0.06)" stroke-width="1" />
+                        <line x1="168" y1="12" x2="224" y2="56" stroke="rgba(156,255,0,0.06)" stroke-width="1" />
+                        <line x1="224" y1="56" x2="120" y2="96" stroke="rgba(156,255,0,0.06)" stroke-width="1" />
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="section container">
+            <h2>About</h2>
+            <p>use-web-kit bundles a set of focused React hooks that solve routine web problems: detecting connectivity
+                changes, queuing idle work, observing intersections, broadcasting small state across tabs, handling page
+                lifecycle events, and adaptive polling. Each hook aims to be minimal, well-documented, and easy to
+                compose.</p>
+            <p>They’re useful to reduce boilerplate in apps and keep your components declarative and testable.</p>
+        </section>
+
+        <!-- Hooks overview removed — detailed documentation follows below -->
+
+        <section id="install" class="section container">
+            <h2>Installation</h2>
+            <p>Install with your package manager of choice.</p>
+            <div class="install-grid">
+                <pre class="install-list"><code>npm install use-web-kit</code></pre>
+                <pre class="install-list"><code>yarn add use-web-kit</code></pre>
+                <pre class="install-list"><code>pnpm add use-web-kit</code></pre>
+            </div>
+        </section>
+
+        <section id="quickstart" class="section container">
+            <h2>Quick Start</h2>
+            <p>Minimal working example using <strong>useNetworkStatus</strong>. Copy-paste into a React app (JSX).</p>
+            <pre class="code"><code>// QuickStart.jsx
+import React from 'react'
+import { useNetworkStatus } from 'use-web-kit'
+
+export default function QuickStart(){
+  const online = useNetworkStatus()
+  return (
+    <main style={{padding:20}}>
+      <h3>Network</h3>
+      <p>Status: {online ? 'Online' : 'Offline'}</p>
+    </main>
+  )
+}
+</code></pre>
+            <p><strong>What happens:</strong> the hook subscribes to the browser online/offline events and returns a
+                boolean. Use it to toggle UI or queue sync tasks when connectivity returns.</p>
+        </section>
+
+        <section id="links" class="section container">
+            <h2>Links</h2>
+            <ul>
+                <li><a href="https://github.com/tanushbhootra576/use-web-kit">GitHub Repository</a></li>
+                <li><a href="https://www.npmjs.com/package/use-web-kit">NPM Package</a></li>
+                <li><a href="#" id="contrib-link">Contribution Guidelines (open)</a></li>
+            </ul>
+        </section>
+
+        <!-- Contributing modal (hidden by default) -->
+        <div id="contrib-modal" class="modal-overlay" aria-hidden="true">
+            <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contrib-title">
+                <header class="modal-header">
+                    <h3 id="contrib-title">Contributing to use-web-kit</h3>
+                    <button class="modal-close" id="contrib-close" aria-label="Close">✕</button>
+                </header>
+                <div class="modal-body">
+                    <p>This repository follows a straightforward contribution workflow. Please follow these steps:</p>
+                    <ol>
+                        <li>Fork the repository and create a feature branch from <code>main</code>.</li>
+                        <li>Run the test suite and add tests for new behavior. Maintain code style and types where
+                            applicable.</li>
+                        <li>Open a pull request with a clear description, rationale, and before/after examples where
+                            relevant.</li>
+                    </ol>
+                    <h4>Code style</h4>
+                    <ul>
+                        <li>Use TypeScript for new modules when appropriate; keep hooks typed.</li>
+                        <li>Prefer small, focused commits and feature branches.</li>
+                    </ul>
+                    <h4>Tests</h4>
+                    <p>Include unit tests for new behaviour. Tests run with <code>npm test</code>.</p>
+                    <h4>Issue & PR guidance</h4>
+                    <p>Describe the problem, reproduction steps, and expected behavior. Link related issues or PRs.</p>
+                    <p class="muted">By contributing you agree to license your changes under the project MIT License.
+                    </p>
+                        <p style="margin-top:12px">Read the full guidelines in <a href="../CONTRIBUTING.md" target="_blank" rel="noopener">CONTRIBUTING.md</a>.</p>
+                </div>
+            </div>
+        </div>
+
+        <h4>Signature</h4>
+        <pre class="code"><code>function useAdaptivePolling<T = any>(
+    fn: () =&gt; Promise&lt;T&gt; | T,
+    options?: {
+        interval?: number; // base ms
+        maxInterval?: number;
+        activeInterval?: number;
+        pauseOnHidden?: boolean;
+    }
+): { value?: T; start: () =&gt; void; stop: () =&gt; void }</code></pre>
+
+        <h4>Parameters</h4>
+        <table class="api-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Default</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>fn</td>
+                    <td>() =&gt; Promise&lt;T&gt; | T</td>
+                    <td>—</td>
+                    <td>Function returning data to poll.</td>
+                </tr>
+                <tr>
+                    <td>options.interval</td>
+                    <td>number</td>
+                    <td>5000</td>
+                    <td>Base polling interval in ms.</td>
+                </tr>
+                <tr>
+                    <td>options.maxInterval</td>
+                    <td>number</td>
+                    <td>60000</td>
+                    <td>Maximum backoff interval.</td>
+                </tr>
+                <tr>
+                    <td>options.activeInterval</td>
+                    <td>number</td>
+                    <td>1000</td>
+                    <td>Faster interval while active (if used).</td>
+                </tr>
+                <tr>
+                    <td>options.pauseOnHidden</td>
+                    <td>boolean</td>
+                    <td>true</td>
+                    <td>If true, pauses polling when document is hidden.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Returns</h4>
+        <table class="api-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>value</td>
+                    <td>T | undefined</td>
+                    <td>Latest value returned by <code>fn</code>.</td>
+                </tr>
+                <tr>
+                    <td>start</td>
+                    <td>() =&gt; void</td>
+                    <td>Start polling manually.</td>
+                </tr>
+                <tr>
+                    <td>stop</td>
+                    <td>() =&gt; void</td>
+                    <td>Stop polling.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h4>Example (Basic)</h4>
+        <pre class="code"><code>// AdaptivePollingExample.jsx
+import React from 'react'
+import { useAdaptivePolling } from 'use-web-kit'
+
+export default function AdaptivePollingExample(){
+    const { value } = useAdaptivePolling(async ()=>{
+        const r = await fetch('https://jsonplaceholder.typicode.com/todos/1')
+        const json = await r.json()
+        return json.title
+    }, { interval: 5000, maxInterval: 60000 })
+
+    return (
+        <div>
+            <strong>Server status:</strong>
+            <div>{String(value ?? 'loading...')}</div>
+        </div>
+    )
+}
+</code></pre>
+
+        <h4>Behavior Explanation</h4>
+        <p>On mount the hook starts a timer calling <code>fn</code> at <code>interval</code> ms. If the page is
+            idle or hidden and <code>pauseOnHidden</code> is true, polling pauses. When responses are
+            successful, the hook updates <code>value</code>. When failures occur the hook can increase the
+            interval up to <code>maxInterval</code> to reduce load.</p>
+
+        <h4>Example (Advanced)</h4>
+        <pre class="code"><code>// Adaptive with manual control
+import React from 'react'
+import { useAdaptivePolling } from 'use-web-kit'
+
+export default function AdaptiveAdvanced(){
+    const { value, start, stop } = useAdaptivePolling(()=> fetch('/api/health').then(r=>r.json()), { interval:10000, pauseOnHidden:true })
+    return (
+        <div>
+            <div>Health: {String(value ?? 'unknown')}</div>
+            <div style={{marginTop:8}}>
+                <button onClick={start}>Start</button>
+                <button onClick={stop} style={{marginLeft:8}}>Stop</button>
+            </div>
+        </div>
+    )
+}
+</code></pre>
+
+        <h4>Edge Cases</h4>
+        <ul>
+            <li>Network flapping may cause frequent retries; consider exponential backoff in <code>fn</code>.
+            </li>
+            <li>Browsers may throttle timers in background tabs; rely on <code>pauseOnHidden</code> where
+                appropriate.</li>
+        </ul>
+
+        <h4>Best Practices</h4>
+        <ul>
+            <li>Prefer WebSocket/SSE for real-time data when possible.</li>
+            <li>Use <code>pauseOnHidden</code> to reduce battery and network usage.</li>
+        </ul>
+        </article>
+
+        <!-- useBroadcastState -->
+        <article class="module doc">
+            <h3>useBroadcastState</h3>
+            <p class="desc">Share small serializable state across tabs/windows via BroadcastChannel with a
+                localStorage fallback. Useful for theme, active-tab flags, or lightweight cross-tab coordination.
+            </p>
+
+            <h4>Signature</h4>
+            <pre
+                class="code"><code>function useBroadcastState<T>(key: string, initial: T, options?: { serialize?: (v: T) =&gt; string; deserialize?: (s: string) =&gt; T }): [T, (v: T) =&gt; void]</code></pre>
+
+            <h4>Parameters</h4>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>key</td>
+                        <td>string</td>
+                        <td>—</td>
+                        <td>Storage key / channel name.</td>
+                    </tr>
+                    <tr>
+                        <td>initial</td>
+                        <td>T</td>
+                        <td>—</td>
+                        <td>Initial value when no state exists.</td>
+                    </tr>
+                    <tr>
+                        <td>options</td>
+                        <td>object</td>
+                        <td>{}</td>
+                        <td>Serializer/deserializer overrides.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Returns</h4>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>state</td>
+                        <td>T</td>
+                        <td>Current shared state.</td>
+                    </tr>
+                    <tr>
+                        <td>setState</td>
+                        <td>(v: T) =&gt; void</td>
+                        <td>Update and broadcast the state.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Example (Basic)</h4>
+            <pre class="code"><code>// BroadcastExample.jsx
+import React from 'react'
+import { useBroadcastState } from 'use-web-kit'
+
+export default function BroadcastExample(){
+    const [theme, setTheme] = useBroadcastState('site:theme', 'light')
+    return (
+        <div>
+            <p>Theme: {theme}</p>
+            <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>Toggle</button>
+        </div>
+    )
+}
+</code></pre>
+
+            <h4>Behavior Explanation</h4>
+            <p>The hook writes serialized state to a BroadcastChannel (or localStorage) and listens for updates.
+                When another tab broadcasts the same key, the hook updates local state immediately.</p>
+
+            <h4>Example (Advanced)</h4>
+            <pre class="code"><code>// Broadcast with custom serializer
+import React from 'react'
+import { useBroadcastState } from 'use-web-kit'
+
+export default function BroadcastAdvanced(){
+    const [value, setValue] = useBroadcastState('app:count', 0, { serialize: v =&gt; String(v), deserialize: s =&gt; Number(s) })
+    return (
+        <div>
+            <div>Count: {value}</div>
+            <button onClick={() => setValue(value + 1)}>Inc</button>
+        </div>
+    )
+}
+</code></pre>
+
+            <h4>Edge Cases</h4>
+            <ul>
+                <li>Large payloads cause slow serialization and may block the main thread—keep messages small.</li>
+                <li>Older browsers may not support BroadcastChannel; localStorage fallback introduces storage event
+                    semantics.</li>
+            </ul>
+
+            <h4>Best Practices</h4>
+            <ul>
+                <li>Keep broadcast values small and serializable (strings, numbers, small objects).</li>
+                <li>Use for UI flags and lightweight coordination rather than large data sync.</li>
+            </ul>
+        </article>
+
+        <!-- useIdleQueue -->
+        <article class="module doc">
+            <h3>useIdleQueue</h3>
+            <p class="desc">Schedule low-priority work to run when the browser is idle. Falls back to
+                <code>setTimeout</code> if <code>requestIdleCallback</code> is unavailable.
+            </p>
+
+            <h4>Signature</h4>
+            <pre
+                class="code"><code>function useIdleQueue(): (task: () =&gt; void, options?: { timeout?: number }) =&gt; void</code></pre>
+
+            <h4>Parameters</h4>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>task</td>
+                        <td>() =&gt; void</td>
+                        <td>—</td>
+                        <td>Function to run during idle time.</td>
+                    </tr>
+                    <tr>
+                        <td>options.timeout</td>
+                        <td>number</td>
+                        <td>undefined</td>
+                        <td>Maximum ms to wait before running the task.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Returns</h4>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>run</td>
+                        <td>(task: () =&gt; void, options?: { timeout?: number }) =&gt; void</td>
+                        <td>Schedules <code>task</code> to run during idle time (or after <code>timeout</code>).
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Example (Basic)</h4>
+            <pre class="code"><code>// IdleExample.jsx
+import React from 'react'
+import { useIdleQueue } from 'use-web-kit'
+
+export default function IdleExample(){
+    const run = useIdleQueue()
+    return (
+        <div>
+            <button onClick={() => run(() =&gt; console.log('heavy task run during idle'))}>Schedule</button>
+        </div>
+    )
+}
+</code></pre>
+
+            <h4>Behavior Explanation</h4>
+            <p>The hook exposes a <code>run</code> function that schedules tasks using
+                <code>requestIdleCallback</code>. If unavailable, it falls back to <code>setTimeout</code>. A
+                <code>timeout</code> option ensures critical work runs even if the browser never reports idle time.
+            </p>
+
+            <h4>Example (Advanced)</h4>
+            <pre class="code"><code>// Idle with timeout fallback
+import React from 'react'
+import { useIdleQueue } from 'use-web-kit'
+
+export default function IdleAdvanced(){
+    const run = useIdleQueue()
+    function heavy(){
+        // do non-blocking chunked work
+        console.log('running heavy task')
+    }
+    return (
+        <div>
+            <button onClick={() =&gt; run(heavy, { timeout: 2000 })}>Run with timeout</button>
+        </div>
+    )
+}
+</code></pre>
+
+            <h4>Edge Cases</h4>
+            <ul>
+                <li>On very busy pages idle callbacks may be deferred indefinitely; use <code>timeout</code> for
+                    critical tasks.</li>
+            </ul>
+
+            <h4>Best Practices</h4>
+            <ul>
+                <li>Use idle tasks for analytics aggregation, cache cleanup, or prefetching non-critical assets.
+                </li>
+            </ul>
+        </article>
+
+        <!-- useIntersection -->
+        <article class="module doc">
+            <h3>useIntersection</h3>
+            <p class="desc">Observe element visibility in the viewport. Useful for lazy loading, analytics, or
+                triggering work only when an element becomes visible.</p>
+
+            <h4>Signature</h4>
+            <pre
+                class="code"><code>function useIntersection(options?: IntersectionObserverInit): { ref: (el: Element | null) =&gt; void; isIntersecting: boolean }</code></pre>
+
+            <h4>Parameters</h4>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>options</td>
+                        <td>IntersectionObserverInit</td>
+                        <td>{}</td>
+                        <td>Observer options: root, rootMargin, threshold.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Returns</h4>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ref</td>
+                        <td>(el: Element | null) =&gt; void</td>
+                        <td>Attach to observed element.</td>
+                    </tr>
+                    <tr>
+                        <td>isIntersecting</td>
+                        <td>boolean</td>
+                        <td>True when element intersects the viewport per options.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Example (Basic)</h4>
+            <pre class="code"><code>// IntersectionExample.jsx
+import React from 'react'
+import { useIntersection } from 'use-web-kit'
+
+export default function IntersectionExample(){
+    const { ref, isIntersecting } = useIntersection({ threshold: 0.5 })
+    return (
+        <div>
+            <div ref={ref} style={{height:200, border:'1px solid rgba(255,255,255,0.04)'}}>Visible: {String(isIntersecting)}</div>
+        </div>
+    )
+}
+</code></pre>
+
+            <h4>Behavior Explanation</h4>
+            <p>The hook creates an <code>IntersectionObserver</code> and updates <code>isIntersecting</code> when
+                the element meets the provided threshold. The <code>ref</code> setter detaches any previous element
+                and observes the new one.</p>
+
+            <h4>Example (Advanced)</h4>
+            <pre class="code"><code>// LazyImage.jsx
+import React, {useState} from 'react'
+import { useIntersection } from 'use-web-kit'
+
+export default function LazyImage({src, alt}){
+    const { ref, isIntersecting } = useIntersection({ threshold: 0.1 })
+    const [loaded, setLoaded] = useState(false)
+    return (
+        <div ref={ref} style={{minHeight:200}}>
+            {isIntersecting && (
+                <img src={src} alt={alt} onLoad={() =&gt; setLoaded(true)} style={{opacity: loaded ? 1 : 0.6}} />
+            )}
+        </div>
+    )
+}
+</code></pre>
+
+            <h4>Edge Cases</h4>
+            <ul>
+                <li>IntersectionObserver is not available in very old browsers; include a polyfill if you need wide
+                    support.</li>
+            </ul>
+
+            <h4>Best Practices</h4>
+            <ul>
+                <li>Prefer threshold arrays for progressive reveals; keep observers scoped to necessary elements to
+                    limit overhead.</li>
+            </ul>
+        </article>
+
+        <!-- useNetworkStatus -->
+        <article class="module doc">
+            <h3>useNetworkStatus</h3>
+            <p class="desc">Track online/offline status. Use to gate network requests, show sync state, or trigger
+                retries when connectivity returns.</p>
+
+            <h4>Signature</h4>
+            <pre class="code"><code>function useNetworkStatus(): boolean</code></pre>
+
+            <h4>Parameters</h4>
+            <p class="desc">This hook has no parameters.</p>
+
+            <h4>Returns</h4>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>online</td>
+                        <td>boolean</td>
+                        <td>True when the browser reports network connectivity.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Example (Basic)</h4>
+            <pre class="code"><code>// NetworkExample.jsx
+import React from 'react'
+import { useNetworkStatus } from 'use-web-kit'
+
+export default function NetworkExample(){
+    const online = useNetworkStatus()
+    return (
+        <div>
+            <strong>Online:</strong>
+            <div>{String(online)}</div>
+        </div>
+    )
+}
+</code></pre>
+
+            <h4>Behavior Explanation</h4>
+            <p>The hook listens to the browser <code>online</code> and <code>offline</code> events and returns a
+                boolean reflecting the current state. Note that this reflects the browser's connectivity status and
+                not guaranteed end-to-end reachability.</p>
+
+            <h4>Example (Advanced)</h4>
+            <pre class="code"><code>// Queue requests while offline and flush when online
+import React, {useState} from 'react'
+import { useNetworkStatus } from 'use-web-kit'
+
+export default function NetworkAdvanced(){
+    const online = useNetworkStatus()
+    const [queue, setQueue] = useState([])
+
+    async function send(data){
+        if(!online){
+            setQueue(prev => [...prev, data])
+            return
+        }
+        await fetch('/api/submit', { method:'POST', body: JSON.stringify(data) })
+    }
+
+    // simple flush when online
+    React.useEffect(()=>{
+        if(online && queue.length){
+            queue.forEach(item => fetch('/api/submit', { method:'POST', body: JSON.stringify(item) }))
+            setQueue([])
+        }
+    }, [online])
+
+    return (
+        <div>
+            <div>Status: {String(online)}</div>
+            <button onClick={() =&gt; send({ts: Date.now()})}>Send</button>
+        </div>
+    )
+}
+</code></pre>
+
+            <h4>Edge Cases</h4>
+            <ul>
+                <li>The browser's online status may be true even if the server is unreachable (captive portals, DNS
+                    issues).</li>
+            </ul>
+
+            <h4>Best Practices</h4>
+            <ul>
+                <li>Use this hook for UI decisions and light retry logic; perform an application-level health check
+                    for true reachability.</li>
+            </ul>
+        </article>
+
+        <!-- usePageLifecycle -->
+        <article class="module doc">
+            <h3>usePageLifecycle</h3>
+            <p class="desc">Expose document visibility and focus lifecycle states. Use to pause timers, mute
+                updates, or defer work when the page is not active.</p>
+
+            <h4>Signature</h4>
+            <pre class="code"><code>function usePageLifecycle(): DocumentVisibilityState</code></pre>
+
+            <h4>Parameters</h4>
+            <p class="desc">This hook has no parameters.</p>
+
+            <h4>Returns</h4>
+            <table class="api-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>state</td>
+                        <td>DocumentVisibilityState</td>
+                        <td>One of 'visible', 'hidden', 'prerender', etc., matching
+                            <code>document.visibilityState</code>.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Example (Basic)</h4>
+            <pre class="code"><code>// PageLifecycleExample.jsx
+import React from 'react'
+import { usePageLifecycle } from 'use-web-kit'
+
+export default function PageLifecycleExample(){
+    const state = usePageLifecycle()
+    return (
+        <div>
+            <div>Visibility: {state}</div>
+        </div>
+    )
+}
+</code></pre>
+
+            <h4>Behavior Explanation</h4>
+            <p>The hook subscribes to visibility and focus events and returns the current
+                <code>document.visibilityState</code>. Use it to pause animations, stop polling, or reduce
+                background work.
+            </p>
+
+            <h4>Example (Advanced)</h4>
+            <pre class="code"><code>// Pause an interval when not visible
+import React, {useEffect, useState} from 'react'
+import { usePageLifecycle } from 'use-web-kit'
+
+export default function LifecycleAdvanced(){
+    const state = usePageLifecycle()
+    const [count, setCount] = useState(0)
+
+    useEffect(()=>{
+        if(state !== 'visible') return
+        const id = setInterval(()=> setCount(c=>c+1), 1000)
+        return () =&gt; clearInterval(id)
+    }, [state])
+
+    return (
+        <div>
+            <div>Counter (runs only when visible): {count}</div>
+        </div>
+    )
+}
+</code></pre>
+
+            <h4>Edge Cases</h4>
+            <ul>
+                <li>Some browsers may report different lifecycle states while devtools are open; test on target
+                    platforms.</li>
+            </ul>
+
+            <h4>Best Practices</h4>
+            <ul>
+                <li>Use lifecycle hooks to reduce CPU and network usage when your app is not visible.</li>
+            </ul>
+
+        </article>
+
+        </section>
+
+        <section id="links" class="section container">
+            <h2>Links</h2>
+            <ul>
+                <li><a href="https://github.com/tanushbhootra576/use-web-kit">GitHub Repository</a></li>
+                <li><a href="https://www.npmjs.com/package/use-web-kit">NPM Package</a></li>
+                <li><a href="https://github.com/tanushbhootra576/use-web-kit/issues">Issue Tracker</a></li>
+                <li><a href="https://github.com/tanushbhootra576/use-web-kit/blob/main/CONTRIBUTING.md">Contribution
+                        Guidelines</a></li>
+            </ul>
+        </section>
+
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div>
+                <strong>Author:</strong> Your Name
+                <div style="font-size:12px; color:var(--muted)">Version: 0.1.0 • Built for modern React 18+ • Last
+                    updated: 2026-02-24</div>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/tanushbhootra576/use-web-kit">GitHub</a>
+                <a href="https://www.npmjs.com/package/use-web-kit">NPM</a>
+                <span>•</span>
+                <a href="https://github.com/tanushbhootra576/use-web-kit/blob/main/LICENSE">MIT License</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
