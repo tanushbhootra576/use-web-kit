@@ -1,6 +1,6 @@
 {
   "name": "use-web-kit",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "A highly optimized, zero-dependency, lightweight npm library for React custom hooks focusing on performance and Browser APIs.",
   "main": "dist/index.cjs",
   "module": "dist/index.js",
@@ -41,16 +41,16 @@
     "polling",
     "typescript"
   ],
-  "author": "Tanush Bhootra <https://github.com/tanushbhootra576576>",
+  "author": "Tanush Bhootra <https://github.com/tanushbhootra576>",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tanushbhootra576576/use-web-kit.git"
+    "url": "git+https://github.com/tanushbhootra576/use-web-kit.git"
   },
   "bugs": {
-    "url": "https://github.com/tanushbhootra576576/use-web-kit/issues"
+    "url": "https://github.com/tanushbhootra576/use-web-kit/issues"
   },
-  "homepage": "https://github.com/tanushbhootra576576/use-web-kit#readme",
+  "homepage": "https://github.com/tanushbhootra576/use-web-kit#readme",
   "peerDependencies": {
     "react": ">=16.8.0"
   },
