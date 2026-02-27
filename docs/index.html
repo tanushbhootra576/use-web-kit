@@ -4,848 +4,1219 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>use-web-kit — Modern React hooks for web utilities</title>
-    <meta name="description" content="use-web-kit — Modern React hooks for web utilities" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <title>use-web-kit — Modern React Hooks for Web Platform APIs</title>
+    <meta name="description"
+        content="use-web-kit is a focused collection of lightweight, composable React hooks for network status, intersection observers, idle scheduling, cross-tab state, page lifecycle, and adaptive polling." />
+    <meta name="keywords"
+        content="react hooks, web api, intersection observer, broadcast channel, idle callback, network status, page lifecycle, adaptive polling, typescript" />
+    <meta name="author" content="Tanush Bhootra" />
+    <meta property="og:title" content="use-web-kit — Modern React Hooks for Web Platform APIs" />
+    <meta property="og:description"
+        content="Focused, composable React hooks engineered for precision. Lightweight, TypeScript-first, zero dependencies." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="theme-color" content="#0b0f12" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
         href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=JetBrains+Mono:wght@400;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <meta name="theme-color" content="#0b0f12">
-    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+        rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
 </head>
 
 <body>
-    <header class="site-header">
-        <nav class="nav container" id="site-nav">
-            <a class="brand" href="#">use-web-kit</a>
-            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-            <ul class="nav-links" id="nav-links">
+
+    <!-- ─── Navigation ─── -->
+    <header class="site-header" role="banner">
+        <nav class="nav container" id="site-nav" aria-label="Primary navigation">
+            <a class="brand" href="#" aria-label="use-web-kit home">use-web-kit</a>
+            <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation" aria-expanded="false"
+                aria-controls="nav-links">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round">
+                    <line x1="3" y1="5" x2="17" y2="5" />
+                    <line x1="3" y1="10" x2="17" y2="10" />
+                    <line x1="3" y1="15" x2="17" y2="15" />
+                </svg>
+            </button>
+            <ul class="nav-links" id="nav-links" role="list">
                 <li><a href="#about">About</a></li>
                 <li><a href="#hooks">Hooks</a></li>
                 <li><a href="#install">Install</a></li>
-                <li><a href="#usage">Usage</a></li>
+                <li><a href="#quickstart">Quick Start</a></li>
+                <li><a href="#usage">API Docs</a></li>
+                <li><a href="#links">Links</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
-        <section class="hero container">
+
+        <!-- ─── Hero Section ─── -->
+        <section class="hero container" aria-labelledby="hero-heading">
             <div class="hero-content">
                 <div class="hero-left">
-                    <div>
-                        <div class="console-boot" aria-hidden="true">
-                            <pre id="boot-lines" class="terminal" style="margin-bottom:12px;">$ <span class="boot-line" data-text="Initializing Hook Engine..."></span>
-              </pre>
-                        </div>
-                        <div class="logo-wordmark" id="wordmark">use-web-kit</div>
-                        <div class="hero-meta">
-                            <p class="tagline">The Hook Engine — Industrial React utilities</p>
-                            <p class="lead">Focused, composable hooks that operate like the invisible systems powering
-                                modern web apps. Lightweight, testable, and engineered for precision.</p>
-                        </div>
+                    <!-- Boot sequence terminal -->
+                    <div class="console-boot" aria-hidden="true">
+                        <pre class="terminal-line">$ <span class="boot-line" id="boot-line"></span><span
+                                class="cursor" id="boot-cursor">_</span></pre>
+                    </div>
 
-                        <div class="install-box">
-                            <div class="terminal"><span class="dollar">$</span> <span class="cmd">npm install
-                                    use-web-kit</span></div>
-                            <button class="toggle-btn" id="repo-btn">GitHub Repository</button>
-                            <button class="toggle-btn" id="npm-btn">NPM Package</button>
+                    <!-- Logo -->
+                    <h1 class="logo-wordmark" id="wordmark">use-web-kit</h1>
+
+                    <!-- Tagline -->
+                    <p class="tagline" id="hero-heading">The Hook Engine</p>
+                    <p class="lead">Focused, composable hooks that operate like the invisible systems powering modern
+                        web apps. Lightweight, testable, and engineered for precision.</p>
+
+                    <!-- Badges -->
+                    <div class="badge-row" aria-label="Project highlights">
+                        <span class="badge badge--accent">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
+                                <path
+                                    d="M8 1a7 7 0 100 14A7 7 0 008 1zm3.3 5.7l-4 4a.5.5 0 01-.7 0l-2-2a.5.5 0 11.7-.7L7 9.6l3.6-3.6a.5.5 0 11.7.7z" />
+                            </svg>
+                            Zero Dependencies
+                        </span>
+                        <span class="badge badge--accent">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
+                                <path
+                                    d="M0 7.5L2.5 5l1 1L2 7.5 3.5 9l-1 1L0 7.5zM13.5 5L16 7.5 13.5 10l-1-1L14 7.5 12.5 6l1-1zM5.7 14L9.2 2h1.1L6.8 14H5.7z" />
+                            </svg>
+                            TypeScript First
+                        </span>
+                        <span class="badge">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
+                                <path
+                                    d="M8.75.75a.75.75 0 00-1.5 0V2h-3a2 2 0 00-2 2v8a2 2 0 002 2h7.5a2 2 0 002-2V4a2 2 0 00-2-2h-3V.75zM5.25 3.5h5.5a.5.5 0 01.5.5v8a.5.5 0 01-.5.5h-5.5a.5.5 0 01-.5-.5V4a.5.5 0 01.5-.5z" />
+                            </svg>
+                            MIT Licensed
+                        </span>
+                        <span class="badge">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
+                                <path
+                                    d="M3 1a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2V3a2 2 0 00-2-2H3zm5.5 5.5L6 9l-.5-.5L8 6l.5.5v-.5L11 8.5l-.5.5-2.5-2.5H8.5z" />
+                            </svg>
+                            ~3 kB gzipped
+                        </span>
+                        <span class="badge">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M8 1l2 3h3l-2.5 3L12 11H9l-1 3-1-3H4l1.5-4L3 4h3l2-3z" />
+                            </svg>
+                            Tree-Shakeable
+                        </span>
+                    </div>
+
+                    <!-- Install terminal -->
+                    <div class="install-box">
+                        <div class="terminal-box">
+                            <span class="dollar" aria-hidden="true">$</span>
+                            <span class="cmd" id="install-cmd">npm install use-web-kit</span>
+                            <button class="copy-btn" id="copy-install" aria-label="Copy install command"
+                                data-copy="npm install use-web-kit">
+                                <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor">
+                                    <path
+                                        d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                                    <path
+                                        d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                                </svg>
+                                Copy
+                            </button>
                         </div>
+                    </div>
+
+                    <!-- Action buttons -->
+                    <div class="hero-actions">
+                        <a href="https://github.com/tanushbhootra576/use-web-kit" class="action-btn action-btn--ghost"
+                            target="_blank" rel="noopener noreferrer">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
+                                <path
+                                    d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                            </svg>
+                            GitHub
+                        </a>
+                        <a href="https://www.npmjs.com/package/use-web-kit" class="action-btn action-btn--ghost"
+                            target="_blank" rel="noopener noreferrer">
+                            <svg viewBox="0 0 16 16" fill="currentColor">
+                                <path d="M0 0v16h16V0H0zm13 13H8V5h2.5v5.5H13V5h-1.5V3H3v10h10V0" />
+                            </svg>
+                            NPM
+                        </a>
                     </div>
                 </div>
 
-            </div>
-            <div class="hero-visual" aria-hidden="true">
-                <div class="network" id="network">
-                    <div class="node" style="left:10%; top:20%" data-id="n1"></div>
-                    <div class="node" style="left:60%; top:12%" data-id="n2"></div>
-                    <div class="node" style="left:78%; top:56%" data-id="n3"></div>
-                    <div class="node" style="left:42%; top:64%" data-id="n4"></div>
-                    <svg class="net-lines" width="280" height="160" viewBox="0 0 280 160"
-                        style="position:absolute; left:0; top:0; pointer-events:none">
-                        <line x1="28" y1="20" x2="168" y2="12" stroke="rgba(156,255,0,0.06)" stroke-width="1" />
-                        <line x1="168" y1="12" x2="224" y2="56" stroke="rgba(156,255,0,0.06)" stroke-width="1" />
-                        <line x1="224" y1="56" x2="120" y2="96" stroke="rgba(156,255,0,0.06)" stroke-width="1" />
-                    </svg>
+                <!-- Network visualization -->
+                <div class="hero-visual" aria-hidden="true">
+                    <div class="network" id="network">
+                        <div class="node" style="left:8%; top:15%"></div>
+                        <div class="node" style="left:55%; top:5%"></div>
+                        <div class="node" style="left:85%; top:30%"></div>
+                        <div class="node" style="left:70%; top:65%"></div>
+                        <div class="node" style="left:35%; top:55%"></div>
+                        <div class="node" style="left:15%; top:75%"></div>
+                        <div class="node" style="left:50%; top:85%"></div>
+                        <svg class="net-lines" width="300" height="260" viewBox="0 0 300 260"
+                            style="position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none">
+                            <line x1="24" y1="39" x2="165" y2="13" />
+                            <line x1="165" y1="13" x2="255" y2="78" />
+                            <line x1="255" y1="78" x2="210" y2="169" />
+                            <line x1="210" y1="169" x2="105" y2="143" />
+                            <line x1="105" y1="143" x2="24" y2="39" />
+                            <line x1="45" y1="195" x2="105" y2="143" />
+                            <line x1="45" y1="195" x2="150" y2="221" />
+                            <line x1="150" y1="221" x2="210" y2="169" />
+                        </svg>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <section id="about" class="section container">
-            <h2>About</h2>
-            <p>use-web-kit bundles a set of focused React hooks that solve routine web problems: detecting connectivity
-                changes, queuing idle work, observing intersections, broadcasting small state across tabs, handling page
-                lifecycle events, and adaptive polling. Each hook aims to be minimal, well-documented, and easy to
-                compose.</p>
-            <p>They’re useful to reduce boilerplate in apps and keep your components declarative and testable.</p>
-        </section>
-
-        <!-- Hooks overview removed — detailed documentation follows below -->
-
-        <section id="install" class="section container">
-            <h2>Installation</h2>
-            <p>Install with your package manager of choice.</p>
-            <div class="install-grid">
-                <pre class="install-list"><code>npm install use-web-kit</code></pre>
-                <pre class="install-list"><code>yarn add use-web-kit</code></pre>
-                <pre class="install-list"><code>pnpm add use-web-kit</code></pre>
+        <!-- ─── About ─── -->
+        <section id="about" class="section container" aria-labelledby="about-heading">
+            <div class="section-header">
+                <h2 id="about-heading">About <span class="accent">use-web-kit</span></h2>
+                <p>A set of focused React hooks that solve routine web problems. Minimal, well-documented, and easy to
+                    compose — designed to keep your components declarative and testable.</p>
+            </div>
+            <div class="about-grid">
+                <div class="about-card">
+                    <h4>Lightweight</h4>
+                    <p>Zero external dependencies. Ships under 3 kB gzipped. Tree-shakeable so you only pay for what
+                        you import.</p>
+                </div>
+                <div class="about-card">
+                    <h4>TypeScript Native</h4>
+                    <p>Written in TypeScript with full type definitions. IntelliSense works out of the box — no
+                        <code>@types</code> package needed.
+                    </p>
+                </div>
+                <div class="about-card">
+                    <h4>Composable</h4>
+                    <p>Each hook solves one problem well. Combine them freely — use network status to gate polling, or
+                        idle queues to defer analytics.</p>
+                </div>
+                <div class="about-card">
+                    <h4>Well Tested</h4>
+                    <p>Full Jest test coverage for every hook. Designed for deterministic behavior with proper cleanup
+                        on
+                        unmount.</p>
+                </div>
             </div>
         </section>
 
-        <section id="quickstart" class="section container">
-            <h2>Quick Start</h2>
-            <p>Minimal working example using <strong>useNetworkStatus</strong>. Copy-paste into a React app (JSX).</p>
-            <pre class="code"><code>// QuickStart.jsx
-import React from 'react'
-import { useNetworkStatus } from 'use-web-kit'
+        <!-- ─── Hooks Overview (Cards) ─── -->
+        <section id="hooks" class="section container" aria-labelledby="hooks-heading">
+            <div class="section-header">
+                <h2 id="hooks-heading"><span class="accent">Hooks</span> Overview</h2>
+                <p>Six precision-built hooks covering network, visibility, scheduling, coordination, lifecycle, and
+                    polling.</p>
+            </div>
+            <div class="hooks-grid">
 
-export default function QuickStart(){
-  const online = useNetworkStatus()
-  return (
-    <main style={{padding:20}}>
-      <h3>Network</h3>
-      <p>Status: {online ? 'Online' : 'Offline'}</p>
-    </main>
-  )
-}
-</code></pre>
-            <p><strong>What happens:</strong> the hook subscribes to the browser online/offline events and returns a
-                boolean. Use it to toggle UI or queue sync tasks when connectivity returns.</p>
+                <!-- useNetworkStatus -->
+                <article class="hook-card">
+                    <div class="hook-card__header">
+                        <span class="hook-card__name">useNetworkStatus</span>
+                        <div class="hook-card__badges">
+                            <span class="type-badge type-badge--hook">Hook</span>
+                            <span class="type-badge type-badge--stable">Stable</span>
+                        </div>
+                    </div>
+                    <p class="hook-card__desc">Track online/offline status. Gate network requests, show sync state, or
+                        trigger retries when connectivity returns.</p>
+                    <div class="hook-card__sig">
+                        <button class="hook-card__copy" aria-label="Copy signature"
+                            data-copy="useNetworkStatus(): boolean" title="Copy">
+                            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                                <path
+                                    d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                                <path
+                                    d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                            </svg>
+                        </button>
+                        <code><span class="syn-kw">function</span> <span
+                                class="syn-fn">useNetworkStatus</span>(): <span class="syn-type">boolean</span></code>
+                    </div>
+                    <a class="hook-card__link" href="#doc-useNetworkStatus">View full docs &rarr;</a>
+                </article>
+
+                <!-- useIntersection -->
+                <article class="hook-card">
+                    <div class="hook-card__header">
+                        <span class="hook-card__name">useIntersection</span>
+                        <div class="hook-card__badges">
+                            <span class="type-badge type-badge--hook">Hook</span>
+                            <span class="type-badge type-badge--stable">Stable</span>
+                        </div>
+                    </div>
+                    <p class="hook-card__desc">Observe element visibility in the viewport. Useful for lazy loading,
+                        analytics, or triggering work when an element becomes visible.</p>
+                    <div class="hook-card__sig">
+                        <button class="hook-card__copy" aria-label="Copy signature"
+                            data-copy="useIntersection(options?: IntersectionObserverInit): { ref, isIntersecting }"
+                            title="Copy">
+                            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                                <path
+                                    d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                                <path
+                                    d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                            </svg>
+                        </button>
+                        <code><span class="syn-kw">function</span> <span
+                                class="syn-fn">useIntersection</span>(options?): { <span class="syn-attr">ref</span>,
+                            <span class="syn-attr">isIntersecting</span> }</code>
+                    </div>
+                    <a class="hook-card__link" href="#doc-useIntersection">View full docs &rarr;</a>
+                </article>
+
+                <!-- useIdleQueue -->
+                <article class="hook-card">
+                    <div class="hook-card__header">
+                        <span class="hook-card__name">useIdleQueue</span>
+                        <div class="hook-card__badges">
+                            <span class="type-badge type-badge--hook">Hook</span>
+                            <span class="type-badge type-badge--stable">Stable</span>
+                        </div>
+                    </div>
+                    <p class="hook-card__desc">Schedule low-priority work to run when the browser is idle. Falls back to
+                        <code>setTimeout</code> if <code>requestIdleCallback</code> is unavailable.
+                    </p>
+                    <div class="hook-card__sig">
+                        <button class="hook-card__copy" aria-label="Copy signature"
+                            data-copy="useIdleQueue(): (task: () => void, options?) => void" title="Copy">
+                            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                                <path
+                                    d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                                <path
+                                    d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                            </svg>
+                        </button>
+                        <code><span class="syn-kw">function</span> <span class="syn-fn">useIdleQueue</span>(): (<span
+                                class="syn-attr">task</span>, <span class="syn-attr">options?</span>) =&gt; <span
+                                class="syn-type">void</span></code>
+                    </div>
+                    <a class="hook-card__link" href="#doc-useIdleQueue">View full docs &rarr;</a>
+                </article>
+
+                <!-- useBroadcastState -->
+                <article class="hook-card">
+                    <div class="hook-card__header">
+                        <span class="hook-card__name">useBroadcastState</span>
+                        <div class="hook-card__badges">
+                            <span class="type-badge type-badge--hook">Hook</span>
+                            <span class="type-badge type-badge--stable">Stable</span>
+                        </div>
+                    </div>
+                    <p class="hook-card__desc">Share small serializable state across tabs/windows via BroadcastChannel
+                        with a localStorage fallback.</p>
+                    <div class="hook-card__sig">
+                        <button class="hook-card__copy" aria-label="Copy signature"
+                            data-copy="useBroadcastState<T>(key, initial, options?): [T, (v: T) => void]" title="Copy">
+                            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                                <path
+                                    d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                                <path
+                                    d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                            </svg>
+                        </button>
+                        <code><span class="syn-kw">function</span> <span
+                                class="syn-fn">useBroadcastState</span>&lt;<span class="syn-type">T</span>&gt;(<span
+                                class="syn-attr">key</span>, <span class="syn-attr">initial</span>,
+                            <span class="syn-attr">options?</span>): [<span class="syn-type">T</span>, <span
+                                class="syn-kw">SetState</span>]</code>
+                    </div>
+                    <a class="hook-card__link" href="#doc-useBroadcastState">View full docs &rarr;</a>
+                </article>
+
+                <!-- usePageLifecycle -->
+                <article class="hook-card">
+                    <div class="hook-card__header">
+                        <span class="hook-card__name">usePageLifecycle</span>
+                        <div class="hook-card__badges">
+                            <span class="type-badge type-badge--hook">Hook</span>
+                            <span class="type-badge type-badge--stable">Stable</span>
+                        </div>
+                    </div>
+                    <p class="hook-card__desc">Expose document visibility and focus lifecycle states. Pause timers, mute
+                        updates, or defer work when the page is not active.</p>
+                    <div class="hook-card__sig">
+                        <button class="hook-card__copy" aria-label="Copy signature"
+                            data-copy="usePageLifecycle(): DocumentVisibilityState" title="Copy">
+                            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                                <path
+                                    d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                                <path
+                                    d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                            </svg>
+                        </button>
+                        <code><span class="syn-kw">function</span> <span
+                                class="syn-fn">usePageLifecycle</span>(): <span
+                                class="syn-type">DocumentVisibilityState</span></code>
+                    </div>
+                    <a class="hook-card__link" href="#doc-usePageLifecycle">View full docs &rarr;</a>
+                </article>
+
+                <!-- useAdaptivePolling -->
+                <article class="hook-card">
+                    <div class="hook-card__header">
+                        <span class="hook-card__name">useAdaptivePolling</span>
+                        <div class="hook-card__badges">
+                            <span class="type-badge type-badge--hook">Hook</span>
+                            <span class="type-badge type-badge--stable">Stable</span>
+                        </div>
+                    </div>
+                    <p class="hook-card__desc">Smart polling that adapts to page visibility and error state. Backs off
+                        on failure, pauses when hidden.</p>
+                    <div class="hook-card__sig">
+                        <button class="hook-card__copy" aria-label="Copy signature"
+                            data-copy="useAdaptivePolling<T>(fn, options?): { value, start, stop }" title="Copy">
+                            <svg width="12" height="12" viewBox="0 0 16 16" fill="currentColor">
+                                <path
+                                    d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 010 1.5h-1.5a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-1.5a.75.75 0 011.5 0v1.5A1.75 1.75 0 019.25 16h-7.5A1.75 1.75 0 010 14.25v-7.5z" />
+                                <path
+                                    d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0114.25 11h-7.5A1.75 1.75 0 015 9.25v-7.5zm1.75-.25a.25.25 0 00-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 00.25-.25v-7.5a.25.25 0 00-.25-.25h-7.5z" />
+                            </svg>
+                        </button>
+                        <code><span class="syn-kw">function</span> <span
+                                class="syn-fn">useAdaptivePolling</span>&lt;<span
+                                class="syn-type">T</span>&gt;(<span class="syn-attr">fn</span>,
+                            <span class="syn-attr">options?</span>): { <span class="syn-attr">value</span>, <span
+                                class="syn-attr">start</span>, <span class="syn-attr">stop</span> }</code>
+                    </div>
+                    <a class="hook-card__link" href="#doc-useAdaptivePolling">View full docs &rarr;</a>
+                </article>
+
+            </div>
         </section>
 
-        <section id="links" class="section container">
-            <h2>Links</h2>
-            <ul>
-                <li><a href="https://github.com/tanushbhootra576/use-web-kit">GitHub Repository</a></li>
-                <li><a href="https://www.npmjs.com/package/use-web-kit">NPM Package</a></li>
-                <li><a href="#" id="contrib-link">Contribution Guidelines (open)</a></li>
+        <!-- ─── Installation ─── -->
+        <section id="install" class="section container" aria-labelledby="install-heading">
+            <div class="section-header">
+                <h2 id="install-heading"><span class="accent">Installation</span></h2>
+                <p>Install with your package manager of choice.</p>
+            </div>
+            <div class="install-grid">
+                <div class="install-item">
+                    <code>npm install use-web-kit</code>
+                    <button class="copy-btn" data-copy="npm install use-web-kit" aria-label="Copy npm command">Copy
+                    </button>
+                </div>
+                <div class="install-item">
+                    <code>yarn add use-web-kit</code>
+                    <button class="copy-btn" data-copy="yarn add use-web-kit" aria-label="Copy yarn command">Copy
+                    </button>
+                </div>
+                <div class="install-item">
+                    <code>pnpm add use-web-kit</code>
+                    <button class="copy-btn" data-copy="pnpm add use-web-kit" aria-label="Copy pnpm command">Copy
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ─── Quick Start ─── -->
+        <section id="quickstart" class="section container" aria-labelledby="qs-heading">
+            <div class="section-header">
+                <h2 id="qs-heading"><span class="accent">Quick</span> Start</h2>
+                <p>Minimal working example using <strong>useNetworkStatus</strong>. Copy-paste into a React app.</p>
+            </div>
+            <pre class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-cm">// QuickStart.jsx</span>
+<span class="syn-kw">import</span> React <span class="syn-kw">from</span> <span class="syn-str">'react'</span>
+<span class="syn-kw">import</span> { <span class="syn-fn">useNetworkStatus</span> } <span class="syn-kw">from</span> <span class="syn-str">'use-web-kit'</span>
+
+<span class="syn-kw">export default function</span> <span class="syn-fn">QuickStart</span>() {
+  <span class="syn-kw">const</span> online = <span class="syn-fn">useNetworkStatus</span>()
+  <span class="syn-kw">return</span> (
+    &lt;<span class="syn-tag">main</span> <span class="syn-attr">style</span>={{ <span class="syn-attr">padding</span>: <span class="syn-num">20</span> }}&gt;
+      &lt;<span class="syn-tag">h3</span>&gt;Network&lt;/<span class="syn-tag">h3</span>&gt;
+      &lt;<span class="syn-tag">p</span>&gt;Status: {online ? <span class="syn-str">'Online'</span> : <span class="syn-str">'Offline'</span>}&lt;/<span class="syn-tag">p</span>&gt;
+    &lt;/<span class="syn-tag">main</span>&gt;
+  )
+}</code></pre>
+            <p style="color:var(--text-secondary);font-size:13px;margin-top:8px"><strong>What happens:</strong> the hook
+                subscribes to the browser online/offline events and returns a boolean. Use it to toggle UI or queue sync
+                tasks when connectivity returns.</p>
+        </section>
+
+        <!-- ─── Full API Documentation ─── -->
+        <section id="usage" class="section container" aria-labelledby="usage-heading">
+            <div class="section-header">
+                <h2 id="usage-heading"><span class="accent">API</span> Documentation</h2>
+                <p>Complete reference for every hook — signatures, parameters, return values, and usage examples.</p>
+            </div>
+
+            <!-- ── useAdaptivePolling ── -->
+            <article class="doc-article" id="doc-useAdaptivePolling">
+                <h3>useAdaptivePolling</h3>
+                <p class="desc">Smart polling that adapts to page visibility and error state. Backs off on failure,
+                    pauses when the document is hidden, and provides manual start/stop controls.</p>
+
+                <h4>Signature</h4>
+                <pre
+                    class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-kw">function</span> <span class="syn-fn">useAdaptivePolling</span>&lt;<span class="syn-type">T</span> = <span class="syn-type">any</span>&gt;(
+    <span class="syn-attr">fn</span>: () =&gt; <span class="syn-type">Promise</span>&lt;<span class="syn-type">T</span>&gt; | <span class="syn-type">T</span>,
+    <span class="syn-attr">options?</span>: {
+        <span class="syn-attr">interval?</span>: <span class="syn-type">number</span>;       <span class="syn-cm">// base ms</span>
+        <span class="syn-attr">maxInterval?</span>: <span class="syn-type">number</span>;
+        <span class="syn-attr">activeInterval?</span>: <span class="syn-type">number</span>;
+        <span class="syn-attr">pauseOnHidden?</span>: <span class="syn-type">boolean</span>;
+    }
+): { <span class="syn-attr">value?</span>: <span class="syn-type">T</span>; <span class="syn-attr">start</span>: () =&gt; <span class="syn-type">void</span>; <span class="syn-attr">stop</span>: () =&gt; <span class="syn-type">void</span> }</code></pre>
+
+                <h4>Parameters</h4>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>TYPE</th>
+                            <th>DEFAULT</th>
+                            <th>DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>fn</td>
+                            <td>() =&gt; Promise&lt;T&gt; | T</td>
+                            <td>&mdash;</td>
+                            <td>Function returning data to poll.</td>
+                        </tr>
+                        <tr>
+                            <td>options.interval</td>
+                            <td>number</td>
+                            <td>5000</td>
+                            <td>Base polling interval in ms.</td>
+                        </tr>
+                        <tr>
+                            <td>options.maxInterval</td>
+                            <td>number</td>
+                            <td>60000</td>
+                            <td>Maximum backoff interval.</td>
+                        </tr>
+                        <tr>
+                            <td>options.activeInterval</td>
+                            <td>number</td>
+                            <td>1000</td>
+                            <td>Faster interval while active.</td>
+                        </tr>
+                        <tr>
+                            <td>options.pauseOnHidden</td>
+                            <td>boolean</td>
+                            <td>true</td>
+                            <td>Pause polling when document is hidden.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Returns</h4>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>TYPE</th>
+                            <th>DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>value</td>
+                            <td>T | undefined</td>
+                            <td>Latest value returned by <code>fn</code>.</td>
+                        </tr>
+                        <tr>
+                            <td>start</td>
+                            <td>() =&gt; void</td>
+                            <td>Start polling manually.</td>
+                        </tr>
+                        <tr>
+                            <td>stop</td>
+                            <td>() =&gt; void</td>
+                            <td>Stop polling.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Example — Basic</h4>
+                <pre class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-cm">// AdaptivePollingExample.jsx</span>
+<span class="syn-kw">import</span> React <span class="syn-kw">from</span> <span class="syn-str">'react'</span>
+<span class="syn-kw">import</span> { <span class="syn-fn">useAdaptivePolling</span> } <span class="syn-kw">from</span> <span class="syn-str">'use-web-kit'</span>
+
+<span class="syn-kw">export default function</span> <span class="syn-fn">AdaptivePollingExample</span>() {
+    <span class="syn-kw">const</span> { value } = <span class="syn-fn">useAdaptivePolling</span>(<span class="syn-kw">async</span> () =&gt; {
+        <span class="syn-kw">const</span> r = <span class="syn-kw">await</span> <span class="syn-fn">fetch</span>(<span class="syn-str">'https://jsonplaceholder.typicode.com/todos/1'</span>)
+        <span class="syn-kw">return</span> (<span class="syn-kw">await</span> r.<span class="syn-fn">json</span>()).<span class="syn-attr">title</span>
+    }, { <span class="syn-attr">interval</span>: <span class="syn-num">5000</span>, <span class="syn-attr">maxInterval</span>: <span class="syn-num">60000</span> })
+
+    <span class="syn-kw">return</span> (
+        &lt;<span class="syn-tag">div</span>&gt;
+            &lt;<span class="syn-tag">strong</span>&gt;Server status:&lt;/<span class="syn-tag">strong</span>&gt;
+            &lt;<span class="syn-tag">div</span>&gt;{<span class="syn-fn">String</span>(value ?? <span class="syn-str">'loading...'</span>)}&lt;/<span class="syn-tag">div</span>&gt;
+        &lt;/<span class="syn-tag">div</span>&gt;
+    )
+}</code></pre>
+
+                <h4>Behavior</h4>
+                <p>On mount the hook starts a timer calling <code>fn</code> at <code>interval</code> ms. If the page is
+                    idle or hidden and <code>pauseOnHidden</code> is true, polling pauses. When responses are
+                    successful, the hook updates <code>value</code>. On failure the interval increases up to
+                    <code>maxInterval</code> to reduce load.
+                </p>
+
+                <h4>Example — Advanced (Manual Control)</h4>
+                <pre class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-kw">import</span> React <span class="syn-kw">from</span> <span class="syn-str">'react'</span>
+<span class="syn-kw">import</span> { <span class="syn-fn">useAdaptivePolling</span> } <span class="syn-kw">from</span> <span class="syn-str">'use-web-kit'</span>
+
+<span class="syn-kw">export default function</span> <span class="syn-fn">AdaptiveAdvanced</span>() {
+    <span class="syn-kw">const</span> { value, start, stop } = <span class="syn-fn">useAdaptivePolling</span>(
+        () =&gt; <span class="syn-fn">fetch</span>(<span class="syn-str">'/api/health'</span>).<span class="syn-fn">then</span>(r =&gt; r.<span class="syn-fn">json</span>()),
+        { <span class="syn-attr">interval</span>: <span class="syn-num">10000</span>, <span class="syn-attr">pauseOnHidden</span>: <span class="syn-kw">true</span> }
+    )
+    <span class="syn-kw">return</span> (
+        &lt;<span class="syn-tag">div</span>&gt;
+            &lt;<span class="syn-tag">div</span>&gt;Health: {<span class="syn-fn">String</span>(value ?? <span class="syn-str">'unknown'</span>)}&lt;/<span class="syn-tag">div</span>&gt;
+            &lt;<span class="syn-tag">button</span> <span class="syn-attr">onClick</span>={start}&gt;Start&lt;/<span class="syn-tag">button</span>&gt;
+            &lt;<span class="syn-tag">button</span> <span class="syn-attr">onClick</span>={stop}&gt;Stop&lt;/<span class="syn-tag">button</span>&gt;
+        &lt;/<span class="syn-tag">div</span>&gt;
+    )
+}</code></pre>
+
+                <h4>Edge Cases</h4>
+                <ul>
+                    <li>Network flapping may cause frequent retries; consider exponential backoff in <code>fn</code>.
+                    </li>
+                    <li>Browsers may throttle timers in background tabs; rely on <code>pauseOnHidden</code>.</li>
+                </ul>
+
+                <h4>Best Practices</h4>
+                <ul>
+                    <li>Prefer WebSocket/SSE for real-time data when possible.</li>
+                    <li>Use <code>pauseOnHidden</code> to reduce battery and network usage.</li>
+                </ul>
+
+                <div class="ssr-note">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm-.75 3.75a.75.75 0 011.5 0v4a.75.75 0 01-1.5 0v-4zm.75 7a.75.75 0 110-1.5.75.75 0 010 1.5z"/></svg>
+                    <span><strong>SSR Safety:</strong> This hook accesses <code>document.visibilityState</code> and <code>setInterval</code>. Guard with <code>typeof window !== 'undefined'</code> or call only inside <code>useEffect</code>. In Next.js / Remix, the hook is safe as-is because React hooks run client-side only.</span>
+                </div>
+            </article>
+
+            <!-- ── useBroadcastState ── -->
+            <article class="doc-article" id="doc-useBroadcastState">
+                <h3>useBroadcastState</h3>
+                <p class="desc">Share small serializable state across tabs/windows via BroadcastChannel with a
+                    localStorage fallback. Useful for theme, active-tab flags, or lightweight cross-tab coordination.
+                </p>
+
+                <h4>Signature</h4>
+                <pre
+                    class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-kw">function</span> <span class="syn-fn">useBroadcastState</span>&lt;<span class="syn-type">T</span>&gt;(
+    <span class="syn-attr">key</span>: <span class="syn-type">string</span>,
+    <span class="syn-attr">initial</span>: <span class="syn-type">T</span>,
+    <span class="syn-attr">options?</span>: {
+        <span class="syn-attr">serialize?</span>: (<span class="syn-attr">v</span>: <span class="syn-type">T</span>) =&gt; <span class="syn-type">string</span>;
+        <span class="syn-attr">deserialize?</span>: (<span class="syn-attr">s</span>: <span class="syn-type">string</span>) =&gt; <span class="syn-type">T</span>
+    }
+): [<span class="syn-type">T</span>, (<span class="syn-attr">v</span>: <span class="syn-type">T</span>) =&gt; <span class="syn-type">void</span>]</code></pre>
+
+                <h4>Parameters</h4>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>TYPE</th>
+                            <th>DEFAULT</th>
+                            <th>DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>key</td>
+                            <td>string</td>
+                            <td>&mdash;</td>
+                            <td>Storage key / channel name.</td>
+                        </tr>
+                        <tr>
+                            <td>initial</td>
+                            <td>T</td>
+                            <td>&mdash;</td>
+                            <td>Initial value when no state exists.</td>
+                        </tr>
+                        <tr>
+                            <td>options</td>
+                            <td>object</td>
+                            <td>{}</td>
+                            <td>Serializer / deserializer overrides.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Returns</h4>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>TYPE</th>
+                            <th>DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>state</td>
+                            <td>T</td>
+                            <td>Current shared state.</td>
+                        </tr>
+                        <tr>
+                            <td>setState</td>
+                            <td>(v: T) =&gt; void</td>
+                            <td>Update and broadcast the state.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Example — Basic</h4>
+                <pre class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-cm">// BroadcastExample.jsx</span>
+<span class="syn-kw">import</span> React <span class="syn-kw">from</span> <span class="syn-str">'react'</span>
+<span class="syn-kw">import</span> { <span class="syn-fn">useBroadcastState</span> } <span class="syn-kw">from</span> <span class="syn-str">'use-web-kit'</span>
+
+<span class="syn-kw">export default function</span> <span class="syn-fn">BroadcastExample</span>() {
+    <span class="syn-kw">const</span> [theme, setTheme] = <span class="syn-fn">useBroadcastState</span>(<span class="syn-str">'site:theme'</span>, <span class="syn-str">'light'</span>)
+    <span class="syn-kw">return</span> (
+        &lt;<span class="syn-tag">div</span>&gt;
+            &lt;<span class="syn-tag">p</span>&gt;Theme: {theme}&lt;/<span class="syn-tag">p</span>&gt;
+            &lt;<span class="syn-tag">button</span> <span class="syn-attr">onClick</span>={() =&gt; <span class="syn-fn">setTheme</span>(theme === <span class="syn-str">'light'</span> ? <span class="syn-str">'dark'</span> : <span class="syn-str">'light'</span>)}&gt;Toggle&lt;/<span class="syn-tag">button</span>&gt;
+        &lt;/<span class="syn-tag">div</span>&gt;
+    )
+}</code></pre>
+
+                <h4>Behavior</h4>
+                <p>The hook writes serialized state to a BroadcastChannel (or localStorage) and listens for updates.
+                    When another tab broadcasts the same key, the hook updates local state immediately.</p>
+
+                <h4>Example — Advanced (Custom Serializer)</h4>
+                <pre class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-kw">import</span> React <span class="syn-kw">from</span> <span class="syn-str">'react'</span>
+<span class="syn-kw">import</span> { <span class="syn-fn">useBroadcastState</span> } <span class="syn-kw">from</span> <span class="syn-str">'use-web-kit'</span>
+
+<span class="syn-kw">export default function</span> <span class="syn-fn">BroadcastAdvanced</span>() {
+    <span class="syn-kw">const</span> [value, setValue] = <span class="syn-fn">useBroadcastState</span>(<span class="syn-str">'app:count'</span>, <span class="syn-num">0</span>, {
+        <span class="syn-attr">serialize</span>: v =&gt; <span class="syn-fn">String</span>(v),
+        <span class="syn-attr">deserialize</span>: s =&gt; <span class="syn-fn">Number</span>(s)
+    })
+    <span class="syn-kw">return</span> (
+        &lt;<span class="syn-tag">div</span>&gt;
+            &lt;<span class="syn-tag">div</span>&gt;Count: {value}&lt;/<span class="syn-tag">div</span>&gt;
+            &lt;<span class="syn-tag">button</span> <span class="syn-attr">onClick</span>={() =&gt; <span class="syn-fn">setValue</span>(value + <span class="syn-num">1</span>)}&gt;Inc&lt;/<span class="syn-tag">button</span>&gt;
+        &lt;/<span class="syn-tag">div</span>&gt;
+    )
+}</code></pre>
+
+                <h4>Edge Cases</h4>
+                <ul>
+                    <li>Large payloads cause slow serialization and may block the main thread — keep messages small.
+                    </li>
+                    <li>Older browsers may not support BroadcastChannel; localStorage fallback uses storage events.</li>
+                </ul>
+
+                <h4>Best Practices</h4>
+                <ul>
+                    <li>Keep broadcast values small and serializable (strings, numbers, small objects).</li>
+                    <li>Use for UI flags and lightweight coordination rather than large data sync.</li>
+                </ul>
+
+                <div class="ssr-note">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm-.75 3.75a.75.75 0 011.5 0v4a.75.75 0 01-1.5 0v-4zm.75 7a.75.75 0 110-1.5.75.75 0 010 1.5z"/></svg>
+                    <span><strong>SSR Safety:</strong> This hook uses <code>BroadcastChannel</code> and <code>localStorage</code>, which are browser-only APIs. Guard with <code>typeof window !== 'undefined'</code> or rely on React&rsquo;s client-side hook execution. Falls back gracefully in environments without <code>BroadcastChannel</code>.</span>
+                </div>
+            </article>
+
+            <!-- ── useIdleQueue ── -->
+            <article class="doc-article" id="doc-useIdleQueue">
+                <h3>useIdleQueue</h3>
+                <p class="desc">Schedule low-priority work to run when the browser is idle. Falls back to
+                    <code>setTimeout</code> if <code>requestIdleCallback</code> is unavailable.
+                </p>
+
+                <h4>Signature</h4>
+                <pre
+                    class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-kw">function</span> <span class="syn-fn">useIdleQueue</span>(): (<span class="syn-attr">task</span>: () =&gt; <span class="syn-type">void</span>, <span class="syn-attr">options?</span>: { <span class="syn-attr">timeout?</span>: <span class="syn-type">number</span> }) =&gt; <span class="syn-type">void</span></code></pre>
+
+                <h4>Parameters</h4>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>TYPE</th>
+                            <th>DEFAULT</th>
+                            <th>DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>task</td>
+                            <td>() =&gt; void</td>
+                            <td>&mdash;</td>
+                            <td>Function to run during idle time.</td>
+                        </tr>
+                        <tr>
+                            <td>options.timeout</td>
+                            <td>number</td>
+                            <td>undefined</td>
+                            <td>Max ms to wait before running.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Returns</h4>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>TYPE</th>
+                            <th>DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>run</td>
+                            <td>(task, options?) =&gt; void</td>
+                            <td>Schedules <code>task</code> to run during idle time (or after <code>timeout</code>).
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Example — Basic</h4>
+                <pre class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-cm">// IdleExample.jsx</span>
+<span class="syn-kw">import</span> React <span class="syn-kw">from</span> <span class="syn-str">'react'</span>
+<span class="syn-kw">import</span> { <span class="syn-fn">useIdleQueue</span> } <span class="syn-kw">from</span> <span class="syn-str">'use-web-kit'</span>
+
+<span class="syn-kw">export default function</span> <span class="syn-fn">IdleExample</span>() {
+    <span class="syn-kw">const</span> run = <span class="syn-fn">useIdleQueue</span>()
+    <span class="syn-kw">return</span> (
+        &lt;<span class="syn-tag">button</span> <span class="syn-attr">onClick</span>={() =&gt; <span class="syn-fn">run</span>(() =&gt; console.<span class="syn-fn">log</span>(<span class="syn-str">'idle task ran'</span>))}&gt;
+            Schedule
+        &lt;/<span class="syn-tag">button</span>&gt;
+    )
+}</code></pre>
+
+                <h4>Behavior</h4>
+                <p>The hook exposes a <code>run</code> function that schedules tasks using
+                    <code>requestIdleCallback</code>. If unavailable, it falls back to <code>setTimeout</code>. A
+                    <code>timeout</code> option ensures critical work runs even if the browser never reports idle time.
+                </p>
+
+                <h4>Example — Advanced (With Timeout)</h4>
+                <pre class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-kw">import</span> React <span class="syn-kw">from</span> <span class="syn-str">'react'</span>
+<span class="syn-kw">import</span> { <span class="syn-fn">useIdleQueue</span> } <span class="syn-kw">from</span> <span class="syn-str">'use-web-kit'</span>
+
+<span class="syn-kw">export default function</span> <span class="syn-fn">IdleAdvanced</span>() {
+    <span class="syn-kw">const</span> run = <span class="syn-fn">useIdleQueue</span>()
+    <span class="syn-kw">return</span> (
+        &lt;<span class="syn-tag">button</span> <span class="syn-attr">onClick</span>={() =&gt; <span class="syn-fn">run</span>(() =&gt; console.<span class="syn-fn">log</span>(<span class="syn-str">'heavy task'</span>), { <span class="syn-attr">timeout</span>: <span class="syn-num">2000</span> })}&gt;
+            Run with timeout
+        &lt;/<span class="syn-tag">button</span>&gt;
+    )
+}</code></pre>
+
+                <h4>Edge Cases</h4>
+                <ul>
+                    <li>On very busy pages idle callbacks may be deferred indefinitely; use <code>timeout</code> for
+                        critical tasks.</li>
+                </ul>
+
+                <h4>Best Practices</h4>
+                <ul>
+                    <li>Use idle tasks for analytics aggregation, cache cleanup, or prefetching non-critical assets.
+                    </li>
+                </ul>
+
+                <div class="ssr-note">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm-.75 3.75a.75.75 0 011.5 0v4a.75.75 0 01-1.5 0v-4zm.75 7a.75.75 0 110-1.5.75.75 0 010 1.5z"/></svg>
+                    <span><strong>SSR Safety:</strong> This hook uses <code>requestIdleCallback</code> (with a <code>setTimeout</code> fallback). Both APIs are browser-only. Guard with <code>typeof window !== 'undefined'</code> or rely on React&rsquo;s client-side hook execution in Next.js / Remix.</span>
+                </div>
+            </article>
+
+            <!-- ── useIntersection ── -->
+            <article class="doc-article" id="doc-useIntersection">
+                <h3>useIntersection</h3>
+                <p class="desc">Observe element visibility in the viewport. Useful for lazy loading, analytics, or
+                    triggering work only when an element becomes visible.</p>
+
+                <h4>Signature</h4>
+                <pre
+                    class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-kw">function</span> <span class="syn-fn">useIntersection</span>(
+    <span class="syn-attr">options?</span>: <span class="syn-type">IntersectionObserverInit</span>
+): { <span class="syn-attr">ref</span>: (<span class="syn-attr">el</span>: <span class="syn-type">Element</span> | <span class="syn-type">null</span>) =&gt; <span class="syn-type">void</span>; <span class="syn-attr">isIntersecting</span>: <span class="syn-type">boolean</span> }</code></pre>
+
+                <h4>Parameters</h4>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>TYPE</th>
+                            <th>DEFAULT</th>
+                            <th>DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>options</td>
+                            <td>IntersectionObserverInit</td>
+                            <td>{}</td>
+                            <td>Observer options: root, rootMargin, threshold.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Returns</h4>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>TYPE</th>
+                            <th>DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>ref</td>
+                            <td>(el: Element | null) =&gt; void</td>
+                            <td>Attach to observed element.</td>
+                        </tr>
+                        <tr>
+                            <td>isIntersecting</td>
+                            <td>boolean</td>
+                            <td>True when element intersects the viewport.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Example — Basic</h4>
+                <pre class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-cm">// IntersectionExample.jsx</span>
+<span class="syn-kw">import</span> React <span class="syn-kw">from</span> <span class="syn-str">'react'</span>
+<span class="syn-kw">import</span> { <span class="syn-fn">useIntersection</span> } <span class="syn-kw">from</span> <span class="syn-str">'use-web-kit'</span>
+
+<span class="syn-kw">export default function</span> <span class="syn-fn">IntersectionExample</span>() {
+    <span class="syn-kw">const</span> { ref, isIntersecting } = <span class="syn-fn">useIntersection</span>({ <span class="syn-attr">threshold</span>: <span class="syn-num">0.5</span> })
+    <span class="syn-kw">return</span> (
+        &lt;<span class="syn-tag">div</span> <span class="syn-attr">ref</span>={ref} <span class="syn-attr">style</span>={{ <span class="syn-attr">height</span>: <span class="syn-num">200</span> }}&gt;
+            Visible: {<span class="syn-fn">String</span>(isIntersecting)}
+        &lt;/<span class="syn-tag">div</span>&gt;
+    )
+}</code></pre>
+
+                <h4>Behavior</h4>
+                <p>The hook creates an <code>IntersectionObserver</code> and updates <code>isIntersecting</code> when
+                    the element meets the provided threshold. The <code>ref</code> setter detaches any previous element
+                    and observes the new one.</p>
+
+                <h4>Example — Advanced (Lazy Image)</h4>
+                <pre class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-cm">// LazyImage.jsx</span>
+<span class="syn-kw">import</span> React, { useState } <span class="syn-kw">from</span> <span class="syn-str">'react'</span>
+<span class="syn-kw">import</span> { <span class="syn-fn">useIntersection</span> } <span class="syn-kw">from</span> <span class="syn-str">'use-web-kit'</span>
+
+<span class="syn-kw">export default function</span> <span class="syn-fn">LazyImage</span>({ src, alt }) {
+    <span class="syn-kw">const</span> { ref, isIntersecting } = <span class="syn-fn">useIntersection</span>({ <span class="syn-attr">threshold</span>: <span class="syn-num">0.1</span> })
+    <span class="syn-kw">const</span> [loaded, setLoaded] = <span class="syn-fn">useState</span>(<span class="syn-kw">false</span>)
+    <span class="syn-kw">return</span> (
+        &lt;<span class="syn-tag">div</span> <span class="syn-attr">ref</span>={ref} <span class="syn-attr">style</span>={{ <span class="syn-attr">minHeight</span>: <span class="syn-num">200</span> }}&gt;
+            {isIntersecting &amp;&amp; (
+                &lt;<span class="syn-tag">img</span> <span class="syn-attr">src</span>={src} <span class="syn-attr">alt</span>={alt}
+                     <span class="syn-attr">onLoad</span>={() =&gt; <span class="syn-fn">setLoaded</span>(<span class="syn-kw">true</span>)}
+                     <span class="syn-attr">style</span>={{ <span class="syn-attr">opacity</span>: loaded ? <span class="syn-num">1</span> : <span class="syn-num">0.6</span> }} /&gt;
+            )}
+        &lt;/<span class="syn-tag">div</span>&gt;
+    )
+}</code></pre>
+
+                <h4>Edge Cases</h4>
+                <ul>
+                    <li>IntersectionObserver is not available in very old browsers; include a polyfill if needed.</li>
+                </ul>
+
+                <h4>Best Practices</h4>
+                <ul>
+                    <li>Prefer threshold arrays for progressive reveals; keep observers scoped to necessary elements.
+                    </li>
+                </ul>
+
+                <div class="ssr-note">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm-.75 3.75a.75.75 0 011.5 0v4a.75.75 0 01-1.5 0v-4zm.75 7a.75.75 0 110-1.5.75.75 0 010 1.5z"/></svg>
+                    <span><strong>SSR Safety:</strong> This hook creates an <code>IntersectionObserver</code>, a browser-only API. The hook initializes the observer inside <code>useEffect</code>, so it is safe for SSR frameworks like Next.js and Remix out of the box.</span>
+                </div>
+            </article>
+
+            <!-- ── useNetworkStatus ── -->
+            <article class="doc-article" id="doc-useNetworkStatus">
+                <h3>useNetworkStatus</h3>
+                <p class="desc">Track online/offline status. Use to gate network requests, show sync state, or trigger
+                    retries when connectivity returns.</p>
+
+                <h4>Signature</h4>
+                <pre
+                    class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-kw">function</span> <span class="syn-fn">useNetworkStatus</span>(): <span class="syn-type">boolean</span></code></pre>
+
+                <h4>Parameters</h4>
+                <p style="color:var(--text-secondary); font-size:13px;">This hook has no parameters.</p>
+
+                <h4>Returns</h4>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>TYPE</th>
+                            <th>DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>online</td>
+                            <td>boolean</td>
+                            <td>True when the browser reports network connectivity.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Example — Basic</h4>
+                <pre class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-cm">// NetworkExample.jsx</span>
+<span class="syn-kw">import</span> React <span class="syn-kw">from</span> <span class="syn-str">'react'</span>
+<span class="syn-kw">import</span> { <span class="syn-fn">useNetworkStatus</span> } <span class="syn-kw">from</span> <span class="syn-str">'use-web-kit'</span>
+
+<span class="syn-kw">export default function</span> <span class="syn-fn">NetworkExample</span>() {
+    <span class="syn-kw">const</span> online = <span class="syn-fn">useNetworkStatus</span>()
+    <span class="syn-kw">return</span> (
+        &lt;<span class="syn-tag">div</span>&gt;
+            &lt;<span class="syn-tag">strong</span>&gt;Online:&lt;/<span class="syn-tag">strong</span>&gt;
+            &lt;<span class="syn-tag">div</span>&gt;{<span class="syn-fn">String</span>(online)}&lt;/<span class="syn-tag">div</span>&gt;
+        &lt;/<span class="syn-tag">div</span>&gt;
+    )
+}</code></pre>
+
+                <h4>Behavior</h4>
+                <p>The hook listens to the browser <code>online</code> and <code>offline</code> events and returns a
+                    boolean reflecting the current state. Note that this reflects the browser's connectivity status and
+                    not guaranteed end-to-end reachability.</p>
+
+                <h4>Example — Advanced (Offline Queue)</h4>
+                <pre class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-cm">// Queue requests while offline and flush when online</span>
+<span class="syn-kw">import</span> React, { useState, useEffect } <span class="syn-kw">from</span> <span class="syn-str">'react'</span>
+<span class="syn-kw">import</span> { <span class="syn-fn">useNetworkStatus</span> } <span class="syn-kw">from</span> <span class="syn-str">'use-web-kit'</span>
+
+<span class="syn-kw">export default function</span> <span class="syn-fn">NetworkAdvanced</span>() {
+    <span class="syn-kw">const</span> online = <span class="syn-fn">useNetworkStatus</span>()
+    <span class="syn-kw">const</span> [queue, setQueue] = <span class="syn-fn">useState</span>([])
+
+    <span class="syn-fn">useEffect</span>(() =&gt; {
+        <span class="syn-kw">if</span> (online &amp;&amp; queue.<span class="syn-attr">length</span>) {
+            queue.<span class="syn-fn">forEach</span>(item =&gt;
+                <span class="syn-fn">fetch</span>(<span class="syn-str">'/api/submit'</span>, { <span class="syn-attr">method</span>: <span class="syn-str">'POST'</span>, <span class="syn-attr">body</span>: JSON.<span class="syn-fn">stringify</span>(item) })
+            )
+            <span class="syn-fn">setQueue</span>([])
+        }
+    }, [online])
+
+    <span class="syn-kw">return</span> &lt;<span class="syn-tag">div</span>&gt;Status: {<span class="syn-fn">String</span>(online)}&lt;/<span class="syn-tag">div</span>&gt;
+}</code></pre>
+
+                <h4>Edge Cases</h4>
+                <ul>
+                    <li>The browser's online status may be <code>true</code> even if the server is unreachable (captive
+                        portals, DNS issues).</li>
+                </ul>
+
+                <h4>Best Practices</h4>
+                <ul>
+                    <li>Use this hook for UI decisions and light retry logic; perform an application-level health check
+                        for true reachability.</li>
+                </ul>
+
+                <div class="ssr-note">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm-.75 3.75a.75.75 0 011.5 0v4a.75.75 0 01-1.5 0v-4zm.75 7a.75.75 0 110-1.5.75.75 0 010 1.5z"/></svg>
+                    <span><strong>SSR Safety:</strong> This hook reads <code>navigator.onLine</code> and subscribes to <code>window</code> online/offline events. Guard with <code>typeof window !== 'undefined'</code> or rely on React&rsquo;s client-side hook execution. Defaults to <code>true</code> during SSR.</span>
+                </div>
+            </article>
+
+            <!-- ── usePageLifecycle ── -->
+            <article class="doc-article" id="doc-usePageLifecycle">
+                <h3>usePageLifecycle</h3>
+                <p class="desc">Expose document visibility and focus lifecycle states. Use to pause timers, mute
+                    updates, or defer work when the page is not active.</p>
+
+                <h4>Signature</h4>
+                <pre
+                    class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-kw">function</span> <span class="syn-fn">usePageLifecycle</span>(): <span class="syn-type">DocumentVisibilityState</span></code></pre>
+
+                <h4>Parameters</h4>
+                <p style="color:var(--text-secondary); font-size:13px;">This hook has no parameters.</p>
+
+                <h4>Returns</h4>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>NAME</th>
+                            <th>TYPE</th>
+                            <th>DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>state</td>
+                            <td>DocumentVisibilityState</td>
+                            <td>'visible', 'hidden', etc., matching <code>document.visibilityState</code>.</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>Example — Basic</h4>
+                <pre class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-cm">// PageLifecycleExample.jsx</span>
+<span class="syn-kw">import</span> React <span class="syn-kw">from</span> <span class="syn-str">'react'</span>
+<span class="syn-kw">import</span> { <span class="syn-fn">usePageLifecycle</span> } <span class="syn-kw">from</span> <span class="syn-str">'use-web-kit'</span>
+
+<span class="syn-kw">export default function</span> <span class="syn-fn">PageLifecycleExample</span>() {
+    <span class="syn-kw">const</span> state = <span class="syn-fn">usePageLifecycle</span>()
+    <span class="syn-kw">return</span> &lt;<span class="syn-tag">div</span>&gt;Visibility: {state}&lt;/<span class="syn-tag">div</span>&gt;
+}</code></pre>
+
+                <h4>Behavior</h4>
+                <p>The hook subscribes to visibility and focus events and returns the current
+                    <code>document.visibilityState</code>. Use it to pause animations, stop polling, or reduce
+                    background work.
+                </p>
+
+                <h4>Example — Advanced (Pause Interval)</h4>
+                <pre class="code"><button class="code-copy" aria-label="Copy code">Copy</button><code><span class="syn-kw">import</span> React, { useEffect, useState } <span class="syn-kw">from</span> <span class="syn-str">'react'</span>
+<span class="syn-kw">import</span> { <span class="syn-fn">usePageLifecycle</span> } <span class="syn-kw">from</span> <span class="syn-str">'use-web-kit'</span>
+
+<span class="syn-kw">export default function</span> <span class="syn-fn">LifecycleAdvanced</span>() {
+    <span class="syn-kw">const</span> state = <span class="syn-fn">usePageLifecycle</span>()
+    <span class="syn-kw">const</span> [count, setCount] = <span class="syn-fn">useState</span>(<span class="syn-num">0</span>)
+
+    <span class="syn-fn">useEffect</span>(() =&gt; {
+        <span class="syn-kw">if</span> (state !== <span class="syn-str">'visible'</span>) <span class="syn-kw">return</span>
+        <span class="syn-kw">const</span> id = <span class="syn-fn">setInterval</span>(() =&gt; <span class="syn-fn">setCount</span>(c =&gt; c + <span class="syn-num">1</span>), <span class="syn-num">1000</span>)
+        <span class="syn-kw">return</span> () =&gt; <span class="syn-fn">clearInterval</span>(id)
+    }, [state])
+
+    <span class="syn-kw">return</span> &lt;<span class="syn-tag">div</span>&gt;Counter (visible only): {count}&lt;/<span class="syn-tag">div</span>&gt;
+}</code></pre>
+
+                <h4>Edge Cases</h4>
+                <ul>
+                    <li>Some browsers may report different lifecycle states while devtools are open.</li>
+                </ul>
+
+                <h4>Best Practices</h4>
+                <ul>
+                    <li>Use lifecycle hooks to reduce CPU and network usage when your app is not visible.</li>
+                </ul>
+
+                <div class="ssr-note">
+                    <svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 1a7 7 0 100 14A7 7 0 008 1zm-.75 3.75a.75.75 0 011.5 0v4a.75.75 0 01-1.5 0v-4zm.75 7a.75.75 0 110-1.5.75.75 0 010 1.5z"/></svg>
+                    <span><strong>SSR Safety:</strong> This hook accesses <code>document.visibilityState</code> and listens to <code>visibilitychange</code> / <code>focus</code> / <code>blur</code> events. Guard with <code>typeof window !== 'undefined'</code> or rely on React&rsquo;s client-side hook execution. Defaults to <code>"visible"</code> during SSR.</span>
+                </div>
+            </article>
+
+        </section>
+
+        <!-- ─── Links ─── -->
+        <section id="links" class="section container" aria-labelledby="links-heading">
+            <div class="section-header">
+                <h2 id="links-heading"><span class="accent">Links</span></h2>
+            </div>
+            <ul class="links-list" role="list">
+                <li>
+                    <a href="https://github.com/tanushbhootra576/use-web-kit" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 16 16" fill="currentColor">
+                            <path
+                                d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z" />
+                        </svg>
+                        GitHub Repository
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.npmjs.com/package/use-web-kit" target="_blank" rel="noopener noreferrer">
+                        <svg viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M0 0v16h16V0H0zm13 13H8V5h2.5v5.5H13V5h-1.5V3H3v10h10V0" />
+                        </svg>
+                        NPM Package
+                    </a>
+                </li>
+                <li>
+                    <a href="https://github.com/tanushbhootra576/use-web-kit/issues" target="_blank"
+                        rel="noopener noreferrer">
+                        <svg viewBox="0 0 16 16" fill="currentColor">
+                            <path
+                                d="M8 9.5a1.5 1.5 0 100-3 1.5 1.5 0 000 3zM8 0a8 8 0 100 16A8 8 0 008 0zM1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0z" />
+                        </svg>
+                        Issue Tracker
+                    </a>
+                </li>
+                <li>
+                    <a href="#" id="contrib-link">
+                        <svg viewBox="0 0 16 16" fill="currentColor">
+                            <path
+                                d="M11.013 1.427a1.75 1.75 0 012.474 0l1.086 1.086a1.75 1.75 0 010 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 01-.927-.928l.929-3.25a1.75 1.75 0 01.445-.758l8.61-8.61zm1.414 1.06a.25.25 0 00-.354 0L3.463 11.098a.25.25 0 00-.064.108l-.558 1.953 1.953-.558a.25.25 0 00.108-.064l8.61-8.61a.25.25 0 000-.354l-1.086-1.086z" />
+                        </svg>
+                        Contribution Guidelines
+                    </a>
+                </li>
             </ul>
         </section>
 
-        <!-- Contributing modal (hidden by default) -->
+        <!-- Contributing Modal -->
         <div id="contrib-modal" class="modal-overlay" aria-hidden="true">
             <div class="modal" role="dialog" aria-modal="true" aria-labelledby="contrib-title">
                 <header class="modal-header">
                     <h3 id="contrib-title">Contributing to use-web-kit</h3>
-                    <button class="modal-close" id="contrib-close" aria-label="Close">✕</button>
+                    <button class="modal-close" id="contrib-close" aria-label="Close">&#x2715;</button>
                 </header>
                 <div class="modal-body">
-                    <p>This repository follows a straightforward contribution workflow. Please follow these steps:</p>
+                    <p>This repository follows a straightforward contribution workflow:</p>
                     <ol>
                         <li>Fork the repository and create a feature branch from <code>main</code>.</li>
-                        <li>Run the test suite and add tests for new behavior. Maintain code style and types where
-                            applicable.</li>
-                        <li>Open a pull request with a clear description, rationale, and before/after examples where
-                            relevant.</li>
+                        <li>Run the test suite and add tests for new behavior. Maintain code style and types.</li>
+                        <li>Open a pull request with a clear description and before/after examples.</li>
                     </ol>
-                    <h4>Code style</h4>
+                    <h4>Code Style</h4>
                     <ul>
-                        <li>Use TypeScript for new modules when appropriate; keep hooks typed.</li>
+                        <li>Use TypeScript for new modules; keep hooks fully typed.</li>
                         <li>Prefer small, focused commits and feature branches.</li>
                     </ul>
                     <h4>Tests</h4>
-                    <p>Include unit tests for new behaviour. Tests run with <code>npm test</code>.</p>
-                    <h4>Issue & PR guidance</h4>
+                    <p>Include unit tests for new behaviour. Run with <code>npm test</code>.</p>
+                    <h4>Issues &amp; PRs</h4>
                     <p>Describe the problem, reproduction steps, and expected behavior. Link related issues or PRs.</p>
-                    <p class="muted">By contributing you agree to license your changes under the project MIT License.
-                    </p>
+                    <p style="color:var(--muted); margin-top:12px">By contributing you agree to license your changes
+                        under the project MIT License.</p>
                     <p style="margin-top:12px">Read the full guidelines in <a href="../CONTRIBUTING.md" target="_blank"
                             rel="noopener">CONTRIBUTING.md</a>.</p>
                 </div>
             </div>
         </div>
 
-        <h4>Signature</h4>
-        <pre class="code"><code>function useAdaptivePolling<T = any>(
-    fn: () =&gt; Promise&lt;T&gt; | T,
-    options?: {
-        interval?: number; // base ms
-        maxInterval?: number;
-        activeInterval?: number;
-        pauseOnHidden?: boolean;
-    }
-): { value?: T; start: () =&gt; void; stop: () =&gt; void }</code></pre>
-
-        <h4>Parameters</h4>
-        <table class="api-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Default</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>fn</td>
-                    <td>() =&gt; Promise&lt;T&gt; | T</td>
-                    <td>—</td>
-                    <td>Function returning data to poll.</td>
-                </tr>
-                <tr>
-                    <td>options.interval</td>
-                    <td>number</td>
-                    <td>5000</td>
-                    <td>Base polling interval in ms.</td>
-                </tr>
-                <tr>
-                    <td>options.maxInterval</td>
-                    <td>number</td>
-                    <td>60000</td>
-                    <td>Maximum backoff interval.</td>
-                </tr>
-                <tr>
-                    <td>options.activeInterval</td>
-                    <td>number</td>
-                    <td>1000</td>
-                    <td>Faster interval while active (if used).</td>
-                </tr>
-                <tr>
-                    <td>options.pauseOnHidden</td>
-                    <td>boolean</td>
-                    <td>true</td>
-                    <td>If true, pauses polling when document is hidden.</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h4>Returns</h4>
-        <table class="api-table">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>value</td>
-                    <td>T | undefined</td>
-                    <td>Latest value returned by <code>fn</code>.</td>
-                </tr>
-                <tr>
-                    <td>start</td>
-                    <td>() =&gt; void</td>
-                    <td>Start polling manually.</td>
-                </tr>
-                <tr>
-                    <td>stop</td>
-                    <td>() =&gt; void</td>
-                    <td>Stop polling.</td>
-                </tr>
-            </tbody>
-        </table>
-
-        <h4>Example (Basic)</h4>
-        <pre class="code"><code>// AdaptivePollingExample.jsx
-import React from 'react'
-import { useAdaptivePolling } from 'use-web-kit'
-
-export default function AdaptivePollingExample(){
-    const { value } = useAdaptivePolling(async ()=>{
-        const r = await fetch('https://jsonplaceholder.typicode.com/todos/1')
-        const json = await r.json()
-        return json.title
-    }, { interval: 5000, maxInterval: 60000 })
-
-    return (
-        <div>
-            <strong>Server status:</strong>
-            <div>{String(value ?? 'loading...')}</div>
-        </div>
-    )
-}
-</code></pre>
-
-        <h4>Behavior Explanation</h4>
-        <p>On mount the hook starts a timer calling <code>fn</code> at <code>interval</code> ms. If the page is
-            idle or hidden and <code>pauseOnHidden</code> is true, polling pauses. When responses are
-            successful, the hook updates <code>value</code>. When failures occur the hook can increase the
-            interval up to <code>maxInterval</code> to reduce load.</p>
-
-        <h4>Example (Advanced)</h4>
-        <pre class="code"><code>// Adaptive with manual control
-import React from 'react'
-import { useAdaptivePolling } from 'use-web-kit'
-
-export default function AdaptiveAdvanced(){
-    const { value, start, stop } = useAdaptivePolling(()=> fetch('/api/health').then(r=>r.json()), { interval:10000, pauseOnHidden:true })
-    return (
-        <div>
-            <div>Health: {String(value ?? 'unknown')}</div>
-            <div style={{marginTop:8}}>
-                <button onClick={start}>Start</button>
-                <button onClick={stop} style={{marginLeft:8}}>Stop</button>
-            </div>
-        </div>
-    )
-}
-</code></pre>
-
-        <h4>Edge Cases</h4>
-        <ul>
-            <li>Network flapping may cause frequent retries; consider exponential backoff in <code>fn</code>.
-            </li>
-            <li>Browsers may throttle timers in background tabs; rely on <code>pauseOnHidden</code> where
-                appropriate.</li>
-        </ul>
-
-        <h4>Best Practices</h4>
-        <ul>
-            <li>Prefer WebSocket/SSE for real-time data when possible.</li>
-            <li>Use <code>pauseOnHidden</code> to reduce battery and network usage.</li>
-        </ul>
-        </article>
-
-        <!-- useBroadcastState -->
-        <article class="module doc">
-            <h3>useBroadcastState</h3>
-            <p class="desc">Share small serializable state across tabs/windows via BroadcastChannel with a
-                localStorage fallback. Useful for theme, active-tab flags, or lightweight cross-tab coordination.
-            </p>
-
-            <h4>Signature</h4>
-            <pre
-                class="code"><code>function useBroadcastState<T>(key: string, initial: T, options?: { serialize?: (v: T) =&gt; string; deserialize?: (s: string) =&gt; T }): [T, (v: T) =&gt; void]</code></pre>
-
-            <h4>Parameters</h4>
-            <table class="api-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>key</td>
-                        <td>string</td>
-                        <td>—</td>
-                        <td>Storage key / channel name.</td>
-                    </tr>
-                    <tr>
-                        <td>initial</td>
-                        <td>T</td>
-                        <td>—</td>
-                        <td>Initial value when no state exists.</td>
-                    </tr>
-                    <tr>
-                        <td>options</td>
-                        <td>object</td>
-                        <td>{}</td>
-                        <td>Serializer/deserializer overrides.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h4>Returns</h4>
-            <table class="api-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>state</td>
-                        <td>T</td>
-                        <td>Current shared state.</td>
-                    </tr>
-                    <tr>
-                        <td>setState</td>
-                        <td>(v: T) =&gt; void</td>
-                        <td>Update and broadcast the state.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h4>Example (Basic)</h4>
-            <pre class="code"><code>// BroadcastExample.jsx
-import React from 'react'
-import { useBroadcastState } from 'use-web-kit'
-
-export default function BroadcastExample(){
-    const [theme, setTheme] = useBroadcastState('site:theme', 'light')
-    return (
-        <div>
-            <p>Theme: {theme}</p>
-            <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>Toggle</button>
-        </div>
-    )
-}
-</code></pre>
-
-            <h4>Behavior Explanation</h4>
-            <p>The hook writes serialized state to a BroadcastChannel (or localStorage) and listens for updates.
-                When another tab broadcasts the same key, the hook updates local state immediately.</p>
-
-            <h4>Example (Advanced)</h4>
-            <pre class="code"><code>// Broadcast with custom serializer
-import React from 'react'
-import { useBroadcastState } from 'use-web-kit'
-
-export default function BroadcastAdvanced(){
-    const [value, setValue] = useBroadcastState('app:count', 0, { serialize: v =&gt; String(v), deserialize: s =&gt; Number(s) })
-    return (
-        <div>
-            <div>Count: {value}</div>
-            <button onClick={() => setValue(value + 1)}>Inc</button>
-        </div>
-    )
-}
-</code></pre>
-
-            <h4>Edge Cases</h4>
-            <ul>
-                <li>Large payloads cause slow serialization and may block the main thread—keep messages small.</li>
-                <li>Older browsers may not support BroadcastChannel; localStorage fallback introduces storage event
-                    semantics.</li>
-            </ul>
-
-            <h4>Best Practices</h4>
-            <ul>
-                <li>Keep broadcast values small and serializable (strings, numbers, small objects).</li>
-                <li>Use for UI flags and lightweight coordination rather than large data sync.</li>
-            </ul>
-        </article>
-
-        <!-- useIdleQueue -->
-        <article class="module doc">
-            <h3>useIdleQueue</h3>
-            <p class="desc">Schedule low-priority work to run when the browser is idle. Falls back to
-                <code>setTimeout</code> if <code>requestIdleCallback</code> is unavailable.
-            </p>
-
-            <h4>Signature</h4>
-            <pre
-                class="code"><code>function useIdleQueue(): (task: () =&gt; void, options?: { timeout?: number }) =&gt; void</code></pre>
-
-            <h4>Parameters</h4>
-            <table class="api-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>task</td>
-                        <td>() =&gt; void</td>
-                        <td>—</td>
-                        <td>Function to run during idle time.</td>
-                    </tr>
-                    <tr>
-                        <td>options.timeout</td>
-                        <td>number</td>
-                        <td>undefined</td>
-                        <td>Maximum ms to wait before running the task.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h4>Returns</h4>
-            <table class="api-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>run</td>
-                        <td>(task: () =&gt; void, options?: { timeout?: number }) =&gt; void</td>
-                        <td>Schedules <code>task</code> to run during idle time (or after <code>timeout</code>).
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h4>Example (Basic)</h4>
-            <pre class="code"><code>// IdleExample.jsx
-import React from 'react'
-import { useIdleQueue } from 'use-web-kit'
-
-export default function IdleExample(){
-    const run = useIdleQueue()
-    return (
-        <div>
-            <button onClick={() => run(() =&gt; console.log('heavy task run during idle'))}>Schedule</button>
-        </div>
-    )
-}
-</code></pre>
-
-            <h4>Behavior Explanation</h4>
-            <p>The hook exposes a <code>run</code> function that schedules tasks using
-                <code>requestIdleCallback</code>. If unavailable, it falls back to <code>setTimeout</code>. A
-                <code>timeout</code> option ensures critical work runs even if the browser never reports idle time.
-            </p>
-
-            <h4>Example (Advanced)</h4>
-            <pre class="code"><code>// Idle with timeout fallback
-import React from 'react'
-import { useIdleQueue } from 'use-web-kit'
-
-export default function IdleAdvanced(){
-    const run = useIdleQueue()
-    function heavy(){
-        // do non-blocking chunked work
-        console.log('running heavy task')
-    }
-    return (
-        <div>
-            <button onClick={() =&gt; run(heavy, { timeout: 2000 })}>Run with timeout</button>
-        </div>
-    )
-}
-</code></pre>
-
-            <h4>Edge Cases</h4>
-            <ul>
-                <li>On very busy pages idle callbacks may be deferred indefinitely; use <code>timeout</code> for
-                    critical tasks.</li>
-            </ul>
-
-            <h4>Best Practices</h4>
-            <ul>
-                <li>Use idle tasks for analytics aggregation, cache cleanup, or prefetching non-critical assets.
-                </li>
-            </ul>
-        </article>
-
-        <!-- useIntersection -->
-        <article class="module doc">
-            <h3>useIntersection</h3>
-            <p class="desc">Observe element visibility in the viewport. Useful for lazy loading, analytics, or
-                triggering work only when an element becomes visible.</p>
-
-            <h4>Signature</h4>
-            <pre
-                class="code"><code>function useIntersection(options?: IntersectionObserverInit): { ref: (el: Element | null) =&gt; void; isIntersecting: boolean }</code></pre>
-
-            <h4>Parameters</h4>
-            <table class="api-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Default</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>options</td>
-                        <td>IntersectionObserverInit</td>
-                        <td>{}</td>
-                        <td>Observer options: root, rootMargin, threshold.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h4>Returns</h4>
-            <table class="api-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>ref</td>
-                        <td>(el: Element | null) =&gt; void</td>
-                        <td>Attach to observed element.</td>
-                    </tr>
-                    <tr>
-                        <td>isIntersecting</td>
-                        <td>boolean</td>
-                        <td>True when element intersects the viewport per options.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h4>Example (Basic)</h4>
-            <pre class="code"><code>// IntersectionExample.jsx
-import React from 'react'
-import { useIntersection } from 'use-web-kit'
-
-export default function IntersectionExample(){
-    const { ref, isIntersecting } = useIntersection({ threshold: 0.5 })
-    return (
-        <div>
-            <div ref={ref} style={{height:200, border:'1px solid rgba(255,255,255,0.04)'}}>Visible: {String(isIntersecting)}</div>
-        </div>
-    )
-}
-</code></pre>
-
-            <h4>Behavior Explanation</h4>
-            <p>The hook creates an <code>IntersectionObserver</code> and updates <code>isIntersecting</code> when
-                the element meets the provided threshold. The <code>ref</code> setter detaches any previous element
-                and observes the new one.</p>
-
-            <h4>Example (Advanced)</h4>
-            <pre class="code"><code>// LazyImage.jsx
-import React, {useState} from 'react'
-import { useIntersection } from 'use-web-kit'
-
-export default function LazyImage({src, alt}){
-    const { ref, isIntersecting } = useIntersection({ threshold: 0.1 })
-    const [loaded, setLoaded] = useState(false)
-    return (
-        <div ref={ref} style={{minHeight:200}}>
-            {isIntersecting && (
-                <img src={src} alt={alt} onLoad={() =&gt; setLoaded(true)} style={{opacity: loaded ? 1 : 0.6}} />
-            )}
-        </div>
-    )
-}
-</code></pre>
-
-            <h4>Edge Cases</h4>
-            <ul>
-                <li>IntersectionObserver is not available in very old browsers; include a polyfill if you need wide
-                    support.</li>
-            </ul>
-
-            <h4>Best Practices</h4>
-            <ul>
-                <li>Prefer threshold arrays for progressive reveals; keep observers scoped to necessary elements to
-                    limit overhead.</li>
-            </ul>
-        </article>
-
-        <!-- useNetworkStatus -->
-        <article class="module doc">
-            <h3>useNetworkStatus</h3>
-            <p class="desc">Track online/offline status. Use to gate network requests, show sync state, or trigger
-                retries when connectivity returns.</p>
-
-            <h4>Signature</h4>
-            <pre class="code"><code>function useNetworkStatus(): boolean</code></pre>
-
-            <h4>Parameters</h4>
-            <p class="desc">This hook has no parameters.</p>
-
-            <h4>Returns</h4>
-            <table class="api-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>online</td>
-                        <td>boolean</td>
-                        <td>True when the browser reports network connectivity.</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h4>Example (Basic)</h4>
-            <pre class="code"><code>// NetworkExample.jsx
-import React from 'react'
-import { useNetworkStatus } from 'use-web-kit'
-
-export default function NetworkExample(){
-    const online = useNetworkStatus()
-    return (
-        <div>
-            <strong>Online:</strong>
-            <div>{String(online)}</div>
-        </div>
-    )
-}
-</code></pre>
-
-            <h4>Behavior Explanation</h4>
-            <p>The hook listens to the browser <code>online</code> and <code>offline</code> events and returns a
-                boolean reflecting the current state. Note that this reflects the browser's connectivity status and
-                not guaranteed end-to-end reachability.</p>
-
-            <h4>Example (Advanced)</h4>
-            <pre class="code"><code>// Queue requests while offline and flush when online
-import React, {useState} from 'react'
-import { useNetworkStatus } from 'use-web-kit'
-
-export default function NetworkAdvanced(){
-    const online = useNetworkStatus()
-    const [queue, setQueue] = useState([])
-
-    async function send(data){
-        if(!online){
-            setQueue(prev => [...prev, data])
-            return
-        }
-        await fetch('/api/submit', { method:'POST', body: JSON.stringify(data) })
-    }
-
-    // simple flush when online
-    React.useEffect(()=>{
-        if(online && queue.length){
-            queue.forEach(item => fetch('/api/submit', { method:'POST', body: JSON.stringify(item) }))
-            setQueue([])
-        }
-    }, [online])
-
-    return (
-        <div>
-            <div>Status: {String(online)}</div>
-            <button onClick={() =&gt; send({ts: Date.now()})}>Send</button>
-        </div>
-    )
-}
-</code></pre>
-
-            <h4>Edge Cases</h4>
-            <ul>
-                <li>The browser's online status may be true even if the server is unreachable (captive portals, DNS
-                    issues).</li>
-            </ul>
-
-            <h4>Best Practices</h4>
-            <ul>
-                <li>Use this hook for UI decisions and light retry logic; perform an application-level health check
-                    for true reachability.</li>
-            </ul>
-        </article>
-
-        <!-- usePageLifecycle -->
-        <article class="module doc">
-            <h3>usePageLifecycle</h3>
-            <p class="desc">Expose document visibility and focus lifecycle states. Use to pause timers, mute
-                updates, or defer work when the page is not active.</p>
-
-            <h4>Signature</h4>
-            <pre class="code"><code>function usePageLifecycle(): DocumentVisibilityState</code></pre>
-
-            <h4>Parameters</h4>
-            <p class="desc">This hook has no parameters.</p>
-
-            <h4>Returns</h4>
-            <table class="api-table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>state</td>
-                        <td>DocumentVisibilityState</td>
-                        <td>One of 'visible', 'hidden', 'prerender', etc., matching
-                            <code>document.visibilityState</code>.
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <h4>Example (Basic)</h4>
-            <pre class="code"><code>// PageLifecycleExample.jsx
-import React from 'react'
-import { usePageLifecycle } from 'use-web-kit'
-
-export default function PageLifecycleExample(){
-    const state = usePageLifecycle()
-    return (
-        <div>
-            <div>Visibility: {state}</div>
-        </div>
-    )
-}
-</code></pre>
-
-            <h4>Behavior Explanation</h4>
-            <p>The hook subscribes to visibility and focus events and returns the current
-                <code>document.visibilityState</code>. Use it to pause animations, stop polling, or reduce
-                background work.
-            </p>
-
-            <h4>Example (Advanced)</h4>
-            <pre class="code"><code>// Pause an interval when not visible
-import React, {useEffect, useState} from 'react'
-import { usePageLifecycle } from 'use-web-kit'
-
-export default function LifecycleAdvanced(){
-    const state = usePageLifecycle()
-    const [count, setCount] = useState(0)
-
-    useEffect(()=>{
-        if(state !== 'visible') return
-        const id = setInterval(()=> setCount(c=>c+1), 1000)
-        return () =&gt; clearInterval(id)
-    }, [state])
-
-    return (
-        <div>
-            <div>Counter (runs only when visible): {count}</div>
-        </div>
-    )
-}
-</code></pre>
-
-            <h4>Edge Cases</h4>
-            <ul>
-                <li>Some browsers may report different lifecycle states while devtools are open; test on target
-                    platforms.</li>
-            </ul>
-
-            <h4>Best Practices</h4>
-            <ul>
-                <li>Use lifecycle hooks to reduce CPU and network usage when your app is not visible.</li>
-            </ul>
-
-        </article>
-
-        </section>
-
-        <section id="links" class="section container">
-            <h2>Links</h2>
-            <ul>
-                <li><a href="https://github.com/tanushbhootra576/use-web-kit">GitHub Repository</a></li>
-                <li><a href="https://www.npmjs.com/package/use-web-kit">NPM Package</a></li>
-                <li><a href="https://github.com/tanushbhootra576/use-web-kit/issues">Issue Tracker</a></li>
-                <li><a href="https://github.com/tanushbhootra576/use-web-kit/blob/main/CONTRIBUTING.md">Contribution
-                        Guidelines</a></li>
-            </ul>
-        </section>
-
     </main>
 
-    <footer class="site-footer">
+    <!-- ─── Footer ─── -->
+    <footer class="site-footer" role="contentinfo">
         <div class="container footer-inner">
             <div>
-                <strong>Author:</strong> Your Name
-                <div style="font-size:12px; color:var(--muted)">Version: 0.1.0 • Built for modern React 18+ • Last
-                    updated: 2026-02-24</div>
+                <div class="footer-brand"><strong>use-web-kit</strong> &mdash; Tanush Bhootra</div>
+                <div class="footer-meta">v0.1.0 &bull; React 18+ &bull; Last updated 2026-02-27</div>
+                <div class="footer-license">Released under the <a href="https://github.com/tanushbhootra576/use-web-kit/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">MIT License</a>. Copyright &copy; 2026 Tanush Bhootra.</div>
             </div>
             <div class="footer-links">
-                <a href="https://github.com/tanushbhootra576/use-web-kit">GitHub</a>
-                <a href="https://www.npmjs.com/package/use-web-kit">NPM</a>
-                <span>•</span>
-                <a href="https://github.com/tanushbhootra576/use-web-kit/blob/main/LICENSE">MIT License</a>
+                <a href="https://github.com/tanushbhootra576/use-web-kit" target="_blank"
+                    rel="noopener noreferrer">GitHub</a>
+                <a href="https://www.npmjs.com/package/use-web-kit" target="_blank" rel="noopener noreferrer">NPM</a>
+                <span class="footer-sep">&bull;</span>
+                <a href="https://github.com/tanushbhootra576/use-web-kit/blob/main/LICENSE" target="_blank"
+                    rel="noopener noreferrer">License</a>
             </div>
         </div>
     </footer>
+
+    <!-- Toast -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script src="script.js"></script>
 </body>

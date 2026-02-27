@@ -55,8 +55,8 @@
     "react": ">=16.8.0"
   },
   "devDependencies": {
-    "@testing-library/react": "^16.1.0",
     "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
     "@types/jest": "^29.5.14",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
@@ -67,5 +67,8 @@
     "ts-jest": "^29.2.5",
     "tsup": "^8.3.5",
     "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "use-web-kit": "^0.2.1"
   }
 }
