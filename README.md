@@ -1,278 +1,134 @@
-## use-web-kit
+# use-web-kit
 
 <img src="https://img.shields.io/npm/v/use-web-kit.svg" alt="npm version">
 <img src="https://github.com/tanushbhootra576/use-web-kit/actions/workflows/ci.yml/badge.svg" alt="Build Status">
 <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT">
-<img src="https://img.shields.io/badge/types-TypeScript-blue.svg" alt="Typescript">
+<img src="https://img.shields.io/badge/types-TypeScript-blue.svg" alt="TypeScript">
 
-A compact collection of zero-runtime-dependency, TypeScript-first React hooks for common browser interactions: idle work scheduling, cross-tab state, adaptive polling, network information, intersection observation, and page lifecycle.
+A compact collection of **zero-runtime-dependency**, TypeScript-first React hooks for common browser interactions.
 
-This document provides installation, concise examples, API reference, SSR notes, testing guidance, contribution guidelines, and license information.
+---
 
-Package
-Name: use-web-kit
-Version: 0.1.0
-Repository: https://github.com/tanushbhootra576/use-web-kit
-Features
-Zero runtime dependencies
-Tree-shakeable named exports
-TypeScript typings included
-Graceful fallbacks for unsupported browser APIs
-Small runtime surface and predictable cleanup behavior
-Installation
-Quick example
-API Reference
-All hooks are exported as named exports. Import only the hooks you need to keep bundles minimal.
+## Installation
 
-Each hook section follows the same structure: Description, Signature, Parameters (when applicable), Return value, and Notes.
+```bash
+npm install use-web-kit
+```
 
-useIdleQueue
-Description
-Queue non-urgent tasks to run during browser idle time. Uses requestIdleCallback when available, otherwise a setTimeout fallback.
+## Quick Example
 
-Signature
+```tsx
+import { useStorage, usePermission, useMediaControls } from "use-web-kit";
 
-Parameters
+function App() {
+  const [theme, setTheme] = useStorage("theme", "light");
+  const { state: camState } = usePermission("camera");
+  const { ref, state, controls } = useMediaControls();
 
-Name Type Default Description
-timeout number undefined Maximum wait time (ms) before forcing execution of queued tasks.
-fallbackInterval number 50 Interval (ms) used by the setTimeout fallback.
-Return value
+  return (
+    <>
+      <button
+        onClick={() => setTheme((t) => (t === "light" ? "dark" : "light"))}
+      >
+        Theme: {theme}
+      </button>
+      <p>Camera permission: {camState}</p>
+      <video ref={ref} src="/clip.mp4" />
+      <button onClick={state.paused ? controls.play : controls.pause}>
+        {state.paused ? "Play" : "Pause"}
+      </button>
+    </>
+  );
+}
+```
 
-enqueue(task) — enqueue a task to run during idle time.
-clearQueue() — clear pending tasks.
-queueLength — current number of queued tasks.
-Notes
+---
 
-Intended for best-effort background work (analytics, cache writes).
-The hook manages its own queue and cleans up on unmount.
-useBroadcastState
-Description
-Synchronize a small JSON-serializable state across browser tabs/windows using the BroadcastChannel API, with a fallback to in-tab state when unavailable.
+## Hooks
 
-Signature
+### Utility
 
-Parameters
+| Hook                 | Description                                                   | Docs                                                  |
+| -------------------- | ------------------------------------------------------------- | ----------------------------------------------------- |
+| `useIdleQueue`       | Schedule non-critical tasks during browser idle time          | [API →](docs/api-utility-hooks.md#useidlequeue)       |
+| `useBroadcastState`  | Sync state across browser tabs via `BroadcastChannel`         | [API →](docs/api-utility-hooks.md#usebroadcaststate)  |
+| `useAdaptivePolling` | Run a callback at an interval; slows/pauses when backgrounded | [API →](docs/api-utility-hooks.md#useadaptivepolling) |
+| `useNetworkStatus`   | Reactive `navigator.onLine` + Network Information API         | [API →](docs/api-utility-hooks.md#usenetworkstatus)   |
+| `useIntersection`    | Pooled `IntersectionObserver` with a ref-callback interface   | [API →](docs/api-utility-hooks.md#useintersection)    |
+| `usePageLifecycle`   | Track page visibility, focus, and freeze state                | [API →](docs/api-utility-hooks.md#usepagelifecycle)   |
 
-Name Type Description
-channelName string Unique name for the broadcast channel.
-initialValue T Initial state value (must be JSON-serializable).
-Return value
+### Browser API
 
-[state, setState] — React-style state tuple; setState accepts a value or an updater function.
-Notes
+| Hook               | Description                                                  | Docs                                                |
+| ------------------ | ------------------------------------------------------------ | --------------------------------------------------- |
+| `useStorage`       | `localStorage` / `sessionStorage` with cross-tab sync        | [API →](docs/api-browser-hooks.md#usestorage)       |
+| `usePermission`    | Query and watch Web Permissions API state                    | [API →](docs/api-browser-hooks.md#usepermission)    |
+| `useMediaControls` | Attach to `<audio>`/`<video>` with reactive state + controls | [API →](docs/api-browser-hooks.md#usemediacontrols) |
 
-Values must be structured-clone / JSON-serializable.
-Falls back to local in-tab state when BroadcastChannel is not available.
-The hook performs cleanup on unmount.
-useAdaptivePolling
-Description
-Run a callback at a configurable interval. The hook can pause or slow polling when the page is backgrounded to conserve resources.
+Full API reference:
 
-Signature
+- [Utility Hooks](docs/api-utility-hooks.md)
+- [Browser API Hooks](docs/api-browser-hooks.md)
 
-Parameters
-
-Name Type Default Description
-interval number — Polling interval in milliseconds (required).
-enabled boolean true Enable or disable polling.
-pauseOnBackground boolean true If true, polling is paused when the page is hidden. If false, interval is multiplied by backgroundSlowdownFactor.
-backgroundSlowdownFactor number 5 Multiplier applied to interval when the page is backgrounded (if not paused).
-Return value
-
-void — the hook manages timers internally.
-Notes
-
-The hook listens to page visibility and adjusts polling behavior accordingly.
-Provide a stable callback (e.g., wrapped with useCallback) to avoid unintended restarts.
-Cleans up timers on unmount or when enabled is set to false.
-useNetworkStatus
-Description
-Track navigator online status and, when available, Network Information API fields.
-
-Signature
-
-Return value
-
-online: boolean — current navigator.onLine if available; defaults to true in non-browser contexts.
-effectiveType?: string — navigator.connection.effectiveType when supported.
-downlink?: number — navigator.connection.downlink in Mbps when supported.
-rtt?: number — navigator.connection.rtt in ms when supported.
-Notes
-use-web-kit
-<img src="https://img.shields.io/npm/v/use-web-kit.svg" alt="npm version">
-<img src="https://github.com/tanushbhootra576/use-web-kit/actions/workflows/ci.yml/badge.svg" alt="Build Status">
-<img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT">
-<img src="https://img.shields.io/badge/types-TypeScript-blue.svg" alt="Typescript">
-
-A compact collection of zero-runtime-dependency, TypeScript-first React hooks for common browser interactions: idle work scheduling, cross-tab state, adaptive polling, network information, intersection observation, and page lifecycle.
-
-This document provides installation, concise examples, API reference, SSR notes, testing guidance, contribution guidelines, and license information.
-
-## Package
-
-- Name: use-web-kit
-- Version: 0.1.0
-- Repository: https://github.com/tanushbhootra576/use-web-kit
+---
 
 ## Features
 
 - Zero runtime dependencies
-- Tree-shakeable named exports
-- TypeScript typings included
+- Tree-shakeable named exports — import only what you use
+- Strict TypeScript typings included
+- SSR-safe — all hooks guard `window` / `navigator` access
 - Graceful fallbacks for unsupported browser APIs
-- Small runtime surface and predictable cleanup behavior
 
-## Installation
+---
 
-## Quick example
+## SSR Compatibility
 
-## API Reference
+Every hook tests for `window`, `navigator`, and the relevant API before accessing it. In a server render:
 
-All hooks are exported as named exports. Import only the hooks you need to keep bundles minimal.
+- `useStorage` returns `initialValue`
+- `usePermission` returns `{ state: "unavailable", loading: false }`
+- `useNetworkStatus` returns `{ online: true }`
+- `useIntersection` returns `{ isIntersecting: false, entry: undefined }`
+- `usePageLifecycle` returns `{ visible: false, focused: false, frozen: false }`
+- `useMediaControls` returns default state with a no-op ref
 
-Each hook section follows the same structure: Description, Signature, Parameters (when applicable), Return value, and Notes.
+---
 
-useIdleQueue
-Description
-Queue non-urgent tasks to run during browser idle time. Uses requestIdleCallback when available, otherwise a setTimeout fallback.
+## Bundle / Tree-shaking
 
-Signature
+All hooks are named exports at the package root:
 
-Parameters
+```ts
+import { useIdleQueue } from "use-web-kit"; // only useIdleQueue bundled
+import { useStorage, usePermission } from "use-web-kit"; // two hooks bundled
+```
 
-Name Type Default Description
-timeout number undefined Maximum wait time (ms) before forcing execution of queued tasks.
-fallbackInterval number 50 Interval (ms) used by the setTimeout fallback.
-Return value
+The package ships both ESM (`dist/index.mjs`) and CJS (`dist/index.js`) builds via `tsup`.
 
-enqueue(task) — enqueue a task to run during idle time.
-clearQueue() — clear pending tasks.
-queueLength — current number of queued tasks.
-Notes
+---
 
-Intended for best-effort background work (analytics, cache writes).
-The hook manages its own queue and cleans up on unmount.
-useBroadcastState
-Description
-Synchronize a small JSON-serializable state across browser tabs/windows using the BroadcastChannel API, with a fallback to in-tab state when unavailable.
+## Testing
 
-Signature
+```bash
+npm test            # run all tests once
+npm test -- --watch # watch mode
+```
 
-Parameters
+All hooks are thoroughly tested with [Jest](https://jestjs.io/) and [@testing-library/react](https://testing-library.com/docs/react-testing-library/intro/).
 
-Name Type Description
-channelName string Unique name for the broadcast channel.
-initialValue T Initial state value (must be JSON-serializable).
-Return value
+---
 
-[state, setState] — React-style state tuple; setState accepts a value or an updater function.
-Notes
+## Contributing
 
-Values must be structured-clone / JSON-serializable.
-Falls back to local in-tab state when BroadcastChannel is not available.
-The hook performs cleanup on unmount.
-useAdaptivePolling
-Description
-Run a callback at a configurable interval. The hook can pause or slow polling when the page is backgrounded to conserve resources.
+1. Fork the repo and create a feature branch.
+2. `npm install` to set up dependencies.
+3. Write tests alongside your changes.
+4. Ensure `npm test` passes with no failures.
+5. Open a pull request with a clear description.
 
-Signature
+---
 
-Parameters
+## License
 
-Name Type Default Description
-interval number — Polling interval in milliseconds (required).
-enabled boolean true Enable or disable polling.
-pauseOnBackground boolean true If true, polling is paused when the page is hidden. If false, interval is multiplied by backgroundSlowdownFactor.
-backgroundSlowdownFactor number 5 Multiplier applied to interval when the page is backgrounded (if not paused).
-Return value
-
-void — the hook manages timers internally.
-Notes
-
-The hook listens to page visibility and adjusts polling behavior accordingly.
-Provide a stable callback (e.g., wrapped with useCallback) to avoid unintended restarts.
-Cleans up timers on unmount or when enabled is set to false.
-useNetworkStatus
-Description
-Track navigator online status and, when available, Network Information API fields.
-
-Signature
-
-Return value
-
-online: boolean — current navigator.onLine if available; defaults to true in non-browser contexts.
-effectiveType?: string — navigator.connection.effectiveType when supported.
-downlink?: number — navigator.connection.downlink in Mbps when supported.
-rtt?: number — navigator.connection.rtt in ms when supported.
-Notes
-
-Listens to online/offline events and navigator.connection change events when available.
-Graceful fallback when the Network Information API is not supported.
-SSR-safe: does not access window/navigator during server render and returns safe defaults.
-useIntersection
-Description
-Observe element visibility using a pooled IntersectionObserver implementation to reduce the number of observers created for identical options.
-
-Signature
-
-Parameters
-
-Name Type Default Description
-root `Element	null` null
-rootMargin string undefined Root margin string.
-threshold number | number[] undefined Threshold(s) for intersection ratio.
-Return value
-
-ref(node) — assignable ref callback for the observed element.
-isIntersecting: boolean — whether the element is currently intersecting.
-entry?: IntersectionObserverEntry — most recent entry when available.
-Notes
-
-Uses observer pooling: hooks created with identical options share an IntersectionObserver instance.
-SSR fallback: returns isIntersecting = false and entry = undefined when IntersectionObserver is not present.
-Observers and internal callbacks are cleaned up on unmount or when ref changes.
-usePageLifecycle
-Description
-Track page visibility, window focus, and freeze state where supported.
-
-Signature
-
-Return value
-
-visible: boolean — whether document.visibilityState === 'visible'.
-focused: boolean — result of document.hasFocus() when available.
-frozen: boolean — reflects freeze/pagehide state when supported.
-Notes
-
-Listens to visibilitychange, focus, blur, freeze, and pagehide events where supported and removes listeners on unmount.
-SSR-safe: returns defaults when document/window are not available.
-SSR compatibility
-
-All hooks perform runtime checks before accessing browser globals. On the server:
-
-- No event listeners, observers, or timers are created.
-- Hooks return safe defaults (booleans, undefined for optional fields).
-- Example: useNetworkStatus returns an online boolean (default true) when navigator is not available.
-- This minimizes differences between server and client renders while avoiding server-side side effects.
-
-Bundle size and tree-shaking
-
-Hooks are exported as named exports to enable tree-shaking by modern bundlers; import only the hooks you use to minimize bundle size.
-The library focuses on a small runtime surface; actual bundle size depends on the consumer's bundler and minification settings.
-
-Testing
-
-- Unit tests use Jest with the jsdom environment.
-- Browser APIs are mocked where needed (e.g., navigator.connection, IntersectionObserver, document.visibilityState) to verify behavior and cleanup.
-- Tests validate event registration and teardown to prevent leaks across mounts/unmounts.
-
-Contributing
-
-- Open an issue to discuss API changes or major work before implementing breaking changes.
-- Add unit tests for new features and for listener/observer cleanup.
-- Keep runtime dependencies to zero; dev-dependencies for testing/building are acceptable.
-- Follow the existing TypeScript configuration and coding style.
-- Create a pull request against main with a clear description and test coverage for changes.
-
-  ### Developed by Tanush Bhootra
+[MIT](LICENSE)
