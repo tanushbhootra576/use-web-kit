@@ -1,44 +1,65 @@
 # Node.js
 node_modules/
+.pnp
+.pnp.js
 
 # Build outputs
 dist/
 build/
+.next/
+out/
 
 # TypeScript
 *.tsbuildinfo
 
 # Logs
+logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
 
 # Testing
 coverage/
+.nyc_output
 
 # IDE files
 .vscode/
 .idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # OS files
 .DS_Store
+.AppleDouble
+.LSOverride
 Thumbs.db
+Icon
 
 # Misc
 .env
 .env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-# npm
-package-lock.json
+# npm/Yarn/pnpm/Bun
 yarn.lock
+pnpm-lock.yaml
+bun.lockb
 
-# Others
-*.swp
-*.swo
+# Caches
+.eslintcache
+.jest/
+.tsup/
 
 # Ignore local config
 local.settings.json
 
-# Ignore Jest cache
-.jest/
-
-# Ignore tsup cache
-.tsup/
+# Ignore generated skills folder
+skills/

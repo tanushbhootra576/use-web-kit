@@ -1,0 +1,42 @@
+# Development & Source
+src/
+__tests__/
+coverage/
+.jest/
+test-app/
+scripts/
+
+# Docs
+docs/
+docs-site/
+
+# Tooling & Config
+.changeset/
+.github/
+.husky/
+.idea/
+.vscode/
+tsup.config.ts
+tsconfig.json
+jest.config.js
+lint-staged.config.js
+.size-limit.json
+AGENTS.md
+CONTRIBUTING.md
+.npmignore
+.gitignore
+skills/
+
+# Lockfiles & Misc
+yarn.lock
+pnpm-lock.yaml
+*.log
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+.env
+.env.*
+*.tsbuildinfo
+.tsup/
+node_modules/

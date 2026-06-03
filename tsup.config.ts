@@ -10,4 +10,10 @@ export default defineConfig({
     external: ['react', 'react-dom'],
     treeshake: true,
     splitting: false,
+    outExtension({ format }) {
+        return { js: format === 'cjs' ? '.cjs' : '.mjs' };
+    },
+    banner: {
+        js: '"use client";'
+    }
 });

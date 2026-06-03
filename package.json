@@ -1,46 +1,75 @@
 {
   "name": "use-web-kit",
-  "version": "1.0.0",
-  "description": "A highly optimized, zero-dependency, lightweight npm library for React custom hooks focusing on performance and Browser APIs.",
+  "version": "1.1.0",
+  "description": "A zero-cost performance toolkit for React 19. Global singletons, RAF-batched updates, and perfect hydration without external dependencies.",
+  "sideEffects": false,
   "main": "dist/index.cjs",
-  "module": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
       },
       "require": {
-        "types": "./dist/index.d.cts",
+        "types": "./dist/index.d.ts",
         "default": "./dist/index.cjs"
       }
     }
   },
+  "bin": {
+    "use-web-kit": "bin/init.js"
+  },
   "files": [
-    "dist"
+    "dist",
+    "bin",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "scripts": {
     "build": "tsup",
-    "name": "use-web-kit",
     "test": "jest --env=jsdom",
     "test:watch": "jest --watch",
     "lint": "tsc --noEmit",
-    "prepublishOnly": "npm run build",
-    "release": "npm test && npm run build && npm version patch && npm publish"
+    "size": "size-limit",
+    "changeset": "changeset",
+    "version": "changeset version",
+    "release": "npm run build && changeset publish",
+    "prepare": "node -e \"try{require('./node_modules/.bin/husky')}catch(e){}\""
   },
   "keywords": [
     "react",
+    "react19",
     "hooks",
     "custom-hooks",
+    "nextjs",
+    "nextjs15",
+    "performance",
+    "zero-dependency",
+    "typescript",
+    "intersection-observer",
+    "web-workers",
+    "broadcast-channel",
+    "requestIdleCallback",
+    "useSyncExternalStore",
+    "ssr",
+    "browser-api",
+    "useIntersection",
+    "useWorkerPool",
     "useIdleQueue",
     "useBroadcastState",
     "useAdaptivePolling",
-    "requestIdleCallback",
-    "BroadcastChannel",
-    "Page Visibility API",
-    "polling",
-    "typescript"
+    "useNetworkStatus",
+    "usePageLifecycle",
+    "usePermission",
+    "useDebouncedStorage",
+    "useStorage",
+    "useEventPipeline",
+    "useActionPipeline",
+    "useMediaControls",
+    "useSmartIntersection"
   ],
   "author": "Tanush Bhootra <https://github.com/tanushbhootra576>",
   "license": "MIT",
@@ -53,11 +82,12 @@
   },
   "homepage": "https://github.com/tanushbhootra576/use-web-kit#readme",
   "peerDependencies": {
-    "react": ">=16.8.0"
+    "react": ">=18.0.0"
   },
   "devDependencies": {
-    "@testing-library/react": "^16.1.0",
+    "@tailwindcss/postcss": "^4.2.4",
     "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
     "@types/jest": "^29.5.14",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
@@ -65,8 +95,13 @@
     "jest-environment-jsdom": "^29.7.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "tailwindcss": "^4.2.4",
     "ts-jest": "^29.2.5",
+    "ts-morph": "^28.0.0",
     "tsup": "^8.3.5",
     "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "use-web-kit": "^1.1.0"
   }
 }
