@@ -71,7 +71,6 @@ export const TOP_NAV_LINKS: NavItem[] = [
   { label: "Docs", href: "/docs" },
   { label: "API", href: "/docs/api" },
   { label: "Architecture", href: "/architecture" },
-  { label: "Changelog", href: "/changelog" },
 ];
 
 export interface FooterLinkGroup {
@@ -94,7 +93,6 @@ export const FOOTER_LINKS: FooterLinkGroup[] = [
     links: [
       { label: "Contributing", href: "/contributing" },
       { label: "GitHub", href: "https://github.com/tanushbhootra576/use-web-kit", external: true },
-      { label: "Changelog", href: "/changelog" },
       { label: "Roadmap", href: "/roadmap" },
     ],
   },
