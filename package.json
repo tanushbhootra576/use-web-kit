@@ -33,16 +33,8 @@
     "test": "jest --env=jsdom",
     "test:watch": "jest --watch",
     "lint": "tsc --noEmit",
-<<<<<<< HEAD
-    "size": "size-limit",
-    "changeset": "changeset",
-    "version": "changeset version",
-    "release": "npm run build && changeset publish",
-    "prepare": "node -e \"try{require('./node_modules/.bin/husky')}catch(e){}\""
-=======
     "prepublishOnly": "npm run build",
     "release": "npm test && npm run build && npm version patch && npm publish"
->>>>>>> cad53af05773fcc07c4594153dc696afa10f531f
   },
   "keywords": [
     "react",
