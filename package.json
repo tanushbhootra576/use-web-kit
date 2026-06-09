@@ -1,6 +1,6 @@
 {
   "name": "use-web-kit",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A zero-cost performance toolkit for React 19. Global singletons, RAF-batched updates, and perfect hydration without external dependencies.",
   "sideEffects": false,
   "main": "dist/index.cjs",
