@@ -88,11 +88,9 @@ Full API reference:
 - Strict TypeScript typings included
 - SSR-safe — all hooks guard `window` / `navigator` access
 - Graceful fallbacks for unsupported browser APIs
->>>>>>> cad53af05773fcc07c4594153dc696afa10f531f
 
 ---
 
-<<<<<<< HEAD
 \`\`\`bash
 npm install use-web-kit
 \`\`\`
