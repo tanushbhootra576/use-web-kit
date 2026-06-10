@@ -1,6 +1,6 @@
 # use-web-kit
 
-<<<<<<< HEAD
+
 [![NPM Version](https://img.shields.io/npm/v/use-web-kit.svg)](https://www.npmjs.com/package/use-web-kit)
 [![CI Status](https://github.com/tanushbhootra576/use-web-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/tanushbhootra576/use-web-kit/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
@@ -198,4 +198,4 @@ All hooks are thoroughly tested with [Jest](https://jestjs.io/) and [@testing-li
 ## License
 
 [MIT](LICENSE)
->>>>>>> cad53af05773fcc07c4594153dc696afa10f531f
+
