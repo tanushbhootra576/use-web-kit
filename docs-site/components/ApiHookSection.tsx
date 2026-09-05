@@ -14,6 +14,11 @@ export default function ApiHookSection({ hook }: { hook: HookDoc }) {
           <span className="font-mono text-[10px] uppercase tracking-[0.15em] px-2.5 py-1 bg-accent/[0.08] text-accent border border-accent/15 font-semibold">
             {hook.domain}
           </span>
+          {hook.isNew && (
+            <span className="font-mono text-[10px] uppercase tracking-[0.15em] px-2.5 py-1 bg-green-500/[0.1] text-green-400 border border-green-500/20 font-semibold">
+              NEW
+            </span>
+          )}
         </div>
         <h2 id={`${hook.id}-heading`} className="text-3xl lg:text-4xl font-bold text-white tracking-[-0.03em] mb-4 flex items-baseline gap-1.5">
           <span className="text-accent/60 font-mono font-normal text-2xl">use</span>

@@ -30,6 +30,7 @@ export interface HookDoc {
   codePreview: string; // added for compatibility
   tags: string[]; // added for compatibility
   notes?: string[];
+  isNew?: boolean;
 }
 
 export type HookMeta = HookDoc;
@@ -74,6 +75,7 @@ export function LazyImage({ src }: { src: string }) {
     id: "useElementDimensions",
     name: "useElementDimensions",
     domain: "DOM",
+    isNew: true,
     description: "O(1) DOM measurement hook using a module-level ResizeObserver singleton. Prevents memory leaks by strictly following React 19 ref callback cleanup patterns.",
     signature: "function useElementDimensions(): { ref, dimensions }",
     options: [],
@@ -96,6 +98,7 @@ return <div ref={ref}>Width: {dimensions?.width ?? 0}px</div>;`
     id: "useIntentObserver",
     name: "useIntentObserver",
     domain: "DOM",
+    isNew: true,
     description: "Predictive hover pre-fetching using global mouse velocity and vector prediction, coupled with an O(1) IntersectionObserver rect cache.",
     signature: "function useIntentObserver(options: UseIntentObserverOptions): { ref }",
     options: [
@@ -250,6 +253,7 @@ enqueue(() => sendAnalytics(data));`
     id: "useChunkedTask",
     name: "useChunkedTask",
     domain: "Concurrency",
+    isNew: true,
     description: "Processes large datasets without blocking the main thread. Utilizes scheduler.yield() to yield to user input, maintaining optimal INP metrics.",
     signature: "function useChunkedTask<TIn, TOut>(options?: UseChunkedTaskOptions): { run, cancel, state }",
     options: [
@@ -275,6 +279,7 @@ return <div>Progress: {state.progress * 100}%</div>;`
     id: "useSharedWorkerPool",
     name: "useSharedWorkerPool",
     domain: "Concurrency",
+    isNew: true,
     description: "Enterprise multi-tab sync and offloading. Spawns a single SharedWorker that all open tabs connect to via MessagePorts, eliminating redundant server connections.",
     signature: "function useSharedWorkerPool<TIn, TOut>(options: UseSharedWorkerPoolOptions): UseSharedWorkerPoolReturn<TIn, TOut>",
     options: [
@@ -369,6 +374,7 @@ return <textarea value={value} onChange={e => setValue(e.target.value)} onBlur={
     id: "useHeavyStorage",
     name: "useHeavyStorage",
     domain: "State",
+    isNew: true,
     description: "Asynchronously stores and retrieves GBs of Blobs, ArrayBuffers, or Strings using the modern Origin Private File System (OPFS), entirely off the main thread.",
     signature: "function useHeavyStorage(): UseHeavyStorageReturn",
     options: [],
@@ -515,6 +521,7 @@ useEffect(() => { if (!visible) video.pause(); }, [visible]);`
     id: "useAdaptivePerformance",
     name: "useAdaptivePerformance",
     domain: "BOM",
+    isNew: true,
     description: "SSR-safe hardware capability observer using useSyncExternalStore. Dynamically categorizes devices into high/medium/low tiers for graceful degradation.",
     signature: "function useAdaptivePerformance(): AdaptivePerformanceMetrics",
     options: [],
@@ -541,7 +548,7 @@ export const HOOKS_DATA: HookDoc[] = RAW_HOOKS_DATA.map(h => ({
   ...h,
   slug: h.id,
   category: h.domain,
-  tags: [h.domain, 'React 19'],
+  tags: [h.domain, 'React 19', ...(h.isNew ? ['New'] : [])],
   codePreview: h.examples[0]?.code ?? ""
 })) as HookDoc[];
 

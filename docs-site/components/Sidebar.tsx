@@ -34,8 +34,8 @@ const NAVIGATION: SidebarGroup[] = [
       { name: 'useSmartIntersection', href: '/docs/api#useSmartIntersection', badge: 'rec' },
       { name: 'useIntersection', href: '/docs/api#useIntersection' },
       { name: 'useMediaControls', href: '/docs/api#useMediaControls' },
-      { name: 'useElementDimensions', href: '/docs/api#useElementDimensions', badge: 'rec' },
-      { name: 'useIntentObserver', href: '/docs/api#useIntentObserver', badge: 'rec' },
+      { name: 'useElementDimensions', href: '/docs/api#useElementDimensions', badge: 'new' },
+      { name: 'useIntentObserver', href: '/docs/api#useIntentObserver', badge: 'new' },
     ]
   },
   {
@@ -43,8 +43,8 @@ const NAVIGATION: SidebarGroup[] = [
     count: 5,
     links: [
       { name: 'useWorkerPool', href: '/docs/api#useWorkerPool' },
-      { name: 'useSharedWorkerPool', href: '/docs/api#useSharedWorkerPool', badge: 'rec' },
-      { name: 'useChunkedTask', href: '/docs/api#useChunkedTask', badge: 'rec' },
+      { name: 'useSharedWorkerPool', href: '/docs/api#useSharedWorkerPool', badge: 'new' },
+      { name: 'useChunkedTask', href: '/docs/api#useChunkedTask', badge: 'new' },
       { name: 'useIdleQueue', href: '/docs/api#useIdleQueue' },
       { name: 'useAdaptivePolling', href: '/docs/api#useAdaptivePolling' },
     ]
@@ -54,7 +54,7 @@ const NAVIGATION: SidebarGroup[] = [
     count: 4,
     links: [
       { name: 'useDebouncedStorage', href: '/docs/api#useDebouncedStorage', badge: 'rec' },
-      { name: 'useHeavyStorage', href: '/docs/api#useHeavyStorage', badge: 'rec' },
+      { name: 'useHeavyStorage', href: '/docs/api#useHeavyStorage', badge: 'new' },
       { name: 'useStorage', href: '/docs/api#useStorage' },
       { name: 'useBroadcastState', href: '/docs/api#useBroadcastState' },
     ]
@@ -71,7 +71,7 @@ const NAVIGATION: SidebarGroup[] = [
     section: 'BOM',
     count: 4,
     links: [
-      { name: 'useAdaptivePerformance', href: '/docs/api#useAdaptivePerformance', badge: 'rec' },
+      { name: 'useAdaptivePerformance', href: '/docs/api#useAdaptivePerformance', badge: 'new' },
       { name: 'useNetworkStatus', href: '/docs/api#useNetworkStatus' },
       { name: 'usePageLifecycle', href: '/docs/api#usePageLifecycle' },
       { name: 'usePermission', href: '/docs/api#usePermission' },
@@ -147,6 +147,9 @@ export default function Sidebar() {
                           {link.name}
                           {link.badge === 'rec' && (
                             <span className="text-[8px] font-mono uppercase tracking-wider text-accent/60 bg-accent/[0.08] px-1.5 py-0.5 border border-accent/10">rec</span>
+                          )}
+                          {link.badge === 'new' && (
+                            <span className="text-[8px] font-mono uppercase tracking-wider text-green-400/80 bg-green-500/[0.08] px-1.5 py-0.5 border border-green-500/20">new</span>
                           )}
                         </span>
                       </Link>
