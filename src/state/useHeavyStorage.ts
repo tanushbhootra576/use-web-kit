@@ -20,7 +20,7 @@ export function useHeavyStorage(): UseHeavyStorageReturn {
   const [isSupported, setIsSupported] = useState(false);
 
   useEffect(() => {
-    if (typeof navigator !== "undefined" && navigator.storage && navigator.storage.getDirectory) {
+    if (typeof navigator !== "undefined" && navigator.storage && "getDirectory" in navigator.storage) {
       setIsSupported(true);
     }
   }, []);
