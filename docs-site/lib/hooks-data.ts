@@ -572,6 +572,379 @@ return <HeavyWebGLCanvas />;`
     ],
     notes: ["Automatically downgrades on 'saveData' or poor network conditions."]
   }
+  ,
+  {
+  "id": "useViewTransition",
+  "name": "useViewTransition",
+  "domain": "DOM",
+  "isNew": true,
+  "description": "Wraps the native View Transitions API with a React-safe wrapper. Falls back gracefully for older browsers.",
+  "signature": "function useViewTransition(): UseViewTransitionReturn",
+  "options": [],
+  "returns": [
+    {
+      "name": "startTransition",
+      "type": "(updateFn: () => void | Promise<void>) => Promise<void>",
+      "description": "Trigger a view transition"
+    },
+    {
+      "name": "isTransitioning",
+      "type": "boolean",
+      "description": "True during the transition"
+    },
+    {
+      "name": "isSupported",
+      "type": "boolean",
+      "description": "True if View Transitions API is supported"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Page Transition",
+      "code": "const { startTransition } = useViewTransition();\n\nconst handleClick = () => {\n  startTransition(() => {\n    setPage(nextPage);\n  });\n};"
+    }
+  ]
+},
+  {
+  "id": "useOptimisticQueue",
+  "name": "useOptimisticQueue",
+  "domain": "State",
+  "isNew": true,
+  "description": "Manages a queue of optimistic mutations with automatic rollback on server error.",
+  "signature": "function useOptimisticQueue<T>(initialItems: T[]): UseOptimisticQueueReturn<T>",
+  "options": [
+    {
+      "name": "initialItems",
+      "type": "T[]",
+      "description": "Initial dataset"
+    }
+  ],
+  "returns": [
+    {
+      "name": "items",
+      "type": "T[]",
+      "description": "Current optimistically updated list"
+    },
+    {
+      "name": "enqueue",
+      "type": "(item: T, serverCall: () => Promise<T[]>) => void",
+      "description": "Add optimistic item & start server call"
+    },
+    {
+      "name": "isPending",
+      "type": "boolean",
+      "description": "True if any server calls in flight"
+    },
+    {
+      "name": "error",
+      "type": "Error | null",
+      "description": "Last rollback error"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Optimistic Add",
+      "code": "const { items, enqueue } = useOptimisticQueue(todos);\n\nenqueue(newTodo, () => api.add(newTodo));"
+    }
+  ]
+},
+  {
+  "id": "useInfiniteScroll",
+  "name": "useInfiniteScroll",
+  "domain": "DOM",
+  "isNew": true,
+  "description": "Built on top of a module-level O(1) IntersectionObserver singleton for efficient infinite scrolling.",
+  "signature": "function useInfiniteScroll(options: UseInfiniteScrollOptions): { sentinelRef: RefCallback, isLoading: boolean }",
+  "options": [
+    {
+      "name": "onLoadMore",
+      "type": "() => void | Promise<void>",
+      "description": "Callback when intersection occurs"
+    },
+    {
+      "name": "hasMore",
+      "type": "boolean",
+      "description": "If true, observe sentinel"
+    },
+    {
+      "name": "threshold",
+      "type": "number",
+      "description": "Intersection threshold (default 0.1)"
+    }
+  ],
+  "returns": [
+    {
+      "name": "sentinelRef",
+      "type": "(el: Element | null) => (() => void) | void",
+      "description": "Ref callback for the bottom element"
+    },
+    {
+      "name": "isLoading",
+      "type": "boolean",
+      "description": "True when load is in progress"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Infinite List",
+      "code": "const { sentinelRef, isLoading } = useInfiniteScroll({\n  onLoadMore: fetchNextPage,\n  hasMore: !!nextCursor\n});\n\nreturn <div>{items.map(Item)}<div ref={sentinelRef} /></div>;"
+    }
+  ]
+},
+  {
+  "id": "useAIStream",
+  "name": "useAIStream",
+  "domain": "Concurrency",
+  "isNew": true,
+  "description": "Consumes a ReadableStream<Uint8Array> from any LLM API endpoint with SSE and back-pressure support.",
+  "signature": "function useAIStream(): UseAIStreamReturn",
+  "options": [],
+  "returns": [
+    {
+      "name": "text",
+      "type": "string",
+      "description": "Accumulated AI text"
+    },
+    {
+      "name": "done",
+      "type": "boolean",
+      "description": "True when stream completes"
+    },
+    {
+      "name": "streaming",
+      "type": "boolean",
+      "description": "True while streaming"
+    },
+    {
+      "name": "stream",
+      "type": "(res: Response | ReadableStream) => void",
+      "description": "Start processing a stream"
+    },
+    {
+      "name": "abort",
+      "type": "() => void",
+      "description": "Abort current stream"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Chat Completion",
+      "code": "const { text, streaming, stream } = useAIStream();\n\nconst ask = async () => {\n  const res = await fetch('/api/chat');\n  stream(res);\n};"
+    }
+  ]
+},
+  {
+  "id": "useKeyboardShortcut",
+  "name": "useKeyboardShortcut",
+  "domain": "DOM",
+  "isNew": true,
+  "description": "ONE global keydown listener shared across all subscribers (O(1)). Parses cmd/ctrl/shift modifiers.",
+  "signature": "function useKeyboardShortcut(key: string, callback: (e: KeyboardEvent) => void, options?: UseKeyboardShortcutOptions): void",
+  "options": [
+    {
+      "name": "key",
+      "type": "string",
+      "description": "Shortcut e.g., 'cmd+k', 'ctrl+shift+p'"
+    },
+    {
+      "name": "callback",
+      "type": "(e: KeyboardEvent) => void",
+      "description": "Event handler"
+    },
+    {
+      "name": "options",
+      "type": "UseKeyboardShortcutOptions",
+      "description": "{ enabled?: boolean, preventDefault?: boolean, target?: 'window'|'document' }"
+    }
+  ],
+  "returns": [],
+  "examples": [
+    {
+      "title": "Command Palette",
+      "code": "useKeyboardShortcut('cmd+k', () => {\n  setPaletteOpen(true);\n});"
+    }
+  ]
+},
+  {
+  "id": "useDebounce",
+  "name": "useDebounce",
+  "domain": "Concurrency",
+  "isNew": true,
+  "description": "Debounces a changing value. Strict cleanup to prevent memory leaks.",
+  "signature": "function useDebounce<T>(value: T, delay: number): T",
+  "options": [
+    {
+      "name": "value",
+      "type": "T",
+      "description": "Value to debounce"
+    },
+    {
+      "name": "delay",
+      "type": "number",
+      "description": "Debounce delay in ms"
+    }
+  ],
+  "returns": [
+    {
+      "name": "debouncedValue",
+      "type": "T",
+      "description": "The debounced value"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Search Query",
+      "code": "const debouncedQuery = useDebounce(searchQuery, 300);"
+    }
+  ]
+},
+  {
+  "id": "useThrottle",
+  "name": "useThrottle",
+  "domain": "Concurrency",
+  "isNew": true,
+  "description": "Throttles a changing value. Strict cleanup to prevent memory leaks.",
+  "signature": "function useThrottle<T>(value: T, interval: number): T",
+  "options": [
+    {
+      "name": "value",
+      "type": "T",
+      "description": "Value to throttle"
+    },
+    {
+      "name": "interval",
+      "type": "number",
+      "description": "Throttle interval in ms"
+    }
+  ],
+  "returns": [
+    {
+      "name": "throttledValue",
+      "type": "T",
+      "description": "The throttled value"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Scroll Position",
+      "code": "const throttledScroll = useThrottle(scrollY, 100);"
+    }
+  ]
+},
+  {
+  "id": "useWindowSize",
+  "name": "useWindowSize",
+  "domain": "BOM",
+  "isNew": true,
+  "description": "Module-level singleton listening to window resize via RAF-debounced handler. SSR-safe.",
+  "signature": "function useWindowSize(): WindowSize",
+  "options": [],
+  "returns": [
+    {
+      "name": "width",
+      "type": "number",
+      "description": "Window width"
+    },
+    {
+      "name": "height",
+      "type": "number",
+      "description": "Window height"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Responsive Check",
+      "code": "const { width } = useWindowSize();\nconst isMobile = width < 768;"
+    }
+  ]
+},
+  {
+  "id": "useScrollProgress",
+  "name": "useScrollProgress",
+  "domain": "DOM",
+  "isNew": true,
+  "description": "React 19 ref callback pattern. Observes scroll on a target element or window with RAF syncing.",
+  "signature": "function useScrollProgress(): { ref: RefCallback, progress: number }",
+  "options": [],
+  "returns": [
+    {
+      "name": "ref",
+      "type": "(el: Element | null) => (() => void) | void",
+      "description": "Ref callback for scroll container (if not window)"
+    },
+    {
+      "name": "progress",
+      "type": "number",
+      "description": "Scroll progress from 0 to 1"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Reading Progress Bar",
+      "code": "const { ref, progress } = useScrollProgress();\n<div ref={ref}>\n  <ProgressBar value={progress} />\n</div>"
+    }
+  ]
+},
+  {
+  "id": "useClipboard",
+  "name": "useClipboard",
+  "domain": "BOM",
+  "isNew": true,
+  "description": "SSR safe clipboard reading and writing with success state reset.",
+  "signature": "function useClipboard(resetDelay?: number): { copy: (text: string) => Promise<void>, copied: boolean, error: Error | null }",
+  "options": [
+    {
+      "name": "resetDelay",
+      "type": "number",
+      "description": "Ms to wait before resetting copied state (default 2000)"
+    }
+  ],
+  "returns": [
+    {
+      "name": "copy",
+      "type": "(text: string) => Promise<void>",
+      "description": "Copies text to clipboard"
+    },
+    {
+      "name": "copied",
+      "type": "boolean",
+      "description": "True if recently copied"
+    },
+    {
+      "name": "error",
+      "type": "Error | null",
+      "description": "Clipboard error if any"
+    }
+  ],
+  "examples": [
+    {
+      "title": "Copy Button",
+      "code": "const { copy, copied } = useClipboard();\n<button onClick={() => copy('text')}>{copied ? 'Copied!' : 'Copy'}</button>"
+    }
+  ]
+},
+  {
+  "id": "useLockBodyScroll",
+  "name": "useLockBodyScroll",
+  "domain": "BOM",
+  "isNew": true,
+  "description": "Locks document.body scroll. Ref-counts multiple concurrent callers safely.",
+  "signature": "function useLockBodyScroll(): (el: Element | null) => (() => void) | void",
+  "options": [],
+  "returns": [
+    {
+      "name": "ref",
+      "type": "(el: Element | null) => (() => void) | void",
+      "description": "Ref callback. Locks on mount, unlocks on unmount."
+    }
+  ],
+  "examples": [
+    {
+      "title": "Modal Scroll Lock",
+      "code": "const lockRef = useLockBodyScroll();\nreturn <div ref={lockRef}>Modal Content</div>;"
+    }
+  ]
+}
 ];
 
 export const HOOKS_DATA: HookDoc[] = RAW_HOOKS_DATA.map(h => ({

@@ -119,3 +119,43 @@ npm test -- --watch # watch mode
 ## License
 
 [MIT](LICENSE) - Engineered for modern web applications.
+
+## New Enterprise Hooks
+
+- `useViewTransition` — Native View Transitions API wrapper, graceful fallback
+- `useOptimisticQueue` — Optimistic mutations with auto-rollback on server error
+- `useInfiniteScroll` — Built on the existing O(1) IntersectionObserver singleton
+- `useAIStream` — ReadableStream LLM consumer with SSE, abort, useReducer state
+- `useKeyboardShortcut` — ONE shared keydown listener, parses cmd+k, ctrl+shift+p
+- `useDebounce` + `useDebouncedCallback`
+- `useThrottle` + `useThrottledCallback`
+- `useWindowSize` — Singleton window size listener, SSR safe
+- `useScrollProgress` — React 19 ref callback pattern, RAF synced
+- `useClipboard` — SSR safe clipboard reader/writer with timeout reset
+- `useLockBodyScroll` — Ref-counted scroll lock for modals
+## New Enterprise Hooks
+
+- `useViewTransition` — Native View Transitions API wrapper, graceful fallback
+- `useOptimisticQueue` — Optimistic mutations with auto-rollback on server error
+- `useInfiniteScroll` — Built on the existing O(1) IntersectionObserver singleton
+- `useAIStream` — ReadableStream LLM consumer with SSE, abort, useReducer state
+- `useKeyboardShortcut` — ONE shared keydown listener, parses cmd+k, ctrl+shift+p
+- `useDebounce` + `useDebouncedCallback`
+- `useThrottle` + `useThrottledCallback`
+- `useWindowSize` — Singleton window size listener, SSR safe
+- `useScrollProgress` — React 19 ref callback pattern, RAF synced
+- `useClipboard` — SSR safe clipboard reader/writer with timeout reset
+- `useLockBodyScroll` — Ref-counted scroll lock for modals
+## New Enterprise Hooks
+
+- `useViewTransition` — Native View Transitions API wrapper, graceful fallback
+- `useOptimisticQueue` — Optimistic mutations with auto-rollback on server error
+- `useInfiniteScroll` — Built on the existing O(1) IntersectionObserver singleton
+- `useAIStream` — ReadableStream LLM consumer with SSE, abort, useReducer state
+- `useKeyboardShortcut` — ONE shared keydown listener, parses cmd+k, ctrl+shift+p
+- `useDebounce` + `useDebouncedCallback`
+- `useThrottle` + `useThrottledCallback`
+- `useWindowSize` — Singleton window size listener, SSR safe
+- `useScrollProgress` — React 19 ref callback pattern, RAF synced
+- `useClipboard` — SSR safe clipboard reader/writer with timeout reset
+- `useLockBodyScroll` — Ref-counted scroll lock for modals
