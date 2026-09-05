@@ -17,16 +17,16 @@ export default function Page() {
             letterSpacing: "0.05em",
           }}
         >
-          Concurrency
+          {`Concurrency`}
         </span>
         <h1
           className="text-4xl font-bold text-white mb-5 tracking-tight"
           style={{ fontFamily: "'JetBrains Mono', monospace" }}
         >
-          useChunkedTask
+          {`useChunkedTask`}
         </h1>
         <p className="text-[#9ca3af] text-[0.95rem] leading-[1.8]">
-          Processes large datasets without blocking the main thread using scheduler.yield.
+          {`Processes large datasets without blocking the main thread using scheduler.yield.`}
         </p>
       </div>
 
@@ -74,17 +74,17 @@ run(hugeArray, item => expensiveCompute(item));`}
 
             <div className="glass-card p-6 rounded-xl border border-[rgba(255,255,255,0.06)]">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-[#a3ff12] font-mono text-sm">run</span>
-                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">(items: TIn[], processor: Function) => Promise<TOut[]></span>
+                <span className="text-[#a3ff12] font-mono text-sm">{`run`}</span>
+                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">{`(items: TIn[], processor: Function) => Promise<TOut[]>`}</span>
               </div>
-              <p className="text-sm text-[#9ca3af] leading-relaxed">Executes the array processor.</p>
+              <p className="text-sm text-[#9ca3af] leading-relaxed">{`Executes the array processor.`}</p>
             </div>
             <div className="glass-card p-6 rounded-xl border border-[rgba(255,255,255,0.06)]">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-[#a3ff12] font-mono text-sm">state</span>
-                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">ChunkedTaskState</span>
+                <span className="text-[#a3ff12] font-mono text-sm">{`state`}</span>
+                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">{`ChunkedTaskState`}</span>
               </div>
-              <p className="text-sm text-[#9ca3af] leading-relaxed">isRunning, progress, result, and error state.</p>
+              <p className="text-sm text-[#9ca3af] leading-relaxed">{`isRunning, progress, result, and error state.`}</p>
             </div>
         </div>
       </div>

@@ -17,16 +17,16 @@ export default function Page() {
             letterSpacing: "0.05em",
           }}
         >
-          Concurrency
+          {`Concurrency`}
         </span>
         <h1
           className="text-4xl font-bold text-white mb-5 tracking-tight"
           style={{ fontFamily: "'JetBrains Mono', monospace" }}
         >
-          useSharedWorkerPool
+          {`useSharedWorkerPool`}
         </h1>
         <p className="text-[#9ca3af] text-[0.95rem] leading-[1.8]">
-          Enterprise multi-tab sync and offloading using a single SharedWorker.
+          {`Enterprise multi-tab sync and offloading using a single SharedWorker.`}
         </p>
       </div>
 
@@ -73,17 +73,17 @@ const { postMessage, broadcast } = useSharedWorkerPool({ workerUrl: "/socket-wor
 
             <div className="glass-card p-6 rounded-xl border border-[rgba(255,255,255,0.06)]">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-[#a3ff12] font-mono text-sm">postMessage</span>
-                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">Function</span>
+                <span className="text-[#a3ff12] font-mono text-sm">{`postMessage`}</span>
+                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">{`Function`}</span>
               </div>
-              <p className="text-sm text-[#9ca3af] leading-relaxed">Send and await a response from the worker.</p>
+              <p className="text-sm text-[#9ca3af] leading-relaxed">{`Send and await a response from the worker.`}</p>
             </div>
             <div className="glass-card p-6 rounded-xl border border-[rgba(255,255,255,0.06)]">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-[#a3ff12] font-mono text-sm">broadcast</span>
-                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">Function</span>
+                <span className="text-[#a3ff12] font-mono text-sm">{`broadcast`}</span>
+                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">{`Function`}</span>
               </div>
-              <p className="text-sm text-[#9ca3af] leading-relaxed">Fire and forget a message.</p>
+              <p className="text-sm text-[#9ca3af] leading-relaxed">{`Fire and forget a message.`}</p>
             </div>
         </div>
       </div>

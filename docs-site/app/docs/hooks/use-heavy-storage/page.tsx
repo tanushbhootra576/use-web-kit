@@ -17,16 +17,16 @@ export default function Page() {
             letterSpacing: "0.05em",
           }}
         >
-          State
+          {`State`}
         </span>
         <h1
           className="text-4xl font-bold text-white mb-5 tracking-tight"
           style={{ fontFamily: "'JetBrains Mono', monospace" }}
         >
-          useHeavyStorage
+          {`useHeavyStorage`}
         </h1>
         <p className="text-[#9ca3af] text-[0.95rem] leading-[1.8]">
-          Asynchronously stores GBs of Blobs using Origin Private File System (OPFS).
+          {`Asynchronously stores GBs of Blobs using Origin Private File System (OPFS).`}
         </p>
       </div>
 
@@ -74,17 +74,17 @@ await save("intro.mp4", blob);`}
 
             <div className="glass-card p-6 rounded-xl border border-[rgba(255,255,255,0.06)]">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-[#a3ff12] font-mono text-sm">save</span>
-                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">Function</span>
+                <span className="text-[#a3ff12] font-mono text-sm">{`save`}</span>
+                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">{`Function`}</span>
               </div>
-              <p className="text-sm text-[#9ca3af] leading-relaxed">Saves data to a virtual file.</p>
+              <p className="text-sm text-[#9ca3af] leading-relaxed">{`Saves data to a virtual file.`}</p>
             </div>
             <div className="glass-card p-6 rounded-xl border border-[rgba(255,255,255,0.06)]">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-[#a3ff12] font-mono text-sm">load</span>
-                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">Function</span>
+                <span className="text-[#a3ff12] font-mono text-sm">{`load`}</span>
+                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">{`Function`}</span>
               </div>
-              <p className="text-sm text-[#9ca3af] leading-relaxed">Retrieves the virtual file.</p>
+              <p className="text-sm text-[#9ca3af] leading-relaxed">{`Retrieves the virtual file.`}</p>
             </div>
         </div>
       </div>

@@ -17,16 +17,16 @@ export default function Page() {
             letterSpacing: "0.05em",
           }}
         >
-          BOM
+          {`BOM`}
         </span>
         <h1
           className="text-4xl font-bold text-white mb-5 tracking-tight"
           style={{ fontFamily: "'JetBrains Mono', monospace" }}
         >
-          useAdaptivePerformance
+          {`useAdaptivePerformance`}
         </h1>
         <p className="text-[#9ca3af] text-[0.95rem] leading-[1.8]">
-          SSR-safe hardware capability observer using useSyncExternalStore.
+          {`SSR-safe hardware capability observer using useSyncExternalStore.`}
         </p>
       </div>
 
@@ -75,17 +75,17 @@ return <HeavyWebGLCanvas />;`}
 
             <div className="glass-card p-6 rounded-xl border border-[rgba(255,255,255,0.06)]">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-[#a3ff12] font-mono text-sm">tier</span>
-                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">"high" | "medium" | "low"</span>
+                <span className="text-[#a3ff12] font-mono text-sm">{`tier`}</span>
+                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">{`"high" | "medium" | "low"`}</span>
               </div>
-              <p className="text-sm text-[#9ca3af] leading-relaxed">Calculated performance tier.</p>
+              <p className="text-sm text-[#9ca3af] leading-relaxed">{`Calculated performance tier.`}</p>
             </div>
             <div className="glass-card p-6 rounded-xl border border-[rgba(255,255,255,0.06)]">
               <div className="flex items-center gap-3 mb-3">
-                <span className="text-[#a3ff12] font-mono text-sm">hardwareConcurrency</span>
-                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">number</span>
+                <span className="text-[#a3ff12] font-mono text-sm">{`hardwareConcurrency`}</span>
+                <span className="text-[11px] text-[#9ca3af] px-2 py-0.5 rounded border border-[rgba(163,255,18,0.2)] bg-[rgba(163,255,18,0.03)] font-mono">{`number`}</span>
               </div>
-              <p className="text-sm text-[#9ca3af] leading-relaxed">Logical CPU cores.</p>
+              <p className="text-sm text-[#9ca3af] leading-relaxed">{`Logical CPU cores.`}</p>
             </div>
         </div>
       </div>
