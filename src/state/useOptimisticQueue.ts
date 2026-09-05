@@ -59,11 +59,14 @@ function reducer<T>(state: State<T>, action: Action<T>): State<T> {
  * Manages a queue of optimistic mutations with automatic rollback on server error.
  */
 export function useOptimisticQueue<T>(initialItems: T[]): UseOptimisticQueueReturn<T> {
-  const [state, dispatch] = useReducer((s: State<T>, a: Action<T>) => reducer(s, a), {
-    items: initialItems,
-    queue: [],
-    error: null,
-  });
+  const [state, dispatch] = useReducer(
+    reducer as (state: State<T>, action: Action<T>) => State<T>, 
+    {
+      items: initialItems,
+      queue: [],
+      error: null,
+    }
+  );
 
   const enqueue = useCallback((optimisticItem: T, serverCall: () => Promise<T[]>) => {
     const id = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).slice(2);
