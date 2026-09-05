@@ -71,6 +71,51 @@ export function LazyImage({ src }: { src: string }) {
     ]
   },
   {
+    id: "useElementDimensions",
+    name: "useElementDimensions",
+    domain: "DOM",
+    description: "O(1) DOM measurement hook using a module-level ResizeObserver singleton. Prevents memory leaks by strictly following React 19 ref callback cleanup patterns.",
+    signature: "function useElementDimensions(): { ref, dimensions }",
+    options: [],
+    returns: [
+      { name: "ref", type: "(node: Element | null) => void | (() => void)", description: "React 19 ref callback to attach to the measured element." },
+      { name: "dimensions", type: "ElementDimensions | null", description: "The width, height, and coordinates of the element." }
+    ],
+    examples: [
+      {
+        title: "Responsive Widget",
+        code: `const { ref, dimensions } = useElementDimensions();
+return <div ref={ref}>Width: {dimensions?.width ?? 0}px</div>;`
+      }
+    ],
+    notes: [
+      "Avoids O(N) observer instantiation by pooling all nodes into one ResizeObserver."
+    ]
+  },
+  {
+    id: "useIntentObserver",
+    name: "useIntentObserver",
+    domain: "DOM",
+    description: "Predictive hover pre-fetching using global mouse velocity and vector prediction, coupled with an O(1) IntersectionObserver rect cache.",
+    signature: "function useIntentObserver(options: UseIntentObserverOptions): { ref }",
+    options: [
+      { name: "onIntent", type: "() => void", description: "Callback fired ~150ms before the user actually clicks or hovers." },
+      { name: "once", type: "boolean", default: "true", description: "If true, intent only triggers once per mount." }
+    ],
+    returns: [
+      { name: "ref", type: "(node: Element | null) => void | (() => void)", description: "React 19 ref callback." }
+    ],
+    examples: [
+      {
+        title: "Predictive Prefetch",
+        code: `const { ref } = useIntentObserver({
+  onIntent: () => prefetch('/heavy-route.js')
+});
+return <a ref={ref} href="/heavy-route">Go</a>;`
+      }
+    ]
+  },
+  {
     id: "useIntersection",
     name: "useIntersection",
     domain: "DOM",
@@ -201,6 +246,57 @@ enqueue(() => sendAnalytics(data));`
       }
     ]
   },
+  {
+    id: "useChunkedTask",
+    name: "useChunkedTask",
+    domain: "Concurrency",
+    description: "Processes large datasets without blocking the main thread. Utilizes scheduler.yield() to yield to user input, maintaining optimal INP metrics.",
+    signature: "function useChunkedTask<TIn, TOut>(options?: UseChunkedTaskOptions): { run, cancel, state }",
+    options: [
+      { name: "chunkTimeMs", type: "number", default: "10", description: "Target milliseconds to block before yielding." }
+    ],
+    returns: [
+      { name: "run", type: "(items: TIn[], processor: Function) => Promise<TOut[]>", description: "Executes the array processor." },
+      { name: "cancel", type: "() => void", description: "Aborts the currently running task." },
+      { name: "state", type: "ChunkedTaskState", description: "isRunning, progress, result, and error state." }
+    ],
+    examples: [
+      {
+        title: "Yielding Main Thread",
+        code: `const { run, state } = useChunkedTask();
+const handleProcess = () => {
+  run(hugeArray, (item) => expensiveCompute(item));
+};
+return <div>Progress: {state.progress * 100}%</div>;`
+      }
+    ]
+  },
+  {
+    id: "useSharedWorkerPool",
+    name: "useSharedWorkerPool",
+    domain: "Concurrency",
+    description: "Enterprise multi-tab sync and offloading. Spawns a single SharedWorker that all open tabs connect to via MessagePorts, eliminating redundant server connections.",
+    signature: "function useSharedWorkerPool<TIn, TOut>(options: UseSharedWorkerPoolOptions): UseSharedWorkerPoolReturn<TIn, TOut>",
+    options: [
+      { name: "workerUrl", type: "string | URL", description: "URL to the worker script." },
+      { name: "name", type: "string", description: "Optional name for grouping SharedWorkers." },
+      { name: "waitForReady", type: "boolean", default: "false", description: "Wait for worker to send READY message." }
+    ],
+    returns: [
+      { name: "postMessage", type: "(msg: TIn) => Promise<TOut>", description: "Send and await a response from the worker." },
+      { name: "broadcast", type: "(msg: TIn) => void", description: "Fire and forget a message to the worker." },
+      { name: "isReady", type: "boolean", description: "Whether the worker connection is established." },
+      { name: "latestMessage", type: "any", description: "The most recent unprompted broadcast from the worker." }
+    ],
+    examples: [
+      {
+        title: "Cross-Tab WebSocket",
+        code: `const { postMessage, latestMessage } = useSharedWorkerPool({
+  workerUrl: '/socket-worker.js'
+});`
+      }
+    ]
+  },
 
   // ─── State ────────────────────────────────────────────────────────────────
   {
@@ -266,6 +362,29 @@ return <textarea value={value} onChange={e => setValue(e.target.value)} onBlur={
       {
         title: "Cart Sync",
         code: `const [cart, setCart] = useBroadcastState('cart_channel', []);`
+      }
+    ]
+  },
+  {
+    id: "useHeavyStorage",
+    name: "useHeavyStorage",
+    domain: "State",
+    description: "Asynchronously stores and retrieves GBs of Blobs, ArrayBuffers, or Strings using the modern Origin Private File System (OPFS), entirely off the main thread.",
+    signature: "function useHeavyStorage(): UseHeavyStorageReturn",
+    options: [],
+    returns: [
+      { name: "save", type: "(key: string, data: Blob | string) => Promise<void>", description: "Saves data to a virtual file." },
+      { name: "load", type: "(key: string) => Promise<File | null>", description: "Retrieves the virtual file." },
+      { name: "remove", type: "(key: string) => Promise<void>", description: "Deletes the virtual file." },
+      { name: "isSupported", type: "boolean", description: "True if OPFS is supported in the current browser." }
+    ],
+    examples: [
+      {
+        title: "Caching Video Blobs",
+        code: `const { save, load } = useHeavyStorage();
+const cacheVideo = async (blob: Blob) => {
+  await save('intro-video.mp4', blob);
+};`
       }
     ]
   },
@@ -391,6 +510,30 @@ useEffect(() => { if (!visible) video.pause(); }, [visible]);`
         code: `const { state, request } = usePermission('notifications');`
       }
     ]
+  },
+  {
+    id: "useAdaptivePerformance",
+    name: "useAdaptivePerformance",
+    domain: "BOM",
+    description: "SSR-safe hardware capability observer using useSyncExternalStore. Dynamically categorizes devices into high/medium/low tiers for graceful degradation.",
+    signature: "function useAdaptivePerformance(): AdaptivePerformanceMetrics",
+    options: [],
+    returns: [
+      { name: "tier", type: "'high' | 'medium' | 'low'", description: "The calculated performance tier." },
+      { name: "hardwareConcurrency", type: "number", description: "Number of logical CPU cores." },
+      { name: "deviceMemory", type: "number", description: "Approximate amount of device RAM in GB." },
+      { name: "saveData", type: "boolean", description: "True if the user has requested reduced data usage." },
+      { name: "effectiveType", type: "string", description: "Network effective type (e.g., '4g', '3g')." }
+    ],
+    examples: [
+      {
+        title: "Conditional Rendering",
+        code: `const { tier } = useAdaptivePerformance();
+if (tier === 'low') return <StaticImage />;
+return <HeavyWebGLCanvas />;`
+      }
+    ],
+    notes: ["Automatically downgrades on 'saveData' or poor network conditions."]
   }
 ];
 

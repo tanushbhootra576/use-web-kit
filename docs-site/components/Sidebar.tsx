@@ -29,27 +29,32 @@ const NAVIGATION: SidebarGroup[] = [
   },
   {
     section: 'DOM',
-    count: 3,
+    count: 5,
     links: [
       { name: 'useSmartIntersection', href: '/docs/api#useSmartIntersection', badge: 'rec' },
       { name: 'useIntersection', href: '/docs/api#useIntersection' },
       { name: 'useMediaControls', href: '/docs/api#useMediaControls' },
+      { name: 'useElementDimensions', href: '/docs/api#useElementDimensions', badge: 'rec' },
+      { name: 'useIntentObserver', href: '/docs/api#useIntentObserver', badge: 'rec' },
     ]
   },
   {
     section: 'Concurrency',
-    count: 3,
+    count: 5,
     links: [
       { name: 'useWorkerPool', href: '/docs/api#useWorkerPool' },
+      { name: 'useSharedWorkerPool', href: '/docs/api#useSharedWorkerPool', badge: 'rec' },
+      { name: 'useChunkedTask', href: '/docs/api#useChunkedTask', badge: 'rec' },
       { name: 'useIdleQueue', href: '/docs/api#useIdleQueue' },
       { name: 'useAdaptivePolling', href: '/docs/api#useAdaptivePolling' },
     ]
   },
   {
     section: 'State',
-    count: 3,
+    count: 4,
     links: [
       { name: 'useDebouncedStorage', href: '/docs/api#useDebouncedStorage', badge: 'rec' },
+      { name: 'useHeavyStorage', href: '/docs/api#useHeavyStorage', badge: 'rec' },
       { name: 'useStorage', href: '/docs/api#useStorage' },
       { name: 'useBroadcastState', href: '/docs/api#useBroadcastState' },
     ]
@@ -64,8 +69,9 @@ const NAVIGATION: SidebarGroup[] = [
   },
   {
     section: 'BOM',
-    count: 3,
+    count: 4,
     links: [
+      { name: 'useAdaptivePerformance', href: '/docs/api#useAdaptivePerformance', badge: 'rec' },
       { name: 'useNetworkStatus', href: '/docs/api#useNetworkStatus' },
       { name: 'usePageLifecycle', href: '/docs/api#usePageLifecycle' },
       { name: 'usePermission', href: '/docs/api#usePermission' },
