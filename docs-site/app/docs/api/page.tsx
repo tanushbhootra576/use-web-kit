@@ -13,11 +13,6 @@ export default function ApiReferencePage() {
     <div className="w-full">
       {/* Page Header */}
       <header className="not-prose mb-20 relative">
-        <div className="flex items-center gap-3 mb-5">
-          <div className="w-6 h-[1px] bg-accent/40" />
-          <span className="section-label">Core Architecture</span>
-        </div>
-
         <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 tracking-[-0.04em] leading-[0.92]">
           API Reference
         </h1>

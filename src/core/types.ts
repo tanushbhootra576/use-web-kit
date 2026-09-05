@@ -8,6 +8,12 @@ export type NetworkStatus = {
       downlink?: number;
       rtt?: number;
     };
+
+export type WindowSize = {
+    width: number;
+    height: number;
+};
+
 export type PageLifecycle = {
       visible: boolean;
       focused: boolean;
@@ -386,3 +392,35 @@ export interface UseStorageReturn<T> {
 }
 
 export type StorageType = "localStorage" | "sessionStorage";
+
+export interface UseKeyboardShortcutOptions {
+  enabled?: boolean;
+  preventDefault?: boolean;
+  target?: 'window' | 'document';
+}
+
+export interface AIStreamState {
+  text: string;
+  done: boolean;
+  error: Error | null;
+  streaming: boolean;
+}
+
+export interface UseAIStreamReturn extends AIStreamState {
+  stream: (response: Response | ReadableStream<Uint8Array>) => void;
+  abort: () => void;
+}
+
+export interface UseViewTransitionReturn {
+  startTransition: (updateFn: () => void | Promise<void>) => Promise<void>;
+  isTransitioning: boolean;
+  isSupported: boolean;
+}
+
+export interface UseOptimisticQueueReturn<T> {
+  items: T[];
+  enqueue: (item: T, serverCall: () => Promise<T[]>) => void;
+  isPending: boolean;
+  error: Error | null;
+}
+

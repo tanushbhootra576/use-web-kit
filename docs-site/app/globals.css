@@ -249,3 +249,11 @@
 .pulse-subtle {
   animation: pulse-subtle 3s ease-in-out infinite;
 }
+
+@layer base {
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--color-background), 0 0 0 4px var(--color-accent);
+    border-radius: 2px;
+  }
+}

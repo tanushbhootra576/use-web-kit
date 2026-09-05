@@ -60,9 +60,17 @@ const RAW_HOOKS_DATA = [
         title: "Lazy Image Loading",
         code: `import { useSmartIntersection } from "use-web-kit";
 
-export function LazyImage({ src }: { src: string }) {
+export default function App() {
   const { ref, isIntersecting } = useSmartIntersection({ lowPriority: true });
-  return <img ref={ref} src={isIntersecting ? src : undefined} />;
+  return (
+    <div style={{ padding: "20px", color: "white" }}>
+      <p>Scroll down...</p>
+      <div style={{ height: "100vh" }} />
+      <div ref={ref} style={{ background: isIntersecting ? "#5BE30C" : "#333", padding: "20px", color: isIntersecting ? "black" : "white" }}>
+        {isIntersecting ? "Image Loaded!" : "Waiting..."}
+      </div>
+    </div>
+  );
 }`
       }
     ],
@@ -86,8 +94,20 @@ export function LazyImage({ src }: { src: string }) {
     examples: [
       {
         title: "Responsive Widget",
-        code: `const { ref, dimensions } = useElementDimensions();
-return <div ref={ref}>Width: {dimensions?.width ?? 0}px</div>;`
+        code: `import { useElementDimensions } from "use-web-kit";
+
+export default function App() {
+  const { ref, dimensions } = useElementDimensions();
+  return (
+    <div style={{ padding: "20px", color: "white" }}>
+      <div ref={ref} style={{ resize: "both", overflow: "auto", border: "2px solid #5BE30C", padding: "20px" }}>
+        Drag bottom right corner to resize!<br/><br/>
+        Width: {dimensions?.width ?? 0}px<br/>
+        Height: {dimensions?.height ?? 0}px
+      </div>
+    </div>
+  );
+}`
       }
     ],
     notes: [
@@ -111,10 +131,20 @@ return <div ref={ref}>Width: {dimensions?.width ?? 0}px</div>;`
     examples: [
       {
         title: "Predictive Prefetch",
-        code: `const { ref } = useIntentObserver({
-  onIntent: () => prefetch('/heavy-route.js')
-});
-return <a ref={ref} href="/heavy-route">Go</a>;`
+        code: `import { useIntentObserver } from "use-web-kit";
+
+export default function App() {
+  const { ref } = useIntentObserver({
+    onIntent: () => console.log("User is about to hover! Pre-fetching data...")
+  });
+  return (
+    <div style={{ padding: "20px" }}>
+      <button ref={ref} style={{ padding: "10px 20px", background: "#5BE30C", color: "black", borderRadius: "8px", border: "none", cursor: "pointer", fontWeight: "bold" }}>
+        Hover toward me! (Check console)
+      </button>
+    </div>
+  );
+}`
       }
     ]
   },

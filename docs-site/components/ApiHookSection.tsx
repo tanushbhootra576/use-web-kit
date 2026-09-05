@@ -4,6 +4,7 @@ import { HookDoc } from "../lib/hooks-data";
 import CodeBlock from "./CodeBlock";
 import PropsTable from "./PropsTable";
 import Callout from "./Callout";
+import LivePlayground from "./LivePlayground";
 
 export default function ApiHookSection({ hook }: { hook: HookDoc }) {
   return (
@@ -37,9 +38,7 @@ export default function ApiHookSection({ hook }: { hook: HookDoc }) {
           </svg>
           Signature
         </h3>
-        <div className="bg-[#08080b] border border-white/[0.06] p-4 font-mono text-[13px] text-zinc-300 overflow-x-auto">
-          <code>{hook.signature}</code>
-        </div>
+        <CodeBlock code={hook.signature} language="typescript" filename="type" />
       </div>
 
       {/* ── Options ── */}
@@ -78,12 +77,24 @@ export default function ApiHookSection({ hook }: { hook: HookDoc }) {
         <div className="mb-10">
           <h3 className="mono-label !text-[9px] text-zinc-500 mb-3">Examples</h3>
           <div className="flex flex-col gap-5">
-            {hook.examples.map((example, i) => (
-              <div key={i}>
-                <div className="text-sm text-white mb-2 font-medium">{example.title}</div>
-                <CodeBlock code={example.code} filename="example.tsx" />
-              </div>
-            ))}
+            {hook.examples.map((example, i) => {
+              const isRunnable = example.code.includes("export default");
+              
+              return (
+                <div key={i}>
+                  <div className="text-sm text-white mb-2 font-medium flex items-center gap-2">
+                    {isRunnable && <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />}
+                    {example.title}
+                    {isRunnable && <span className="text-[10px] font-mono text-zinc-500 ml-2 border border-white/10 px-1.5 py-0.5 rounded-sm">Live Sandbox</span>}
+                  </div>
+                  {isRunnable ? (
+                    <LivePlayground code={example.code} />
+                  ) : (
+                    <CodeBlock code={example.code} filename="example.tsx" />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       )}

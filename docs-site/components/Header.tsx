@@ -6,7 +6,8 @@ import { TOP_NAV_LINKS } from "@/lib/nav-data";
 import { Menu, X, Github, Terminal, Cpu } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { clsx } from "clsx";
+import clsx from "clsx";
+import GithubStarButton from "./GithubStarButton";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -81,15 +82,10 @@ export default function Header() {
             <span className="font-mono text-[11px] text-zinc-500 group-hover:text-zinc-300 transition-colors tracking-tight">npm i use-web-kit</span>
           </div>
 
-          {/* GitHub */}
-          <a
-            href="https://github.com/tanushbhootra576/use-web-kit"
-            target="_blank"
-            rel="noreferrer"
-            className="hidden sm:flex items-center gap-2 text-zinc-500 hover:text-white transition-colors p-2 rounded-md hover:bg-white/[0.04]"
-          >
-            <Github size={16} />
-          </a>
+          {/* GitHub Star */}
+          <div className="hidden sm:block">
+            <GithubStarButton />
+          </div>
 
           {/* Mobile toggle */}
           <button
@@ -131,15 +127,7 @@ export default function Header() {
                 );
               })}
               <div className="mt-4 pt-4 border-t border-white/[0.06] flex items-center justify-between px-4">
-                <a
-                  href="https://github.com/tanushbhootra576/use-web-kit"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-2 text-zinc-500 text-sm"
-                >
-                  <Github size={16} />
-                  GitHub
-                </a>
+                <GithubStarButton showCount={false} />
                 <span className="meta-text text-zinc-700">v1.0.4</span>
               </div>
             </nav>

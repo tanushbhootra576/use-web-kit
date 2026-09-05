@@ -15,6 +15,9 @@ export { useChunkedTask } from "./concurrency/useChunkedTask";
 export type { ChunkedTaskState, UseChunkedTaskOptions } from "./concurrency/useChunkedTask";
 export { useSharedWorkerPool } from "./concurrency/useSharedWorkerPool";
 export type { UseSharedWorkerPoolOptions, UseSharedWorkerPoolReturn } from "./concurrency/useSharedWorkerPool";
+export { useAIStream } from "./concurrency/useAIStream";
+export { useDebounce, useDebouncedCallback } from "./concurrency/useDebounce";
+export { useThrottle, useThrottledCallback } from "./concurrency/useThrottle";
 
 // ── DOM & Rendering ──
 export { useIntersection } from "./dom/useIntersection";
@@ -24,6 +27,7 @@ export { useElementDimensions } from "./dom/useElementDimensions";
 export type { ElementDimensions } from "./dom/useElementDimensions";
 export { useIntentObserver } from "./dom/useIntentObserver";
 export type { UseIntentObserverOptions } from "./dom/useIntentObserver";
+export { useKeyboardShortcut } from "./dom/useKeyboardShortcut";
 
 // ── Pipelines & Events ──
 export { useEventPipeline, useActionPipeline, PIPELINE_SKIP } from "./pipelines/useEventPipeline";

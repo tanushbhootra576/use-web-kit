@@ -25,6 +25,7 @@ const NAVIGATION: SidebarGroup[] = [
       { name: 'Introduction', href: '/docs' },
       { name: 'Installation', href: '/docs/installation' },
       { name: 'Quick Start', href: '/docs/quick-start' },
+      { name: 'Live Sandbox', href: '/docs/playground', badge: 'new' },
     ]
   },
   {
@@ -87,6 +88,8 @@ const NAVIGATION: SidebarGroup[] = [
   },
 ];
 
+import { motion } from 'framer-motion';
+
 export default function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState<Record<string, boolean>>({});
@@ -127,29 +130,43 @@ export default function Sidebar() {
 
             {/* Links */}
             {!isCollapsed && (
-              <ul className="flex flex-col gap-0.5 border-l border-white/[0.04] ml-[2px]">
+              <ul className="flex flex-col gap-1 border-l border-white/[0.04] ml-[2px]">
                 {group.links.map((link) => {
                   const isActive = pathname === link.href ||
                     (link.href.includes('#') && pathname === link.href.split('#')[0]);
 
                   return (
-                    <li key={link.name}>
+                    <li key={link.name} className="relative">
+                      {isActive && (
+                        <motion.div
+                          layoutId="sidebar-active-indicator"
+                          className="absolute inset-y-0 left-[-1px] w-[2px] bg-accent z-10"
+                          transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                        />
+                      )}
+                      {isActive && (
+                        <motion.div
+                          layoutId="sidebar-active-bg"
+                          className="absolute inset-0 bg-accent/[0.04] rounded-r-md z-0"
+                          transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                        />
+                      )}
                       <Link
                         href={link.href}
                         className={cn(
-                          "block py-1.5 pl-4 -ml-px text-[13px] transition-all duration-150 border-l",
+                          "relative z-10 block py-1.5 pl-4 -ml-px text-[13px] transition-colors duration-150 border-l",
                           isActive
-                            ? 'text-accent border-accent font-medium bg-accent/[0.06]'
+                            ? 'text-accent font-medium border-transparent'
                             : 'text-zinc-500 border-transparent hover:text-zinc-300 hover:border-white/10 hover:bg-white/[0.02]'
                         )}
                       >
                         <span className="flex items-center gap-2">
                           {link.name}
                           {link.badge === 'rec' && (
-                            <span className="text-[8px] font-mono uppercase tracking-wider text-accent/60 bg-accent/[0.08] px-1.5 py-0.5 border border-accent/10">rec</span>
+                            <span className="text-[8px] font-mono uppercase tracking-wider text-accent/60 bg-accent/[0.08] px-1.5 py-0.5 border border-accent/10 rounded-sm">rec</span>
                           )}
                           {link.badge === 'new' && (
-                            <span className="text-[8px] font-mono uppercase tracking-wider text-green-400/80 bg-green-500/[0.08] px-1.5 py-0.5 border border-green-500/20">new</span>
+                            <span className="text-[8px] font-mono uppercase tracking-wider text-green-400/80 bg-green-500/[0.08] px-1.5 py-0.5 border border-green-500/20 rounded-sm">new</span>
                           )}
                         </span>
                       </Link>

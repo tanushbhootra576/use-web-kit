@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { HookMeta } from "@/lib/hooks-data";
 import { clsx } from "clsx";
-import { Terminal, Cpu, ArrowUpRight } from "lucide-react";
+import { Cpu, ArrowUpRight } from "lucide-react";
+import SpotlightCard from "./SpotlightCard";
 
 interface HookCardProps {
   hook: HookMeta;
@@ -9,8 +10,8 @@ interface HookCardProps {
 
 export default function HookCard({ hook }: HookCardProps) {
   return (
-    <Link href={`/docs/hooks/${hook.slug}`} className="block group h-full">
-      <div className="premium-border bg-black/40 backdrop-blur-sm p-8 h-full flex flex-col transition-all duration-500 hover:bg-black/60">
+    <Link href={`/docs/hooks/${hook.slug}`} className="block group h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent rounded-xl">
+      <SpotlightCard className="p-8 h-full flex flex-col">
         {/* Subtle background pattern */}
         <div className="absolute inset-0 bg-runtime-dots opacity-[0.03] pointer-events-none" />
         
@@ -85,7 +86,7 @@ export default function HookCard({ hook }: HookCardProps) {
             </span>
           ))}
         </div>
-      </div>
+      </SpotlightCard>
     </Link>
   );
 }
