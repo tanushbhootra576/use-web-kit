@@ -2,8 +2,7 @@
   {
     "path": "dist/index.mjs",
     "import": "{ useWorkerPool, useSmartIntersection, useDebouncedStorage, useEventPipeline }",
-    "limit": "5 kB",
-    "webpack": false
+    "limit": "5 kB"
   },
   {
     "path": "dist/index.mjs",
