@@ -100,7 +100,7 @@ export function ConnectionGuard({ children }) {
       <section className="relative z-10 border-y border-white/[0.04]">
         <div className="max-w-[1400px] mx-auto grid grid-cols-2 md:grid-cols-4 gap-px bg-white/[0.04]">
           {[
-            { label: "Hooks", value: "14", sub: "Production-ready" },
+            { label: "Hooks", value: "20", sub: "Production-ready" },
             { label: "Dependencies", value: "0", sub: "Zero-cost" },
             { label: "Bundle Size", value: "<3KB", sub: "Tree-shaken" },
             { label: "TypeScript", value: "100%", sub: "Full coverage" },

@@ -23,7 +23,7 @@ export default function ApiReferencePage() {
         </h1>
 
         <p className="text-zinc-400 text-base lg:text-lg leading-relaxed font-normal max-w-2xl">
-          Complete TypeScript signatures, options, returns, and practical examples for all 14
+          Complete TypeScript signatures, options, returns, and practical examples for all 20
           production-ready hooks. Built on a zero-cost abstraction model.
         </p>
       </header>
