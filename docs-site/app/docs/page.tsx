@@ -1,219 +1,251 @@
-import InstallTerminal from "@/components/InstallTerminal";
 import Link from "next/link";
+import InstallTerminal from "@/components/InstallTerminal";
+import CodeBlock from "@/components/CodeBlock";
+import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { HOOKS_DATA } from "@/lib/hooks-data";
 
 export const metadata = {
-  title: "Documentation — use-web-kit",
+  title: "Introduction — use-web-kit",
   description:
-    "Getting started with use-web-kit: installation and quick start guide.",
+    "use-web-kit is a zero-dependency performance toolkit for React 19. Tree-shakeable, SSR-safe, memory-leak-proof hooks.",
 };
 
-const steps = [
-  {
-    step: "01",
-    title: "Install",
-    description: "Add use-web-kit to your project with a single command.",
-  },
-  {
-    step: "02",
-    title: "Import",
-    description:
-      "Import only the hooks you need. Every hook is individually tree-shakeable.",
-  },
-  {
-    step: "03",
-    title: "Use",
-    description:
-      "Drop hooks directly into your components. No providers, no wrappers.",
-  },
-];
+const importCode = `import { useNetworkStatus, useStorage, useIdleQueue } from 'use-web-kit';`;
+
+const useCode = `function App() {
+  const { isOnline, effectiveType } = useNetworkStatus();
+
+  return (
+    <div>
+      {!isOnline && <Banner>You are offline</Banner>}
+      <p>Connection: {effectiveType}</p>
+    </div>
+  );
+}`;
+
+const domains = ["DOM", "Concurrency", "State", "Pipelines", "BOM"] as const;
 
 export default function DocsPage() {
+  const totalHooks = HOOKS_DATA.length;
+
   return (
-    <div className="w-full">
-      {/* Page header */}
-      <header className="not-prose mb-20">
-        <div className="flex items-center gap-4 mb-6">
-          <div className="w-8 h-[1px] bg-cyan-500/50" />
-          <span className="text-cyan-400 font-mono text-[10px] tracking-[0.3em] uppercase font-bold">
+    <div className="max-w-3xl">
+      {/* ── Hero ── */}
+      <div className="mb-16">
+        <div className="flex items-center gap-2 mb-6">
+          <span className="text-[10px] font-mono font-semibold text-accent/80 bg-accent/10 border border-accent/20 px-2.5 py-1 uppercase tracking-widest">
             Getting Started
           </span>
+          <span className="text-[10px] font-mono text-zinc-600">v1.0.4 — Stable</span>
         </div>
-        <h1 className="text-5xl lg:text-6xl font-black text-white mb-8 tracking-[-0.04em] leading-[0.9]">
-          Installation
+
+        <h1 className="text-4xl font-bold text-white tracking-tight mb-4">
+          Introduction
         </h1>
-        <p className="text-zinc-400 text-lg md:text-xl leading-relaxed font-light max-w-2xl">
-          <code className="text-zinc-300 font-mono">use-web-kit</code> is a zero-dependency React hook library. It is designed from the ground up for
-          React 19 and ships with full TypeScript definitions.
+
+        <p className="text-zinc-400 text-lg leading-relaxed mb-8">
+          <code className="text-zinc-300 text-base font-mono">use-web-kit</code> is a
+          zero-dependency performance toolkit for React 19 and Next.js 15.{" "}
+          {totalHooks} hooks, fully tree-shakeable, SSR-safe, and memory-leak-proof.
         </p>
-      </header>
 
-      <hr className="border-white/5 mb-20" />
-
-      {/* Philosophy */}
-      <section className="mb-24">
-        <h2 className="text-[11px] font-mono font-bold text-zinc-500 mb-8 uppercase tracking-[0.2em] not-prose">
-          Philosophy
-        </h2>
-        <div className="glass-card rounded-2xl p-8 md:p-12 border border-white/5 bg-zinc-900/50">
-          <h3 className="text-2xl font-bold text-white mb-4 tracking-tight mt-0">Zero Dependencies</h3>
-          <p>
-            We believe that core browser APIs shouldn't require installing lodash, custom event emitters, or polyfills. 
-            Every hook in this toolkit relies strictly on native browser APIs and React core primitives.
-          </p>
-          <ul className="not-prose space-y-4 font-mono text-sm mt-6">
-            <li className="flex items-center gap-3 text-zinc-300">
-              <div className="w-1.5 h-1.5 rounded-full bg-cyan-500" /> No lodash/debounce overhead
-            </li>
-            <li className="flex items-center gap-3 text-zinc-300">
-              <div className="w-1.5 h-1.5 rounded-full bg-cyan-500" /> No external state managers required
-            </li>
-            <li className="flex items-center gap-3 text-zinc-300">
-              <div className="w-1.5 h-1.5 rounded-full bg-cyan-500" /> Perfect 0kb runtime footprint when tree-shaken
-            </li>
-          </ul>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/docs/api"
+            className="inline-flex items-center gap-2 bg-accent text-black font-semibold text-sm px-4 py-2.5 hover:bg-accent/90 transition-colors rounded-md"
+          >
+            Browse {totalHooks} Hooks
+            <ArrowRight size={15} />
+          </Link>
+          <Link
+            href="/docs/quick-start"
+            className="inline-flex items-center gap-2 text-sm font-medium text-zinc-300 border border-white/10 px-4 py-2.5 hover:bg-white/[0.04] hover:border-white/20 transition-colors rounded-md"
+          >
+            Quick Start
+          </Link>
         </div>
-      </section>
+      </div>
 
-      {/* Requirements */}
-      <section className="mb-24">
-        <h2 className="text-[11px] font-mono font-bold text-zinc-500 mb-8 uppercase tracking-[0.2em] not-prose">
-          Requirements
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 not-prose">
-          {[
-            { label: "React", value: "≥ 19.0.0" },
-            { label: "TypeScript", value: "≥ 5.0" },
-            { label: "Environments", value: "Modern Browsers" },
-          ].map((req) => (
-            <div
-              key={req.label}
-              className="glass-card rounded-2xl p-8 text-center border border-white/5 bg-zinc-900/50"
-            >
-              <div className="text-cyan-400 font-bold text-xl mb-3 font-mono">
-                {req.value}
-              </div>
-              <div className="text-[10px] text-zinc-500 uppercase tracking-widest font-mono font-bold">
-                {req.label}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <div className="h-px bg-white/[0.06] mb-16" />
 
-      <hr className="border-white/5 mb-24" />
-
-      {/* Steps */}
-      <section className="mb-32">
-        <h2 className="text-[11px] font-mono font-bold text-zinc-500 mb-12 uppercase tracking-[0.2em] not-prose">
-          Setup Guide
+      {/* ── 3 Steps ── */}
+      <div className="mb-16">
+        <h2 className="text-xs font-mono font-semibold text-zinc-500 uppercase tracking-widest mb-10">
+          Setup in 3 steps
         </h2>
 
-        <div className="space-y-20 not-prose">
+        <div className="flex flex-col gap-12">
           {/* Step 1 */}
-          <div className="flex flex-col md:flex-row gap-6 md:gap-12 group">
-            <div className="shrink-0 text-cyan-400 text-2xl md:text-3xl font-black w-16 pt-1 font-mono opacity-50 group-hover:opacity-100 transition-opacity">
-              {steps[0].step}
+          <div className="flex gap-6">
+            <div className="shrink-0 w-8 h-8 flex items-center justify-center border border-white/10 text-sm font-mono font-bold text-zinc-500">
+              1
             </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="text-white font-bold text-2xl mb-4 tracking-tight">
-                {steps[0].title}
-              </h3>
-              <p className="text-zinc-400 text-base leading-relaxed mb-8 font-light">
-                {steps[0].description}
+            <div className="flex-1 pt-1">
+              <h3 className="text-white font-semibold mb-1">Install</h3>
+              <p className="text-zinc-500 text-base mb-4">
+                Add the package to your project.
               </p>
               <InstallTerminal />
-              <p className="text-[10px] text-zinc-600 mt-6 tracking-widest font-mono uppercase font-bold">
-                Also available via <span className="text-zinc-400">yarn</span> or <span className="text-zinc-400">pnpm</span>
-              </p>
             </div>
           </div>
 
           {/* Step 2 */}
-          <div className="flex flex-col md:flex-row gap-6 md:gap-12 group">
-            <div className="shrink-0 text-cyan-400 text-2xl md:text-3xl font-black w-16 pt-1 font-mono opacity-50 group-hover:opacity-100 transition-opacity">
-              {steps[1].step}
+          <div className="flex gap-6">
+            <div className="shrink-0 w-8 h-8 flex items-center justify-center border border-white/10 text-sm font-mono font-bold text-zinc-500">
+              2
             </div>
-            <div className="flex-1 min-w-0">
-              <h3 className="text-white font-bold text-2xl mb-4 tracking-tight">
-                {steps[1].title}
-              </h3>
-              <p className="text-zinc-400 text-base leading-relaxed mb-8 font-light">
-                {steps[1].description}
+            <div className="flex-1 pt-1">
+              <h3 className="text-white font-semibold mb-1">Import</h3>
+              <p className="text-zinc-500 text-base mb-4">
+                Import only what you need — everything is tree-shakeable.
               </p>
-              <div className="terminal-box bg-zinc-950 p-8 rounded-2xl overflow-hidden relative border border-white/5 shadow-2xl">
-                <pre className="text-[13px] leading-[2] overflow-x-auto font-mono">
-                  <span className="text-cyan-400 font-bold">import</span> <span className="text-zinc-500">{"{ "}</span>
-                  <span className="text-white">useNetworkStatus</span><span className="text-zinc-500">,</span>
-                  <span className="text-white"> useStorage </span>
-                  <span className="text-zinc-500">{"}"}</span> <span className="text-cyan-400 font-bold">from</span>{" "}
-                  <span className="text-cyan-400/80">'use-web-kit'</span><span className="text-zinc-500">;</span>
-                </pre>
-              </div>
+              <CodeBlock code={importCode} language="typescript" filename="app.tsx" />
             </div>
           </div>
 
           {/* Step 3 */}
-          <div className="flex flex-col md:flex-row gap-6 md:gap-12 group">
-            <div className="shrink-0 text-cyan-400 text-2xl md:text-3xl font-black w-16 pt-1 font-mono opacity-50 group-hover:opacity-100 transition-opacity">
-              {steps[2].step}
+          <div className="flex gap-6">
+            <div className="shrink-0 w-8 h-8 flex items-center justify-center border border-white/10 text-sm font-mono font-bold text-zinc-500">
+              3
             </div>
-            <div className="flex-1">
-              <h3 className="text-white font-bold text-2xl mb-4 tracking-tight">
-                {steps[2].title}
-              </h3>
-              <p className="text-zinc-400 text-base leading-relaxed mb-8 font-light">
-                {steps[2].description}
+            <div className="flex-1 pt-1">
+              <h3 className="text-white font-semibold mb-1">Use</h3>
+              <p className="text-zinc-500 text-base mb-4">
+                Drop hooks directly into components. No providers, no wrappers.
               </p>
+              <CodeBlock code={useCode} language="tsx" filename="App.tsx" />
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
-      <hr className="border-white/5 mb-24" />
+      <div className="h-px bg-white/[0.06] mb-16" />
 
-      {/* Next steps */}
-      <section className="not-prose">
-        <h2 className="text-[11px] font-mono font-bold text-zinc-500 mb-8 uppercase tracking-[0.2em]">
-          Next Steps
+      {/* ── Why ── */}
+      <div className="mb-16">
+        <h2 className="text-xs font-mono font-semibold text-zinc-500 uppercase tracking-widest mb-8">
+          Why use-web-kit
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {[
+            {
+              title: "Zero Dependencies",
+              body: "No lodash, no polyfills, no event emitters. Built on native browser APIs only.",
+            },
+            {
+              title: "O(1) Observers",
+              body: "All IntersectionObserver and ResizeObserver hooks share a single global instance — never one per component.",
+            },
+            {
+              title: "React 19 Native",
+              body: "Ref callback cleanup, useSyncExternalStore, and startTransition used correctly throughout.",
+            },
+          ].map((f) => (
+            <div
+              key={f.title}
+              className="border border-white/[0.06] bg-white/[0.02] p-5 rounded-xl"
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <CheckCircle2 size={13} className="text-accent shrink-0" />
+                <span className="text-white text-base font-semibold">{f.title}</span>
+              </div>
+              <p className="text-zinc-500 text-base leading-relaxed">{f.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="h-px bg-white/[0.06] mb-16" />
+
+      {/* ── Hook Domains ── */}
+      <div className="mb-16">
+        <h2 className="text-xs font-mono font-semibold text-zinc-500 uppercase tracking-widest mb-8">
+          What's included
+        </h2>
+        <div className="flex flex-col gap-2">
+          {domains.map((domain) => {
+            const hooks = HOOKS_DATA.filter((h) => h.domain === domain);
+            if (!hooks.length) return null;
+            return (
+              <Link
+                key={domain}
+                href={`/docs/api#domain-${domain.toLowerCase()}`}
+                className="flex items-center justify-between p-4 border border-white/[0.06] hover:bg-white/[0.03] hover:border-white/[0.1] transition-all group"
+              >
+                <div className="flex items-center gap-4">
+                  <span className="text-[10px] font-mono text-accent/70 bg-accent/[0.08] border border-accent/10 px-2 py-0.5 uppercase tracking-wider">
+                    {domain}
+                  </span>
+                  <div className="flex flex-wrap gap-1.5">
+                    {hooks.slice(0, 4).map((h) => (
+                      <span key={h.id} className="text-xs font-mono text-zinc-500">
+                        {h.name}
+                      </span>
+                    ))}
+                    {hooks.length > 4 && (
+                      <span className="text-xs font-mono text-zinc-700">
+                        +{hooks.length - 4} more
+                      </span>
+                    )}
+                  </div>
+                </div>
+                <ArrowRight
+                  size={14}
+                  className="text-zinc-600 group-hover:text-zinc-300 group-hover:translate-x-0.5 transition-all shrink-0"
+                />
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* ── Next Steps ── */}
+      <div>
+        <h2 className="text-xs font-mono font-semibold text-zinc-500 uppercase tracking-widest mb-6">
+          Next steps
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[
             {
               title: "API Reference",
-              desc: "Complete type signatures and options for every hook.",
+              desc: "Browse all hooks with type signatures, options, and live examples.",
               href: "/docs/api",
             },
             {
+              title: "Quick Start",
+              desc: "A real-world example combining 5 hooks in a single component.",
+              href: "/docs/quick-start",
+            },
+            {
+              title: "Performance Guide",
+              desc: "Learn about O(1) observers, RAF batching, and memory patterns.",
+              href: "/docs/performance",
+            },
+            {
               title: "Usage Patterns",
-              desc: "Learn composition and SSR safety best practices.",
+              desc: "SSR safety, testing, and composition best practices.",
               href: "/docs/usage",
-            },
-            {
-              title: "useSmartIntersection",
-              desc: "Zero-overhead global Intersection Observer.",
-              href: "/docs/api#useSmartIntersection",
-            },
-            {
-              title: "useWorkerPool",
-              desc: "Offload heavy tasks to Web Workers.",
-              href: "/docs/api#useWorkerPool",
             },
           ].map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="glass-card rounded-2xl p-8 group relative overflow-hidden transition-all duration-500 border border-white/5 bg-zinc-900/30 hover:bg-zinc-900/50 hover:border-white/10"
+              className="group flex flex-col gap-1.5 p-5 border border-white/[0.06] hover:bg-white/[0.03] hover:border-white/[0.1] transition-all rounded-xl"
             >
-              <div className="relative z-10 text-white text-lg font-bold group-hover:text-cyan-400 transition-colors mb-3 tracking-tight">
-                {item.title}
+              <div className="flex items-center justify-between">
+                <span className="text-white text-base font-semibold group-hover:text-accent transition-colors rounded-md">
+                  {item.title}
+                </span>
+                <ArrowRight
+                  size={14}
+                  className="text-zinc-700 group-hover:text-accent group-hover:translate-x-0.5 transition-all rounded-xl"
+                />
               </div>
-              <div className="relative z-10 text-zinc-500 text-sm leading-relaxed font-light group-hover:text-zinc-400 transition-colors">
-                {item.desc}
-              </div>
+              <p className="text-zinc-500 text-base leading-relaxed">{item.desc}</p>
             </Link>
           ))}
         </div>
-      </section>
+      </div>
     </div>
   );
 }

@@ -12,10 +12,6 @@ export default function SearchModal({ isOpen, onClose }: { isOpen: boolean; onCl
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
-        e.preventDefault();
-        if (isOpen) onClose();
-      }
       if (e.key === "Escape" && isOpen) {
         onClose();
       }

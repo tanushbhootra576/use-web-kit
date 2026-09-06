@@ -3,14 +3,16 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { TOP_NAV_LINKS } from "@/lib/nav-data";
-import { Menu, X, Github, Terminal, Cpu } from "lucide-react";
+import { Menu, X, Github, Terminal, Cpu, Search } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import GithubStarButton from "./GithubStarButton";
+import SearchModal from "./SearchModal";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
 
@@ -18,6 +20,17 @@ export default function Header() {
     const handleScroll = () => setScrolled(window.scrollY > 8);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
+        e.preventDefault();
+        setIsSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
@@ -76,6 +89,17 @@ export default function Header() {
 
         {/* ── Right: Actions ── */}
         <div className="flex items-center gap-4">
+          {/* Search Trigger */}
+          <button
+            onClick={() => setIsSearchOpen(true)}
+            className="flex items-center gap-2 px-3 py-1.5 bg-white/[0.02] border border-white/[0.06] rounded-md text-zinc-400 hover:text-white hover:bg-white/[0.05] transition-all group"
+            title="Search Documentation (Cmd+K)"
+          >
+            <Search size={14} className="group-hover:text-accent transition-colors" />
+            <span className="hidden sm:inline-block text-[11px] font-mono tracking-tight mr-2">Search</span>
+            <span className="hidden sm:inline-block text-[9px] font-mono px-1.5 py-0.5 border border-white/10 rounded text-zinc-500 bg-white/[0.02]">⌘K</span>
+          </button>
+
           {/* Install pill */}
           <div className="hidden lg:flex items-center gap-3 px-3.5 py-1.5 bg-white/[0.03] border border-white/[0.06] rounded-md cursor-pointer hover:border-white/[0.1] hover:bg-white/[0.05] transition-all group">
             <Terminal size={12} className="text-zinc-600 group-hover:text-accent transition-colors" />
@@ -134,6 +158,7 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
     </header>
   );
 }

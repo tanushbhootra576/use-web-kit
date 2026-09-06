@@ -10,53 +10,31 @@ export interface NavGroup {
   items: NavItem[];
 }
 
+import { HOOKS_DATA } from "./hooks-data";
+
+const hookDomains = ["DOM", "Concurrency", "State", "Pipelines", "BOM"];
+
+const dynamicHookGroups: NavGroup[] = hookDomains.map(domain => {
+  const hooks = HOOKS_DATA.filter(h => h.domain === domain).sort((a, b) => a.name.localeCompare(b.name));
+  return {
+    title: domain,
+    items: hooks.map(hook => ({
+      label: hook.name,
+      href: `/docs/api#${hook.id}`,
+      badge: hook.isNew ? "New" : undefined
+    }))
+  };
+});
+
 export const NAV_GROUPS: NavGroup[] = [
   {
     title: "Getting Started",
     items: [
-      { label: "Installation", href: "/docs/installation" },
-      { label: "Quick Start", href: "/docs#quickstart" },
+      { label: "Installation", href: "/docs" },
+      { label: "API Reference", href: "/docs/api" },
     ],
   },
-  {
-    title: "DOM",
-    items: [
-      { label: "useSmartIntersection", href: "/docs/api#useSmartIntersection", badge: "Recommended" },
-      { label: "useIntersection", href: "/docs/api#useIntersection" },
-      { label: "useMediaControls", href: "/docs/api#useMediaControls" },
-    ],
-  },
-  {
-    title: "Concurrency",
-    items: [
-      { label: "useWorkerPool", href: "/docs/api#useWorkerPool" },
-      { label: "useIdleQueue", href: "/docs/api#useIdleQueue" },
-      { label: "useAdaptivePolling", href: "/docs/api#useAdaptivePolling" },
-    ],
-  },
-  {
-    title: "State",
-    items: [
-      { label: "useDebouncedStorage", href: "/docs/api#useDebouncedStorage", badge: "Recommended" },
-      { label: "useStorage", href: "/docs/api#useStorage" },
-      { label: "useBroadcastState", href: "/docs/api#useBroadcastState" },
-    ],
-  },
-  {
-    title: "Pipelines",
-    items: [
-      { label: "useEventPipeline", href: "/docs/api#useEventPipeline" },
-      { label: "useActionPipeline", href: "/docs/api#useActionPipeline" },
-    ],
-  },
-  {
-    title: "BOM",
-    items: [
-      { label: "useNetworkStatus", href: "/docs/api#useNetworkStatus" },
-      { label: "usePageLifecycle", href: "/docs/api#usePageLifecycle" },
-      { label: "usePermission", href: "/docs/api#usePermission" },
-    ],
-  },
+  ...dynamicHookGroups,
   {
     title: "Guides",
     items: [

@@ -3,7 +3,7 @@ import { HOOKS_DATA } from '@/lib/hooks-data';
 import { notFound } from 'next/navigation';
 
 export async function generateMetadata() {
-  const hook = HOOKS_DATA.find((h) => h.id === 'useKeyboardShortcut');
+  const hook = HOOKS_DATA.find((h) => h.id === 'useBroadcastState');
   if (!hook) return {};
   return {
     title: `${hook.name} — use-web-kit`,
@@ -12,7 +12,7 @@ export async function generateMetadata() {
 }
 
 export default function Page() {
-  const hook = HOOKS_DATA.find((h) => h.id === 'useKeyboardShortcut');
+  const hook = HOOKS_DATA.find((h) => h.id === 'useBroadcastState');
 
   if (!hook) {
     notFound();

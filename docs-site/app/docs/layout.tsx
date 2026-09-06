@@ -13,10 +13,10 @@ export default function DocsLayout({ children }: { children: React.ReactNode }) 
 
       {/* ── Main Content ── */}
       <div className="flex-1 min-w-0 bg-[#060609]">
-        <div className="mx-auto max-w-[860px] px-6 lg:px-14 py-10 lg:py-16">
-          <div className="prose prose-invert prose-zinc max-w-none
+        <div className="mx-auto max-w-[900px] px-6 lg:px-14 py-12 lg:py-20">
+          <div className="prose prose-lg prose-invert prose-zinc max-w-none
             prose-headings:font-semibold prose-headings:tracking-tight prose-headings:text-white
-            prose-p:text-zinc-400 prose-p:leading-relaxed prose-p:font-normal
+            prose-p:text-zinc-400 prose-p:leading-[1.8] prose-p:font-normal
             prose-a:text-accent hover:prose-a:text-accent/80 prose-a:no-underline prose-a:font-medium
             prose-code:text-accent prose-code:bg-accent/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-sm prose-code:before:content-none prose-code:after:content-none prose-code:border prose-code:border-accent/10
             prose-pre:bg-[#08080b] prose-pre:border prose-pre:border-white/[0.06] prose-pre:shadow-none prose-pre:rounded-none

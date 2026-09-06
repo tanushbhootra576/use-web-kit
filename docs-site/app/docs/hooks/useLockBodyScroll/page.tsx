@@ -2,15 +2,24 @@ import ApiHookSection from '@/components/ApiHookSection';
 import { HOOKS_DATA } from '@/lib/hooks-data';
 import { notFound } from 'next/navigation';
 
+export async function generateMetadata() {
+  const hook = HOOKS_DATA.find((h) => h.id === 'useLockBodyScroll');
+  if (!hook) return {};
+  return {
+    title: `${hook.name} — use-web-kit`,
+    description: hook.description,
+  };
+}
+
 export default function Page() {
   const hook = HOOKS_DATA.find((h) => h.id === 'useLockBodyScroll');
-  
+
   if (!hook) {
     notFound();
   }
 
   return (
-    <div className="animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
+    <div>
       <ApiHookSection hook={hook} />
     </div>
   );

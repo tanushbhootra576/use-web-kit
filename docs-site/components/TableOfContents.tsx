@@ -67,48 +67,6 @@ export default function TableOfContents() {
           </nav>
         </div>
       )}
-
-      {/* Runtime Status Panel */}
-      <div className="border-t border-white/[0.04] pt-8">
-        <div className="flex items-center gap-2 mb-6">
-          <Activity size={12} className="text-zinc-600" />
-          <span className="mono-label !text-[9px] text-zinc-500">Runtime</span>
-        </div>
-
-        <div className="border border-white/[0.05] bg-white/[0.01] p-4 space-y-4">
-          <div className="flex justify-between items-center">
-            <span className="meta-text !text-[8px] text-zinc-600">Latency</span>
-            <span className="text-[10px] font-mono text-accent">0.12ms</span>
-          </div>
-          <div className="h-px w-full bg-white/[0.04] overflow-hidden">
-            <motion.div
-              animate={{ width: ["20%", "45%", "30%"] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-              className="h-full bg-accent/30"
-            />
-          </div>
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <div className="meta-text !text-[7px] text-zinc-700 mb-0.5">Threads</div>
-              <div className="text-xs font-mono text-white">4 Active</div>
-            </div>
-            <div>
-              <div className="meta-text !text-[7px] text-zinc-700 mb-0.5">Heap</div>
-              <div className="text-xs font-mono text-white">12.4MB</div>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-3 p-3 border border-white/[0.04] bg-white/[0.01]">
-          <div className="flex items-center gap-2 mb-2">
-            <Terminal size={10} className="text-accent/50" />
-            <span className="meta-text !text-[7px] text-zinc-600">Quick</span>
-          </div>
-          <div className="text-[10px] font-mono text-zinc-500 bg-black/40 px-2.5 py-1.5 border border-white/[0.04]">
-            $ npx use-web-kit init
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

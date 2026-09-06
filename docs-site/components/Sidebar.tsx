@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { ChevronDown } from 'lucide-react';
 
+import { HOOKS_DATA } from '@/lib/hooks-data';
+
 interface SidebarLink {
   name: string;
   href: string;
@@ -18,74 +20,39 @@ interface SidebarGroup {
   links: SidebarLink[];
 }
 
+const hookDomains = ["DOM", "Concurrency", "State", "Pipelines", "BOM"];
+
+const dynamicHookGroups: SidebarGroup[] = hookDomains.map(domain => {
+  const hooks = HOOKS_DATA.filter(h => h.domain === domain).sort((a, b) => a.name.localeCompare(b.name));
+  return {
+    section: domain + ' Engine',
+    count: hooks.length,
+    links: hooks.map(hook => ({
+      name: hook.name,
+      href: `/docs/hooks/${hook.id}`,
+      badge: hook.isNew ? 'new' : undefined
+    }))
+  };
+});
+
 const NAVIGATION: SidebarGroup[] = [
   {
     section: 'Getting Started',
     links: [
       { name: 'Introduction', href: '/docs' },
-      { name: 'Installation', href: '/docs/installation' },
-      { name: 'Quick Start', href: '/docs/quick-start' },
-      { name: 'Live Sandbox', href: '/docs/playground', badge: 'new' },
+      { name: 'API Reference', href: '/docs/api' },
+      { name: 'Quick Start', href: '/docs/quick-start' }
     ]
   },
-  {
-    section: 'DOM',
-    count: 5,
-    links: [
-      { name: 'useSmartIntersection', href: '/docs/api#useSmartIntersection', badge: 'rec' },
-      { name: 'useIntersection', href: '/docs/api#useIntersection' },
-      { name: 'useMediaControls', href: '/docs/api#useMediaControls' },
-      { name: 'useElementDimensions', href: '/docs/api#useElementDimensions', badge: 'new' },
-      { name: 'useIntentObserver', href: '/docs/api#useIntentObserver', badge: 'new' },
-    ]
-  },
-  {
-    section: 'Concurrency',
-    count: 5,
-    links: [
-      { name: 'useWorkerPool', href: '/docs/api#useWorkerPool' },
-      { name: 'useSharedWorkerPool', href: '/docs/api#useSharedWorkerPool', badge: 'new' },
-      { name: 'useChunkedTask', href: '/docs/api#useChunkedTask', badge: 'new' },
-      { name: 'useIdleQueue', href: '/docs/api#useIdleQueue' },
-      { name: 'useAdaptivePolling', href: '/docs/api#useAdaptivePolling' },
-    ]
-  },
-  {
-    section: 'State',
-    count: 4,
-    links: [
-      { name: 'useDebouncedStorage', href: '/docs/api#useDebouncedStorage', badge: 'rec' },
-      { name: 'useHeavyStorage', href: '/docs/api#useHeavyStorage', badge: 'new' },
-      { name: 'useStorage', href: '/docs/api#useStorage' },
-      { name: 'useBroadcastState', href: '/docs/api#useBroadcastState' },
-    ]
-  },
-  {
-    section: 'Pipelines',
-    count: 2,
-    links: [
-      { name: 'useEventPipeline', href: '/docs/api#useEventPipeline' },
-      { name: 'useActionPipeline', href: '/docs/api#useActionPipeline' },
-    ]
-  },
-  {
-    section: 'BOM',
-    count: 4,
-    links: [
-      { name: 'useAdaptivePerformance', href: '/docs/api#useAdaptivePerformance', badge: 'new' },
-      { name: 'useNetworkStatus', href: '/docs/api#useNetworkStatus' },
-      { name: 'usePageLifecycle', href: '/docs/api#usePageLifecycle' },
-      { name: 'usePermission', href: '/docs/api#usePermission' },
-    ]
-  },
+  ...dynamicHookGroups,
   {
     section: 'Guides',
     links: [
       { name: 'Performance', href: '/docs/performance' },
       { name: 'Usage Patterns', href: '/docs/usage' },
-      { name: 'Migration Guide', href: '/docs/migration' },
+      { name: 'Migration Guide', href: '/docs/migration' }
     ]
-  },
+  }
 ];
 
 import { motion } from 'framer-motion';
