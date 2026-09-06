@@ -33,7 +33,7 @@ Traditional React hook libraries often introduce significant overhead by instant
 
 The toolkit is divided into five architectural domains:
 
-### ⚡ DOM Engine
+### DOM Engine
 - **`useElementDimensions`** — O(1) DOM measurement via a module-level `ResizeObserver` singleton.
 - **`useSmartIntersection`** — Zero-overhead intersection observation via global singletons.
 - **`useIntersection`** — Traditional per-instance observer pool for custom root margins.
@@ -45,7 +45,7 @@ The toolkit is divided into five architectural domains:
 - **`useLockBodyScroll`** — Ref-counted scroll lock for modals.
 - **`useWindowSize`** — Singleton window size listener, SSR safe.
 
-### 🧠 Concurrency Engine
+### Concurrency Engine
 - **`useChunkedTask`** — Process massive datasets without blocking the main thread using `scheduler.yield`.
 - **`useWorkerPool`** — Thread-pool abstraction over Web Workers that dynamically scales.
 - **`useSharedWorkerPool`** — Enterprise multi-tab sync and offloading via a single global `SharedWorker`.
@@ -53,14 +53,14 @@ The toolkit is divided into five architectural domains:
 - **`useAdaptivePolling`** — Polling intervals that dynamically slow down on poor connections or hidden tabs.
 - **`useAIStream`** — ReadableStream LLM consumer with SSE, abort, useReducer state.
 
-### 💾 State Synchronization
+### State Synchronization
 - **`useHeavyStorage`** — Asynchronously store GBs of data using the modern Origin Private File System (OPFS).
 - **`useDebouncedStorage`** — SSR-safe `localStorage` wrapper with integrated debounce and cross-tab sync.
 - **`useStorage`** — Synchronous Web Storage persistence with cross-tab sync.
 - **`useBroadcastState`** — O(1) cross-tab state synchronization that bypasses React Context.
 - **`useOptimisticQueue`** — Optimistic mutations with auto-rollback on server error.
 
-### 🌐 Network & BOM
+### Network & BOM
 - **`useNetworkStatus`** — Comprehensive network connection monitoring (RTT, downlink, effective type).
 - **`usePageLifecycle`** — Hook into visibility state and page freeze events.
 - **`usePermission`** — Query and watch Web Permissions API state with legacy fallbacks.
@@ -68,7 +68,7 @@ The toolkit is divided into five architectural domains:
 - **`useClipboard`** — SSR safe clipboard reader/writer with timeout reset.
 - **`useKeyboardShortcut`** — ONE shared keydown listener, parses cmd+k, ctrl+shift+p.
 
-### 🔄 Pipelines & Utilities
+### Pipelines & Utilities
 - **`useEventPipeline`** — Compose asynchronous event handlers with built-in retry and rollback logic.
 - **`useActionPipeline`** — FormData processing for React 19 `<form action>` and Server Actions.
 - **`useDebounce`** — SSR-safe debounced state and callback generation.
